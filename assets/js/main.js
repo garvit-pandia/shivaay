@@ -21,13 +21,15 @@
 
   if (navToggle && navLinks) {
     navToggle.addEventListener('click', function () {
-      navLinks.classList.toggle('open');
+      const isOpen = navLinks.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', isOpen);
     });
 
-    // Close menu when a nav link is clicked
+      // Close menu when a nav link is clicked
     navLinks.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', function () {
         navLinks.classList.remove('open');
+        if (navToggle) navToggle.setAttribute('aria-expanded', 'false');
       });
     });
 
@@ -35,6 +37,7 @@
     window.addEventListener('resize', function () {
       if (window.innerWidth > 767) {
         navLinks.classList.remove('open');
+        if (navToggle) navToggle.setAttribute('aria-expanded', 'false');
       }
     });
   }
@@ -273,7 +276,7 @@
       if (serviceVal) rawBody += '\nService: ' + serviceVal;
       if (messageVal) rawBody += '\nMessage: ' + messageVal;
 
-      const subject = 'Inquiry from ' + name;
+      const subject = 'Inquiry from ' + nameVal;
       const mailto =
         'mailto:shivaaylogistics2022@gmail.com?subject=' +
         encodeURIComponent(subject) +

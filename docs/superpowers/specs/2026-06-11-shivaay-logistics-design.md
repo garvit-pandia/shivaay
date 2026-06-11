@@ -20,36 +20,41 @@ A professional, trust-building multi-page website showcasing Shivaay Logistics' 
 ### Colors
 | Token | Hex | Usage |
 |-------|-----|-------|
-| Navy (primary) | `#0A1F3D` | nav, footer, headings, dark sections |
-| Light navy | `#1A3559` | card hovers, secondary surfaces |
-| Orange (accent) | `#F26B1F` | CTAs, links, highlights, hover states |
-| Orange hover | `#D45A18` | active/pressed states |
-| Background | `#F8FAFC` | page background |
-| Card | `#FFFFFF` | cards, form background |
-| Body text | `#0F172A` | headings, body copy |
-| Muted text | `#64748B` | secondary text, captions |
-| Border | `#E2E8F0` | dividers, input borders|
-| Success | `#059669` | success states |
-| Error | `#DC2626` | validation errors |
+| Midnight (primary) | `#070B14` | page background, nav, footer, dark sections |
+| Midnight light | `#111827` | card backgrounds, muted sections |
+| Card hover | `#1A2234` | card hover states |
+| Amber (accent) | `#F59E0B` | CTAs, links, highlights, hover states, nav active indicator |
+| Amber hover | `#D97706` | active/pressed states |
+| Amber glow | `rgba(245,158,11,0.15)` | shadow glows on CTA hover |
+| Teal (secondary) | `#0D9488` | tag card icons, route map dots, secondary highlights |
+| Teal glow | `rgba(13,148,136,0.15)` | shadow glows on teal elements |
+| Card bg | `#111827` | cards, form background |
+| Text | `#E2E8F0` | body copy |
+| Text dim | `#94A3B8` | secondary text, captions, breadcrumbs |
+| Border | `rgba(148,163,184,0.12)` | dividers, input borders |
+| Success | `#10B981` | success states |
+| Error | `#EF4444` | validation errors |
 
 ### Typography
-- **Display/Headings:** Outfit (600, 700, 800)
-- **Body:** Inter (400, 500, 600)
-- **Type scale:** 12/14/16/18/20/24/32/40/48/56/72
+- **Display/Headings:** Outfit (600, 700, 800), letter-spacing -0.02em
+- **Body:** Inter (400, 500, 600, 700)
+- **Type scale:** 12/14/16/18/20/24/32/40/48/56/72, with `clamp()` for responsive sizing
 - **Line-height:** 1.15 headings, 1.6 body
+- **Text balance:** `text-wrap: balance` on headings
 
 ### Spacing & Layout
-- Container: `max-w-7xl` mx-auto
-- Section padding: `py-16 md:py-24`
-- Spacing scale: 4 8 12 16 20 24 32 40 48 64 80 96
-- Breakpoints: 375 / 640 / 768 / 1024 / 1280
+- Container: 1280px max-width with 24px padding
+- Section padding: 80px 24px (64px on mobile)
+- Spacing scale: 4 8 12 16 20 24 28 32 40 48 64 80 96
+- Breakpoints: 375 / 480 / 640 / 768 / 1024 / 1280
 
 ### z-index scale
 - 10: elevated cards
 - 20: sticky navbar
-- 30: dropdown/megamenu
+- 30: dropdown/mobile menu
 - 50: overlay/lightbox
 - 100: toasts/notifications
+- 200: skip-to-content link
 
 ## Signature Elements
 
@@ -59,10 +64,11 @@ A professional, trust-building multi-page website showcasing Shivaay Logistics' 
 
 ## Tech Stack
 
-- Static HTML + Tailwind CSS CDN + vanilla JS (no build step)
+- Static HTML + custom CSS + vanilla JS (no build step, no frameworks)
 - Google Fonts: Outfit + Inter with `display=swap`
-- Lucide icons via CDN
+- Lucide icons v0.468 via CDN (`unpkg.com/lucide@0.468.0`)
 - No framework dependencies
+- Dark-mode-first design with `color-scheme: dark`
 
 ## Performance Strategy
 

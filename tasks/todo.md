@@ -28,4 +28,14 @@
 ### Known notes
 - Unsplash images use placeholder URLs that may be rate-limited in production (replace with real images or upload to assets)
 - Google Maps embed uses approximate coordinates (fine-tune with exact lat/lng)
-- Tailwind CSS loaded via CDN (works fine for static site, good for performance with caching)
+
+## Post-Review Fixes (2026-06-11)
+
+- [x] Fix: undefined `name` variable in mailto subject (`main.js:276`) → `nameVal`
+- [x] Fix: `aria-expanded` on nav toggle never updated in JS (always "false")
+- [x] Fix: copy inconsistency — hero said "5+ Years" but why-us said "15+ years" → standardized to "15+"
+- [x] Fix: Tailwind Play CDN removed (unused — all styling is custom CSS)
+- [x] Fix: lucide CDN pinned from `@latest` → `@0.468.0`
+- [x] Fix: added missing `aria-current="page"` to nav links on `index.html` and `services.html`
+- [x] Fix: design spec updated to match actual dark-mode implementation
+- [x] Fix: created `tasks/lessons.md` (required by AGENTS.md workflow)
