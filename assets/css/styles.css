@@ -618,6 +618,21 @@ h3 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); font-weight: 600; color: #FFFFFF
 .service-card h3 { margin: 0; font-size: 1.1rem; color: #fff; }
 .service-card p { margin: 0; font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; }
 
+/* ---------- Services Feature Image ---------- */
+.services-feature-img {
+  margin-bottom: 32px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.services-feature-img img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  aspect-ratio: 21/9;
+}
+
 /* ---------- Gallery / Fleet ---------- */
 .gallery-grid {
   display: grid;

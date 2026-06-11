@@ -1,41 +1,53 @@
-# Implementation Plan — Shivaay Logistics Website
+# Shivaay Logistics — Next.js Conversion Plan
 
-## Status: Complete
+## Goal
+Convert vanilla HTML/CSS/JS logistics website into Next.js 16 with real interactive Leaflet map. Preserve all original content and dark theme.
 
-- [x] Write design spec
-- [x] Create folder structure and logo SVG
-- [x] Build assets/css/styles.css
-- [x] Build assets/js/main.js (menu, scroll reveal, carousel, form, lightbox)
-- [x] Build assets/js/map.js (animated route map)
-- [x] Build index.html (Home page)
-- [x] Build services.html (Services + Gallery)
-- [x] Build contact.html (Contact + Form + Map)
-- [x] Verify: open in browser and test responsive + interactions
+## Status
+**All phases complete.** Builds and serves all routes.
 
-## Review Notes
+---
 
-### Verified (agent-browser)
-- Home: 17 Lucide icons, route map with 5 dots + 6 lines + 5 labels, 3 testimonial dots, 12 scroll-reveal elements
-- Services: 12 service cards, 6 gallery images, lightbox open/close, 3 testimonials
-- Contact: 6 form fields, 5 contact info items, Google Maps embed
-- Form validation: both name and phone errors display correctly
-- Form success flow: fields hide, success message shows, mailto triggers
-- Lightbox: opens on gallery click, closes on X button
-- Carousel: dot click scrolls to correct card, active state updates
-- WhatsApp floating button present on all pages
-- 0 JS errors
+## Review Results
 
-### Known notes
-- Unsplash images use placeholder URLs that may be rate-limited in production (replace with real images or upload to assets)
-- Google Maps embed uses approximate coordinates (fine-tune with exact lat/lng)
+All 28 issues from code review addressed across 7 phases:
 
-## Post-Review Fixes (2026-06-11)
+### Phase 1 — Content Accuracy (C2, C3, C4, M2) ✅
+- Split `homepageServices` (4 cards) from full `services` (12) in data.ts
+- Updated ServiceTags to use correct array
+- Fixed CTASection to accept props
+- Removed duplicate CTA from contact page
 
-- [x] Fix: undefined `name` variable in mailto subject (`main.js:276`) → `nameVal`
-- [x] Fix: `aria-expanded` on nav toggle never updated in JS (always "false")
-- [x] Fix: copy inconsistency — hero said "5+ Years" but why-us said "15+ years" → standardized to "15+"
-- [x] Fix: Tailwind Play CDN removed (unused — all styling is custom CSS)
-- [x] Fix: lucide CDN pinned from `@latest` → `@0.468.0`
-- [x] Fix: added missing `aria-current="page"` to nav links on `index.html` and `services.html`
-- [x] Fix: design spec updated to match actual dark-mode implementation
-- [x] Fix: created `tasks/lessons.md` (required by AGENTS.md workflow)
+### Phase 2 — Critical Bugs (C1, H7) ✅
+- Fixed ScrollReveal re-observation on client nav (usePathname)
+- Deleted dead `app/actions/contact.ts`
+
+### Phase 3 — Accessibility (H1, H2, L3, L4) ✅
+- H1: Added skip link to root layout
+- H2: Lightbox has Escape key, focus trap, role="dialog", aria-modal, focus restoration
+- L3: TestimonialsSection has role="region", aria-label, tabIndex
+- L4: prefers-reduced-motion disables reveals, lightbox, marker pulse
+
+### Phase 4 — Performance (H3, H4, H5, M6, M8) ✅
+- H3: Split ServiceGrid (server) + GalleryLightbox (client) — reduces JS bundle
+- H4/H5: Named imports for lucide-react icons, remotePatterns in next.config
+- M6: Changed barrel `import * as Icons` to named imports
+- M8: `scrollWheelZoom={false}` on map
+
+### Phase 5 — SEO (M3, M4, L8) ✅
+- M3: JSON-LD LocalBusiness structured data on home page
+- M4: twitter:card added to layout metadata
+- L8: Added openGraph + twitter to services and contact pages
+
+### Phase 6 — Polish (M1, M5, H6, M9, L2, L6, L7) ✅
+- M1: Added `.divider-up` CSS class (mirrors `.divider-down`)
+- M5: Added not-found.tsx dark 404 page
+- H6: Fixed duplicate/conflicting IDs (btn-primary, btn-white)
+- M9: Added honeypot hidden field to contact form
+- L2: Memoized divIcon in CityMarkers with useMemo
+- L6: Changed lg:grid-cols-4 → lg:grid-cols-3 (matches original)
+- L7: Added `border-l-[3px] border-l-teal` to service cards
+
+### Phase 7 — Build Verification ✅
+- Build: 0 errors, 4 routes static, 4.4s compile
+- curl: 200 / 200 /services 200 /contact 404 /nonexistent

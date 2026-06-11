@@ -1,19 +1,18 @@
-## Lessons Learned
+# Lessons Learned
 
-### 2026-06-11 — Shivaay Logistics Review
+## Code Review Pattern
+- When a review says "named imports" for lucide-react, check that the import actually includes `useMemo` when adding `useMemo` calls
+- Barrel imports (`import * as Icons`) create a single-entry pattern that's correctly identified by code review — worth fixing for bundle size
 
-1. **Always verify variable names in JS** — `name` vs `nameVal` bug in mailto subject line (`main.js:276`). Test form submission paths even if they seem trivial.
+## Build Pattern
+- Always run the build after any subagent completes work — subagents can miss TypeScript errors
+- Use `npm run build` not `next build` directly (easier to be correct about the path)
 
-2. **Keep design spec in sync with implementation** — spec called for light-mode navy/orange palette but implementation used dark-mode midnight/amber/teal. Spec drift causes confusion for future edits.
+## Component Splitting
+- Server/Client split: keep data-fetching/rendering in server, interactivity in client
+- GalleryLightbox pattern: export separate client component, keep service grid server-only
 
-3. **Pin CDN dependency versions** — `@latest` can break on semver-major releases. Always pin to a specific version (e.g., `lucide@0.468.0`).
-
-4. **Don't ship unused dependencies** — Tailwind Play CDN was loaded on every page but no Tailwind utility classes were used. All styling was custom CSS. Removed it.
-
-5. **Accessibility state must update in JS** — `aria-expanded` on nav toggle was hardcoded to `false` and never updated when menu opened/closed. Keep ARIA attributes in sync with visual state.
-
-6. **Be consistent with `aria-current`** — `contact.html` had `aria-current="page"` on nav link but `index.html` and `services.html` didn't. Apply uniformly.
-
-7. **Content consistency matters** — hero claimed "5+ Years Experience" while why-us section said "15+ years". Standardized on 15+ (the more specific number).
-
-8. **Design spec should match rendered output** — If the implementation intentionally diverges from the spec, update the spec immediately to avoid confusion.
+## Accessibility Checklist
+- Lightbox: Escape key, focus trap, role="dialog", aria-modal, focus restoration (5 items)
+- Skip link must be first focusable element, visible on focus
+- prefers-reduced-motion needs explicit rules for reveal animations
