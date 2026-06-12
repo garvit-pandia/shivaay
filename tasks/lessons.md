@@ -26,3 +26,12 @@
 ## Verification Discipline
 - "Deleted" in todo.md doesn't mean actually deleted — always verify with `ls` or `git status`
 - Run `npm run lint` in addition to `npm run build` — build can pass while lint fails
+
+## Visual Redesign Patterns
+- Logo SVGs need explicit verification after dark→light redesigns. A logo designed for a dark background typically uses white fills + light strokes that become invisible on white. Always grep the SVG for `fill="#FFFFFF"` and `stroke="..."` color values during color-scheme swaps.
+- `brightness-110` and similar image filters were applied to compensate for dark-background logos. They become harmful on light backgrounds. Remove them in the same commit as the SVG fix.
+- 3-subagent parallel verification (build / spec-compliance / visual-screenshot) catches blind spots in one pass. The logo issue was flagged independently by both the spec reviewer and the visual reviewer.
+
+## Workflow
+- Brainstorming skill produces good results even with one "do whatever is best" mandate — pick the simplest defensible option, write the spec, commit, proceed.
+- Subagent-driven implementation works well for mechanical class-name swaps across many files. Dispatch one subagent with the full plan + spec + foundation CSS context, let it commit per-task, then run parallel verification.
