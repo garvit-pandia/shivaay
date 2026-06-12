@@ -12,13 +12,13 @@ const iconMap: Record<string, LucideIcon> = {
 
 export function WhyPartnerSection() {
   return (
-    <section className="py-20 bg-midnight-light/30" aria-labelledby="why-us-heading">
+    <section className="py-20 bg-white border-t border-[#ECEDF0]" aria-labelledby="why-us-heading">
       <div className="mx-auto max-w-[1280px] px-6">
         <div className="text-center mb-12">
-          <h2 id="why-us-heading" className="font-display text-3xl sm:text-4xl font-bold text-white">
+          <h2 id="why-us-heading" className="font-display text-3xl sm:text-4xl font-bold text-[#0B0F19]">
             Why Partner With Us?
           </h2>
-          <p className="text-text-dim mt-3 text-lg">Experience the Shivaay difference</p>
+          <p className="text-[#4B5468] mt-3 text-lg">Experience the Shivaay difference</p>
         </div>
         <div className="max-w-2xl mx-auto">
           <ul className="list-none m-0 p-0 space-y-4">
@@ -30,8 +30,8 @@ export function WhyPartnerSection() {
                     <Icon size={16} strokeWidth={2.5} aria-hidden="true" />
                   </div>
                   <div>
-                    <h3 className="font-display text-[1.05rem] font-semibold text-white mb-1">{item.title}</h3>
-                    <p className="text-text-dim text-sm mt-0">{item.description}</p>
+                    <h3 className="font-display text-[1.05rem] font-semibold text-[#0B0F19] mb-1">{item.title}</h3>
+                    <p className="text-[#4B5468] text-sm mt-0">{item.description}</p>
                   </div>
                 </li>
               );
