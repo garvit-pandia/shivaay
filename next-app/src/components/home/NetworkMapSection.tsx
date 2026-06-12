@@ -7,8 +7,8 @@ const NetworkMapClient = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="w-full h-full rounded-xl bg-midnight-light/50 flex items-center justify-center">
-        <div className="text-text-dim animate-pulse">Loading map...</div>
+      <div className="w-full h-full rounded-xl bg-[#F4F5F7] flex items-center justify-center">
+        <div className="text-[#4B5468] animate-pulse">Loading map...</div>
       </div>
     ),
   }
@@ -16,13 +16,13 @@ const NetworkMapClient = dynamic(
 
 export function NetworkMapSection() {
   return (
-    <section className="relative bg-midnight overflow-hidden divider-down" aria-labelledby="network-heading">
+    <section className="relative bg-white border-t border-[#ECEDF0] overflow-hidden divider-down" aria-labelledby="network-heading">
       <div className="mx-auto max-w-[1280px] px-6 py-16">
         <div className="text-center mb-10">
-          <h2 id="network-heading" className="font-display text-3xl sm:text-4xl font-bold text-white">
+          <h2 id="network-heading" className="font-display text-3xl sm:text-4xl font-bold text-[#0B0F19]">
             Our Coverage Network
           </h2>
-          <p className="text-text-dim mt-3 text-lg max-w-xl mx-auto">
+          <p className="text-[#4B5468] mt-3 text-lg max-w-xl mx-auto">
             Hub-and-spoke logistics network connecting key Indian cities and ports
           </p>
         </div>

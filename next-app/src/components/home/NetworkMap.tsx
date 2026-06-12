@@ -30,7 +30,7 @@ const RouteLines = () => {
               [to.lat, to.lng],
             ]}
             pathOptions={{
-              color: "#F59E0B",
+              color: "#1E3A8A",
               weight: 2.5,
               opacity: 0.6,
               dashArray: "10 8",
@@ -95,8 +95,8 @@ const FreightDots = () => {
       const to = cities[r.to];
       const marker = L.circleMarker([from.lat, from.lng], {
         radius: 4,
-        fillColor: "#F59E0B",
-        color: "#F59E0B",
+        fillColor: "#1E3A8A",
+        color: "#1E3A8A",
         weight: 1.5,
         opacity: 0.9,
         fillOpacity: 0.9,
@@ -202,7 +202,7 @@ export function NetworkMap() {
       scrollWheelZoom={false}
     >
       <TileLayer
-        url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+        url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
         maxZoom={19}
         minZoom={3}
       />
