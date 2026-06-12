@@ -26,7 +26,7 @@ export function Navbar() {
       <div className="mx-auto flex h-full max-w-[1280px] items-center justify-between px-6">
         <Link href="/" className="flex items-center gap-3 no-underline" aria-label="Shivaay Logistics Home">
           <Image src="/logo.svg" alt="Shivaay Logistics" width={44} height={44} className="brightness-110" priority />
-          <span className="hidden min-[480px]:block font-display font-bold text-white text-lg">
+          <span className="hidden min-[480px]:block font-display font-bold text-[#0B0F19] text-lg">
             Shivaay
           </span>
         </Link>
@@ -39,8 +39,8 @@ export function Navbar() {
                 href={l.href}
                 className={`text-sm font-medium transition-colors no-underline ${
                   pathname === l.href
-                    ? "text-amber relative after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-[2px] after:rounded after:bg-amber"
-                    : "text-text-dim hover:text-white"
+                    ? "text-[#1E3A8A] relative after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-[2px] after:rounded after:bg-[#1E3A8A]"
+                    : "text-[#4B5468] hover:text-[#1E3A8A]"
                 }`}
                 {...(pathname === l.href ? { "aria-current": "page" as const } : {})}
               >
@@ -59,7 +59,7 @@ export function Navbar() {
         </Link>
 
         <button
-          className="md:hidden p-2 text-white bg-transparent border-0 cursor-pointer"
+          className="md:hidden p-2 text-[#0B0F19] bg-transparent border-0 cursor-pointer"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label={menuOpen ? "Close navigation menu" : "Toggle navigation menu"}
           aria-expanded={menuOpen}
@@ -70,7 +70,7 @@ export function Navbar() {
 
       {/* Mobile Sheet */}
       {menuOpen && (
-        <div className="fixed inset-0 top-[72px] z-40 bg-midnight/95 backdrop-blur-md md:hidden">
+        <div className="fixed inset-0 top-[72px] z-40 bg-white/95 backdrop-blur-md md:hidden">
           <ul className="flex flex-col items-center gap-6 pt-12 list-none m-0 p-0">
             {links.map((l) => (
               <li key={l.href}>
@@ -78,7 +78,7 @@ export function Navbar() {
                   href={l.href}
                   onClick={() => setMenuOpen(false)}
                   className={`text-lg font-semibold no-underline ${
-                    pathname === l.href ? "text-amber" : "text-text-dim"
+                    pathname === l.href ? "text-[#1E3A8A]" : "text-[#4B5468]"
                   }`}
                   {...(pathname === l.href ? { "aria-current": "page" as const } : {})}
                 >
