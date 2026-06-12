@@ -33,13 +33,13 @@ const iconMap: Record<string, LucideIcon> = {
 
 export function ServiceGrid() {
   return (
-    <section className="py-20" aria-labelledby="services-heading">
+    <section className="py-20 bg-white" aria-labelledby="services-heading">
       <div className="mx-auto max-w-[1280px] px-6">
         <div className="text-center mb-12">
-          <h2 id="services-heading" className="font-display text-3xl sm:text-4xl font-bold text-white">
+          <h2 id="services-heading" className="font-display text-3xl sm:text-4xl font-bold text-[#0B0F19]">
             Complete Logistics Solutions
           </h2>
-          <p className="text-text-dim mt-3 text-lg">12 specialized services to move your business forward</p>
+          <p className="text-[#4B5468] mt-3 text-lg">12 specialized services to move your business forward</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {services.map((s, i) => {
@@ -47,13 +47,13 @@ export function ServiceGrid() {
             return (
               <div
                 key={i}
-                className="reveal bg-card border border-border rounded-2xl p-6 card-hover border-l-[3px] border-l-teal"
+                className="reveal bg-white border border-[#ECEDF0] rounded-2xl p-6 card-hover border-l-[3px] border-l-[#1E3A8A]"
               >
                 <div className="service-icon">
                   <Icon size={22} strokeWidth={1.5} aria-hidden="true" />
                 </div>
-                <h3 className="font-display text-lg font-semibold text-white mb-2">{s.title}</h3>
-                <p className="text-text-dim text-sm leading-relaxed">{s.description}</p>
+                <h3 className="font-display text-lg font-semibold text-[#0B0F19] mb-2">{s.title}</h3>
+                <p className="text-[#4B5468] text-sm leading-relaxed">{s.description}</p>
               </div>
             );
           })}
