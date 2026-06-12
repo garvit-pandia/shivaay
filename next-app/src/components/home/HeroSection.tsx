@@ -3,18 +3,18 @@ import { ArrowRight } from "lucide-react";
 
 export function HeroSection() {
   return (
-    <section className="relative bg-midnight text-white min-h-[calc(100vh-72px)] flex items-center overflow-hidden divider-down" aria-labelledby="hero-heading">
+    <section className="relative bg-white text-[#0B0F19] min-h-[calc(100vh-72px)] flex items-center overflow-hidden divider-down" aria-labelledby="hero-heading">
       <div className="absolute inset-0 hero-glow z-0" />
       <div className="relative z-10 mx-auto max-w-[1280px] px-6 py-20 w-full grid lg:grid-cols-2 gap-12 items-center">
         <div className="max-w-[540px]">
-          <span className="inline-block bg-teal/10 text-teal px-4 py-1.5 rounded-full text-sm font-semibold tracking-wider mb-6">
+          <span className="inline-block bg-[rgba(30,58,138,0.10)] text-[#1E3A8A] px-4 py-1.5 rounded-full text-sm font-semibold tracking-wider mb-6">
             15+ Years Experience
           </span>
-          <h1 id="hero-heading" className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.1] tracking-tight text-white mb-6">
+          <h1 id="hero-heading" className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.1] tracking-tight text-[#0B0F19] mb-6">
             We Deliver Solutions,<br />
-            You <span className="text-amber">Grow Your Business.</span>
+            You <span className="text-[#1E3A8A]">Grow Your Business.</span>
           </h1>
-          <p className="text-text-dim text-lg leading-relaxed mb-8 max-w-[480px]">
+          <p className="text-[#4B5468] text-lg leading-relaxed mb-8 max-w-[480px]">
             Your trusted partner for customs clearance, freight forwarding, and end-to-end logistics solutions across India.
           </p>
           <div className="flex gap-4 flex-wrap">
@@ -35,14 +35,14 @@ export function HeroSection() {
           <div className="relative w-[320px] h-[320px]">
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center">
-                <div className="font-display text-5xl font-extrabold text-amber leading-none">15+</div>
-                <div className="text-text-dim text-sm mt-2">Years Experience</div>
+                <div className="font-display text-5xl font-extrabold text-[#1E3A8A] leading-none">15+</div>
+                <div className="text-[#4B5468] text-sm mt-2">Years Experience</div>
               </div>
             </div>
-            <div className="absolute bottom-3 right-0 bg-card border border-border rounded-xl px-5 py-4 max-w-[180px] card-hover">
+            <div className="absolute bottom-3 right-0 bg-white border border-[#ECEDF0] rounded-xl px-5 py-4 max-w-[180px] card-hover shadow-[0_1px_3px_rgba(11,15,25,0.04)]">
               <div className="text-center">
-                <div className="font-display text-3xl font-extrabold text-amber leading-none">800+</div>
-                <div className="text-text-dim text-xs mt-1">Happy Clients</div>
+                <div className="font-display text-3xl font-extrabold text-[#1E3A8A] leading-none">800+</div>
+                <div className="text-[#4B5468] text-xs mt-1">Happy Clients</div>
               </div>
             </div>
           </div>
