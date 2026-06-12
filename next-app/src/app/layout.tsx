@@ -54,7 +54,7 @@ export default function RootLayout({
       <head>
         <meta name="theme-color" content="#FFFFFF" />
       </head>
-      <body className="min-h-screen bg-midnight text-text antialiased overflow-x-hidden">
+      <body className="min-h-screen antialiased overflow-x-hidden">
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
