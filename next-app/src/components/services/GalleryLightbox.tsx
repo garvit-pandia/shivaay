@@ -84,13 +84,13 @@ export function GalleryLightbox() {
 
   return (
     <>
-      <section className="py-20 bg-midnight-light/30" aria-labelledby="gallery-heading">
+      <section className="py-20 bg-white border-t border-[#ECEDF0]" aria-labelledby="gallery-heading">
         <div className="mx-auto max-w-[1280px] px-6">
           <div className="text-center mb-12">
-            <h2 id="gallery-heading" className="font-display text-3xl sm:text-4xl font-bold text-white">
+            <h2 id="gallery-heading" className="font-display text-3xl sm:text-4xl font-bold text-[#0B0F19]">
               Our Network
             </h2>
-            <p className="text-text-dim mt-3 text-lg">A glimpse into our operations across India</p>
+            <p className="text-[#4B5468] mt-3 text-lg">A glimpse into our operations across India</p>
           </div>
           <div className="gallery-grid">
             {galleryImages.map((img, i) => (
@@ -129,7 +129,7 @@ export function GalleryLightbox() {
         >
           <Image src={galleryImages[openIdx].src} alt={galleryImages[openIdx].alt} width={1200} height={800} className="max-w-[90vw] max-h-[90vh] object-contain" onClick={(e) => e.stopPropagation()} priority />
           <button
-            className="absolute top-6 right-6 text-white text-3xl bg-transparent border-0 cursor-pointer"
+            className="absolute top-6 right-6 w-10 h-10 rounded-full bg-white text-[#1E3A8A] text-2xl flex items-center justify-center border-0 cursor-pointer shadow-[0_2px_8px_rgba(11,15,25,0.2)]"
             onClick={close}
             aria-label="Close lightbox"
           >
