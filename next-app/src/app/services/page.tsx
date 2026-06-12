@@ -24,12 +24,12 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <>
-      <section className="bg-midnight-light/20 py-16 text-center border-b border-border">
-        <h1 className="font-display text-3xl sm:text-4xl font-bold text-white">
+      <section className="bg-white border-b border-[#ECEDF0] py-16 text-center">
+        <h1 className="font-display text-3xl sm:text-4xl font-bold text-[#0B0F19]">
           Our Forwarding Services
         </h1>
-        <p className="text-text-dim text-sm mt-2">
-          <Link href="/" className="text-text-dim hover:text-amber no-underline">Home</Link> / <span>Services</span>
+        <p className="text-[#4B5468] text-sm mt-2">
+          <Link href="/" className="text-[#4B5468] hover:text-[#1E3A8A] no-underline">Home</Link> / <span>Services</span>
         </p>
       </section>
       <ServiceGrid />
