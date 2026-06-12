@@ -23,21 +23,21 @@ const cards = [
 
 export function MissionSection() {
   return (
-    <section className="py-20 divider-up divider-down" aria-labelledby="promise-heading">
+    <section className="py-20 bg-[#FAF6EE] divider-up divider-down" aria-labelledby="promise-heading">
       <div className="mx-auto max-w-[1280px] px-6">
         <div className="text-center mb-12">
-          <h2 id="promise-heading" className="font-display text-3xl sm:text-4xl font-bold text-white">
+          <h2 id="promise-heading" className="font-display text-3xl sm:text-4xl font-bold text-[#0B0F19]">
             Our Promise
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {cards.map((c, i) => (
-            <div key={i} className="reveal bg-card border border-border rounded-2xl p-8 card-hover">
+            <div key={i} className="reveal bg-white border border-[rgba(11,15,25,0.06)] rounded-2xl p-8 card-hover">
               <div className="mission-icon">
                 <c.icon size={26} strokeWidth={1.5} aria-hidden="true" />
               </div>
-              <h3 className="font-display text-xl font-semibold text-white mb-3">{c.title}</h3>
-              <p className="text-text-dim text-sm leading-relaxed">{c.description}</p>
+              <h3 className="font-display text-xl font-semibold text-[#0B0F19] mb-3">{c.title}</h3>
+              <p className="text-[#4B5468] text-sm leading-relaxed">{c.description}</p>
             </div>
           ))}
         </div>
