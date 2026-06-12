@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import Image from "next/image";
 import { galleryImages } from "@/lib/data";
 
 export function GalleryLightbox() {
@@ -109,7 +110,7 @@ export function GalleryLightbox() {
                   }
                 }}
               >
-                <img src={img.src} alt={img.alt} loading="lazy" />
+                <Image src={img.src} alt={img.alt} width={400} height={300} className="w-full h-full object-cover" />
               </div>
             ))}
           </div>
@@ -126,7 +127,7 @@ export function GalleryLightbox() {
           aria-label="Image gallery lightbox"
           tabIndex={-1}
         >
-          <img src={galleryImages[openIdx].src} alt={galleryImages[openIdx].alt} onClick={(e) => e.stopPropagation()} />
+          <Image src={galleryImages[openIdx].src} alt={galleryImages[openIdx].alt} width={1200} height={800} className="max-w-[90vw] max-h-[90vh] object-contain" onClick={(e) => e.stopPropagation()} priority />
           <button
             className="absolute top-6 right-6 text-white text-3xl bg-transparent border-0 cursor-pointer"
             onClick={close}

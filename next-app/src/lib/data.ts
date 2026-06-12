@@ -144,9 +144,6 @@ export const galleryImages = [
   { src: "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=600&h=450&fit=crop", alt: "Cargo ship docked at a busy port terminal" },
   { src: "https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=600&h=450&fit=crop", alt: "Port cranes loading containers at a shipping yard" },
   { src: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&h=450&fit=crop", alt: "Convoy of logistics trucks on a highway" },
-  { src: "https://images.unsplash.com/photo-1436491865332-7a61a109bb05?w=600&h=450&fit=crop", alt: "Cargo plane on the tarmac being loaded with freight" },
-  { src: "https://images.unsplash.com/photo-1553413077-190dd305871c?w=600&h=450&fit=crop", alt: "Spacious warehouse interior with organized shelving" },
-  { src: "https://images.unsplash.com/photo-1493946740644-2d8a1f1a6aff?w=600&h=450&fit=crop", alt: "Container yard with stacked shipping containers" },
 ];
 
 export const contactInfo = {

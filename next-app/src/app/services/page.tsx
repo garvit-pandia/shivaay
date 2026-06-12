@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ServiceGrid } from "@/components/services/ServiceGrid";
 import { GalleryLightbox } from "@/components/services/GalleryLightbox";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
@@ -28,7 +29,7 @@ export default function ServicesPage() {
           Our Forwarding Services
         </h1>
         <p className="text-text-dim text-sm mt-2">
-          <a href="/" className="text-text-dim hover:text-amber no-underline">Home</a> / <span>Services</span>
+          <Link href="/" className="text-text-dim hover:text-amber no-underline">Home</Link> / <span>Services</span>
         </p>
       </section>
       <ServiceGrid />

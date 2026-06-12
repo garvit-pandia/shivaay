@@ -17,10 +17,6 @@ export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    setMenuOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
@@ -80,6 +76,7 @@ export function Navbar() {
               <li key={l.href}>
                 <Link
                   href={l.href}
+                  onClick={() => setMenuOpen(false)}
                   className={`text-lg font-semibold no-underline ${
                     pathname === l.href ? "text-amber" : "text-text-dim"
                   }`}
@@ -90,7 +87,7 @@ export function Navbar() {
               </li>
             ))}
             <li>
-              <Link href="tel:+918847467790" className="inline-flex items-center gap-2 btn-primary px-6 py-3 text-base mt-4 no-underline">
+              <Link href="tel:+918847467790" onClick={() => setMenuOpen(false)} className="inline-flex items-center gap-2 btn-primary px-6 py-3 text-base mt-4 no-underline">
                 <Phone size={18} aria-hidden="true" />
                 Call Now
               </Link>

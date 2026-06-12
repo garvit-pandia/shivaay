@@ -1,7 +1,7 @@
 "use client";
 
 import "leaflet/dist/leaflet.css";
-import { useEffect, useRef, useCallback, useState, useMemo } from "react";
+import { useEffect, useRef, useMemo } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -9,7 +9,6 @@ import {
   Polyline,
   Tooltip,
   Popup,
-  CircleMarker,
   useMap,
 } from "react-leaflet";
 import L from "leaflet";
@@ -43,45 +42,22 @@ const RouteLines = () => {
   );
 };
 
+type Dot = {
+  marker: L.CircleMarker;
+  from: (typeof cities)[string];
+  to: (typeof cities)[string];
+  progress: number;
+  direction: number;
+  pause: number;
+};
+
 const FreightDots = () => {
   const map = useMap();
   const animRef = useRef<number>(0);
   const lastTime = useRef(0);
-  const dotsRef = useRef<{ marker: L.CircleMarker; from: (typeof cities)[string]; to: (typeof cities)[string]; progress: number; direction: number; pause: number }[]>([]);
-  const [ready, setReady] = useState(false);
+  const dotsRef = useRef<Dot[]>([]);
 
-  useEffect(() => {
-    routes.forEach((r) => {
-      const from = cities[r.from];
-      const to = cities[r.to];
-      const marker = L.circleMarker([from.lat, from.lng], {
-        radius: 4,
-        fillColor: "#F59E0B",
-        color: "#F59E0B",
-        weight: 1.5,
-        opacity: 0.9,
-        fillOpacity: 0.9,
-      }).addTo(map);
-
-      dotsRef.current.push({
-        marker,
-        from,
-        to,
-        progress: Math.random(),
-        direction: 1,
-        pause: 0,
-      });
-    });
-
-    setReady(true);
-
-    return () => {
-      dotsRef.current.forEach((d) => map.removeLayer(d.marker));
-      dotsRef.current = [];
-    };
-  }, [map]);
-
-  const animate = useCallback((timestamp: number) => {
+  const animateFn = useRef((timestamp: number) => {
     if (!lastTime.current) lastTime.current = timestamp;
     const delta = Math.min((timestamp - lastTime.current) / 1000, 0.05);
     lastTime.current = timestamp;
@@ -110,16 +86,40 @@ const FreightDots = () => {
       d.marker.setLatLng([lat, lng]);
     });
 
-    animRef.current = requestAnimationFrame(animate);
-  }, []);
+    animRef.current = requestAnimationFrame(animateFn.current);
+  });
 
   useEffect(() => {
-    if (!ready) return;
-    animRef.current = requestAnimationFrame(animate);
+    routes.forEach((r) => {
+      const from = cities[r.from];
+      const to = cities[r.to];
+      const marker = L.circleMarker([from.lat, from.lng], {
+        radius: 4,
+        fillColor: "#F59E0B",
+        color: "#F59E0B",
+        weight: 1.5,
+        opacity: 0.9,
+        fillOpacity: 0.9,
+      }).addTo(map);
+
+      dotsRef.current.push({
+        marker,
+        from,
+        to,
+        progress: Math.random(),
+        direction: 1,
+        pause: 0,
+      });
+    });
+
+    animRef.current = requestAnimationFrame(animateFn.current);
+
     return () => {
-      if (animRef.current) cancelAnimationFrame(animRef.current);
+      cancelAnimationFrame(animRef.current);
+      dotsRef.current.forEach((d) => map.removeLayer(d.marker));
+      dotsRef.current = [];
     };
-  }, [ready, animate]);
+  }, [map]);
 
   return null;
 };

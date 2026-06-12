@@ -41,14 +41,6 @@ export function ServiceGrid() {
           </h2>
           <p className="text-text-dim mt-3 text-lg">12 specialized services to move your business forward</p>
         </div>
-        <div className="mb-12 rounded-xl overflow-hidden border border-border">
-          <img
-            src="https://images.unsplash.com/photo-1436491865332-7a61a109bb05?w=1200&h=500&fit=crop"
-            alt="Cargo plane on the tarmac being loaded with freight"
-            className="w-full h-auto object-cover"
-            loading="lazy"
-          />
-        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {services.map((s, i) => {
             const Icon = iconMap[s.icon] || Box;
