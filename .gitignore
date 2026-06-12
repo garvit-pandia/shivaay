@@ -40,6 +40,9 @@ screenshot-*.png
 # Playwright MCP
 .playwright-mcp/
 
+# Brainstorming visual companion sessions
+.superpowers/
+
 # IDE / OS
 .vscode/
 .idea/
