@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
   },
   other: {
-    "theme-color": "#070B14",
+    "theme-color": "#FFFFFF",
   },
 };
 
@@ -52,7 +52,7 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
     >
       <head>
-        <meta name="theme-color" content="#070B14" />
+        <meta name="theme-color" content="#FFFFFF" />
       </head>
       <body className="min-h-screen bg-midnight text-text antialiased overflow-x-hidden">
         <a href="#main-content" className="skip-link">
