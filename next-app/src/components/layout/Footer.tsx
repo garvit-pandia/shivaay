@@ -11,7 +11,7 @@ export function Footer() {
             alt="Shivaay Logistics"
             width={120}
             height={36}
-            className="brightness-110 mb-4"
+            className="mb-4"
           />
           <p className="text-[#4B5468] text-sm leading-relaxed">
             Shivaay Logistics is a trusted customs broker and logistics facilitator based in Ludhiana, Punjab. We serve businesses across India with reliable, cost-effective freight solutions.

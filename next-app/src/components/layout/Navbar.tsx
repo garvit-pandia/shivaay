@@ -25,7 +25,7 @@ export function Navbar() {
     <nav className="sticky top-0 z-50 nav-blur border-b border-border h-[72px]" aria-label="Primary navigation">
       <div className="mx-auto flex h-full max-w-[1280px] items-center justify-between px-6">
         <Link href="/" className="flex items-center gap-3 no-underline" aria-label="Shivaay Logistics Home">
-          <Image src="/logo.svg" alt="Shivaay Logistics" width={44} height={44} className="brightness-110" priority />
+          <Image src="/logo.svg" alt="Shivaay Logistics" width={44} height={44} priority />
           <span className="hidden min-[480px]:block font-display font-bold text-[#0B0F19] text-lg">
             Shivaay
           </span>
