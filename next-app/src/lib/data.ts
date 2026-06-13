@@ -148,7 +148,7 @@ export const galleryImages = [
 
 export const contactInfo = {
   address: "Plot No. 116, Street No. 8, Ganesh Nagar, 33 Feet Road, Near Ashiana Enclave, Mundian Kalan, Ludhiana-141015 (Pb.)",
-  phones: ["+91 88474-67790", "+91 93165-33756"],
+  phones: ["+91 88474-67790"],
   email: "shivaaylogistics2022@gmail.com",
   hours: "Monday - Saturday: 9:00 AM - 7:00 PM / Sunday: Closed",
 };
@@ -160,7 +160,7 @@ export const companyInfo = {
   clients: "800+ Happy Clients",
   description: "Shivaay Logistics is a trusted customs broker and logistics facilitator based in Ludhiana, Punjab. We serve businesses across India with reliable, cost-effective freight solutions.",
   phone: "+918847467790",
-  whatsapp: "+919316533756",
+  whatsapp: "+918847467790",
 };
 
 export const serviceOptions = [
