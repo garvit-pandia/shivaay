@@ -41,14 +41,11 @@ export function TestimonialsSection() {
   }, [cardWidth]);
 
   return (
-    <section className="py-20 bg-white border-t border-[#ECEDF0]" aria-labelledby="testimonials-heading">
+    <section className="py-24 bg-white border-t border-border" aria-labelledby="testimonials-heading">
       <div className="mx-auto max-w-[1280px] px-6">
-        <div className="text-center mb-12">
-          <h2 id="testimonials-heading" className="font-display text-3xl sm:text-4xl font-bold text-[#0B0F19]">
-            What Our Clients Say
-          </h2>
-          <p className="text-[#4B5468] mt-3 text-lg">Trusted by businesses across India</p>
-        </div>
+        <h2 id="testimonials-heading" className="font-serif text-3xl lg:text-4xl font-medium text-ink text-center mb-12">
+          Trusted by businesses
+        </h2>
         <div
           ref={trackRef}
           className="flex gap-4 overflow-x-auto pb-4 testimonial-scroll"
@@ -75,8 +72,8 @@ export function TestimonialsSection() {
             <button
               key={i}
               onClick={() => scrollTo(i)}
-              className={`w-2.5 h-2.5 rounded-full border-0 cursor-pointer transition-colors ${
-                active === i ? "bg-[#1E3A8A]" : "bg-[#D5D9E2]"
+              className={`h-2 rounded-full border-0 cursor-pointer transition-all duration-300 ${
+                active === i ? "w-7 bg-teal" : "w-2 bg-border"
               }`}
               aria-label={`Go to testimonial ${i + 1}`}
             />

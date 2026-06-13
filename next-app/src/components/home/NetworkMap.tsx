@@ -30,7 +30,7 @@ const RouteLines = () => {
               [to.lat, to.lng],
             ]}
             pathOptions={{
-              color: "#1E3A8A",
+              color: "#0F766E",
               weight: 2.5,
               opacity: 0.6,
               dashArray: "10 8",
@@ -95,8 +95,8 @@ const FreightDots = () => {
       const to = cities[r.to];
       const marker = L.circleMarker([from.lat, from.lng], {
         radius: 4,
-        fillColor: "#1E3A8A",
-        color: "#1E3A8A",
+        fillColor: "#0F766E",
+        color: "#0F766E",
         weight: 1.5,
         opacity: 0.9,
         fillOpacity: 0.9,

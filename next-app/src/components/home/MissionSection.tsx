@@ -23,21 +23,19 @@ const cards = [
 
 export function MissionSection() {
   return (
-    <section className="py-20 bg-[#FAF6EE] divider-up divider-down" aria-labelledby="promise-heading">
+    <section className="py-24 bg-cream" aria-labelledby="promise-heading">
       <div className="mx-auto max-w-[1280px] px-6">
-        <div className="text-center mb-12">
-          <h2 id="promise-heading" className="font-display text-3xl sm:text-4xl font-bold text-[#0B0F19]">
-            Our Promise
-          </h2>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <h2 id="promise-heading" className="font-serif text-3xl lg:text-4xl font-medium text-ink text-center mb-12">
+          Our promise
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {cards.map((c, i) => (
-            <div key={i} className="reveal bg-white border border-[rgba(11,15,25,0.06)] rounded-2xl p-8 card-hover">
-              <div className="mission-icon">
-                <c.icon size={26} strokeWidth={1.5} aria-hidden="true" />
+            <div key={i} className="reveal bg-white border border-[rgba(30,27,24,0.06)] rounded-2xl p-8 card-hover">
+              <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4" style={{ background: "rgba(15, 118, 110, 0.08)" }}>
+                <c.icon size={26} className="text-teal" aria-hidden="true" />
               </div>
-              <h3 className="font-display text-xl font-semibold text-[#0B0F19] mb-3">{c.title}</h3>
-              <p className="text-[#4B5468] text-sm leading-relaxed">{c.description}</p>
+              <h3 className="font-semibold text-ink text-lg mb-2">{c.title}</h3>
+              <p className="text-ink-dim text-sm leading-relaxed">{c.description}</p>
             </div>
           ))}
         </div>

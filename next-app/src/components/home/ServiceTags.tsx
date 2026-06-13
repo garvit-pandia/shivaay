@@ -11,28 +11,25 @@ const iconMap: Record<string, LucideIcon> = {
 
 export function ServiceTags() {
   return (
-    <section className="py-20 bg-[#F4F7FF]" aria-labelledby="services-heading">
+    <section className="py-24 bg-cream" aria-labelledby="services-heading">
       <div className="mx-auto max-w-[1280px] px-6">
-        <div className="text-center mb-12">
-          <h2 id="services-heading" className="font-display text-3xl sm:text-4xl font-bold text-[#0B0F19]">
-            End-to-End Logistics Solutions
-          </h2>
-          <p className="text-[#4B5468] mt-3 text-lg">From documentation to delivery, we handle it all</p>
-        </div>
+        <h2 id="services-heading" className="font-serif text-3xl lg:text-4xl font-medium text-ink text-center mb-12">
+          What we do
+        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {homepageServices.map((s, i) => {
             const Icon = iconMap[s.icon] || PackageCheck;
             return (
               <div
                 key={s.title}
-                className="reveal bg-white border border-[#ECEDF0] rounded-2xl p-6 card-hover shadow-[0_1px_3px_rgba(11,15,25,0.04)]"
+                className="reveal bg-white border border-border rounded-2xl p-6 card-hover"
                 style={{ transitionDelay: `${i * 100}ms` }}
               >
-                <div className="service-icon">
-                  <Icon size={22} strokeWidth={1.5} aria-hidden="true" />
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: "rgba(15, 118, 110, 0.08)" }}>
+                  <Icon size={22} className="text-teal" aria-hidden="true" />
                 </div>
-                <h3 className="font-display text-lg font-semibold text-[#0B0F19] mb-2">{s.title}</h3>
-                <p className="text-[#4B5468] text-sm leading-relaxed">{s.description}</p>
+                <h3 className="font-semibold text-ink mb-2">{s.title}</h3>
+                <p className="text-ink-dim text-sm leading-relaxed">{s.description}</p>
               </div>
             );
           })}
