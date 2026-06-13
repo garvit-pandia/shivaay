@@ -1,7 +1,7 @@
 export function HeroSection() {
   return (
     <section className="bg-white" aria-labelledby="hero-heading">
-      <div className="mx-auto max-w-[1280px] px-6 pt-24 pb-20 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div className="mx-auto max-w-[1280px] px-6 pt-12 pb-20 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         {/* Left: Photo placeholder */}
         <div className="relative aspect-[4/3] lg:aspect-[5/4] bg-cream rounded-2xl overflow-hidden order-2 lg:order-1">
           <div className="absolute inset-0 flex items-center justify-center">

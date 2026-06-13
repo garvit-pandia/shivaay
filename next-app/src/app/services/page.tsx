@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ServiceGrid } from "@/components/services/ServiceGrid";
 import { GalleryLightbox } from "@/components/services/GalleryLightbox";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
@@ -22,16 +21,6 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <>
-      <section className="bg-white pt-20 pb-12">
-        <div className="mx-auto max-w-[1280px] px-6 text-center">
-          <p className="text-sm text-ink-dim mb-3">
-            <Link href="/" className="text-ink-dim hover:text-teal transition-colors no-underline">Home</Link>
-            <span className="mx-2">/</span>
-            <span className="text-ink">Services</span>
-          </p>
-          <h1 className="font-serif text-4xl lg:text-5xl font-medium text-ink">Our forwarding services</h1>
-        </div>
-      </section>
       <ServiceGrid />
       <GalleryLightbox />
       <TestimonialsSection />

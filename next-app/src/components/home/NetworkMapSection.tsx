@@ -1,37 +1,35 @@
+"use client";
+
+import dynamic from "next/dynamic";
 import { cities } from "@/lib/data";
+
+const NetworkMapClient = dynamic(
+  () => import("./NetworkMap").then((mod) => ({ default: mod.NetworkMap })),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="w-full h-full rounded-xl bg-[#F4F5F7] flex items-center justify-center">
+        <div className="text-[#4B5468] animate-pulse">Loading map...</div>
+      </div>
+    ),
+  }
+);
 
 export function NetworkMapSection() {
   return (
-    <section
-      className="relative bg-white border-t border-[#ECEDF0] overflow-hidden divider-down"
-      aria-labelledby="network-heading"
-    >
+    <section className="relative bg-white border-t border-[#ECEDF0] overflow-hidden divider-down" aria-labelledby="network-heading">
       <div className="mx-auto max-w-[1280px] px-6 py-16">
         <div className="text-center mb-10">
-          <h2
-            id="network-heading"
-            className="font-display text-3xl sm:text-4xl font-bold text-[#0B0F19]"
-          >
+          <h2 id="network-heading" className="font-display text-3xl sm:text-4xl font-bold text-[#0B0F19]">
             Our Coverage Network
           </h2>
           <p className="text-[#4B5468] mt-3 text-lg max-w-xl mx-auto">
-            Pan-India logistics network — hub-and-spoke from Ludhiana to key ports and cities
+            Hub-and-spoke logistics network connecting key Indian cities and ports
           </p>
         </div>
-
-        <div className="w-full aspect-[16/10] max-h-[700px] relative rounded-xl overflow-hidden border border-[#E8E4DB] bg-[#FAF8F4]">
-          <iframe
-            src="https://www.openstreetmap.org/export/embed.html?bbox=68.1,6.5,97.4,37.1&layer=mapnik"
-            width="100%"
-            height="100%"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="Shivaay Logistics service network across India"
-          />
+        <div className="w-full aspect-[16/10] max-h-[700px] relative rounded-xl overflow-hidden border border-[#E8E4DB]">
+          <NetworkMapClient />
         </div>
-
         <div className="mt-8 flex flex-wrap justify-center gap-3" aria-label="Service cities">
           {Object.entries(cities).map(([name, city]) => (
             <span

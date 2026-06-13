@@ -4,7 +4,7 @@ import { MapPin, Phone, Mail, Clock, Calendar } from "lucide-react";
 export function ContactInfo() {
   return (
     <div>
-      <h2 className="font-serif text-3xl font-medium text-ink mb-8">Contact Information</h2>
+      <h1 className="font-serif text-3xl font-medium text-ink mb-8">Contact Information</h1>
       <ul className="list-none m-0 p-0 space-y-6">
         <li className="flex items-start gap-4">
           <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ background: "rgba(15, 118, 110, 0.08)" }}>

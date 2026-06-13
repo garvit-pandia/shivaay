@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ContactInfo } from "@/components/contact/ContactInfo";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { OfficeMap } from "@/components/contact/OfficeMap";
@@ -22,18 +21,7 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <section className="bg-white pt-20 pb-12">
-        <div className="mx-auto max-w-[1280px] px-6 text-center">
-          <p className="text-sm text-ink-dim mb-3">
-            <Link href="/" className="text-ink-dim hover:text-teal transition-colors no-underline">Home</Link>
-            <span className="mx-2">/</span>
-            <span className="text-ink">Contact</span>
-          </p>
-          <h1 className="font-serif text-4xl lg:text-5xl font-medium text-ink">Get in touch</h1>
-        </div>
-      </section>
-
-      <section className="pb-20 bg-white">
+      <section className="pt-10 pb-20 bg-white">
         <div className="mx-auto max-w-[1280px] px-6 grid lg:grid-cols-2 gap-12">
           <ContactInfo />
           <ContactForm />
