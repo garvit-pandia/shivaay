@@ -1,24 +1,21 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-ink: #0B0F19;
-  --color-ink-dim: #4B5468;
+  --color-ink: #1E1B18;
+  --color-ink-dim: #6B5E4A;
   --color-surface: #FFFFFF;
   --color-surface-card: #FFFFFF;
-  --color-surface-card-hover: #F4F7FF;
-  --color-tint-cool: #F4F7FF;
-  --color-tint-warm: #FAF6EE;
-  --color-tint-neutral: #F4F5F7;
-  --color-cobalt: #1E3A8A;
-  --color-cobalt-hover: #1E40AF;
-  --color-cobalt-tint: rgba(30, 58, 138, 0.10);
-  --color-cobalt-tint-strong: rgba(30, 58, 138, 0.15);
-  --color-border: #ECEDF0;
-  --color-border-light: #D5D9E2;
+  --color-cream: #FAF8F4;
+  --color-teal: #0F766E;
+  --color-teal-hover: #0D9488;
+  --color-teal-tint: rgba(15, 118, 110, 0.08);
+  --color-teal-tint-strong: rgba(15, 118, 110, 0.15);
+  --color-border: #E8E4DB;
+  --color-border-input: #D4CFC4;
   --color-success: #10b981;
   --color-error: #ef4444;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-playfair);
 }
 
 /* ---- Base ---- */
@@ -29,15 +26,15 @@ html {
 
 body {
   background: #FFFFFF;
-  color: #0B0F19;
+  color: #1E1B18;
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 /* ---- Utility ---- */
-.font-display {
-  font-family: var(--font-display);
+.font-serif-display {
+  font-family: var(--font-serif);
 }
 
 /* ---- Skip Link ---- */
@@ -45,7 +42,7 @@ body {
   position: absolute;
   top: -100px;
   left: 16px;
-  background: #1E3A8A;
+  background: #0F766E;
   color: #FFFFFF;
   padding: 8px 16px;
   border-radius: 999px;
@@ -63,12 +60,12 @@ body {
   background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid #ECEDF0;
+  border-bottom: 1px solid #E8E4DB;
 }
 
 /* ---- Buttons ---- */
 .btn-primary {
-  background: #1E3A8A;
+  background: #0F766E;
   color: #FFFFFF;
   font-weight: 600;
   border-radius: 999px;
@@ -79,13 +76,13 @@ body {
   gap: 8px;
 }
 .btn-primary:hover {
-  background: #1E40AF;
-  box-shadow: 0 4px 24px rgba(30, 58, 138, 0.18);
+  background: #0D9488;
+  box-shadow: 0 4px 24px rgba(15, 118, 110, 0.18);
 }
 
 .btn-outline {
-  border: 1px solid #0B0F19;
-  color: #0B0F19;
+  border: 1px solid #1E1B18;
+  color: #1E1B18;
   font-weight: 600;
   border-radius: 999px;
   transition: border-color 0.2s, color 0.2s, background-color 0.2s;
@@ -96,13 +93,13 @@ body {
   background: transparent;
 }
 .btn-outline:hover {
-  border-color: #1E3A8A;
-  color: #1E3A8A;
+  border-color: #0F766E;
+  color: #0F766E;
 }
 
 .btn-white {
   background: #FFFFFF;
-  color: #1E3A8A;
+  color: #0F766E;
   font-weight: 700;
   border-radius: 999px;
   transition: background-color 0.2s, color 0.2s;
@@ -112,23 +109,7 @@ body {
   gap: 8px;
 }
 .btn-white:hover {
-  background: #0B0F19;
-  color: #FFFFFF;
-}
-
-.btn-on-cobalt {
-  background: #FFFFFF;
-  color: #1E3A8A;
-  font-weight: 700;
-  border-radius: 999px;
-  transition: background-color 0.2s, color 0.2s;
-  padding: 14px 28px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.btn-on-cobalt:hover {
-  background: #0B0F19;
+  background: #1E1B18;
   color: #FFFFFF;
 }
 
@@ -143,7 +124,7 @@ body {
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(to right, transparent, #ECEDF0, transparent);
+  background: linear-gradient(to right, transparent, #E8E4DB, transparent);
 }
 
 .divider-up {
@@ -156,24 +137,17 @@ body {
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(to right, transparent, #ECEDF0, transparent);
+  background: linear-gradient(to right, transparent, #E8E4DB, transparent);
 }
 
-/* ---- Hero glow (subtle on light) ---- */
-.hero-glow {
-  background:
-    radial-gradient(ellipse 800px 600px at 80% 30%, rgba(30, 58, 138, 0.04) 0%, transparent 60%),
-    radial-gradient(ellipse 600px 500px at 20% 80%, rgba(30, 58, 138, 0.03) 0%, transparent 60%);
-  pointer-events: none;
-}
-
-/* ---- Card hover (light variant) ---- */
+/* ---- Card hover ---- */
 .card-hover {
-  transition: border-color 0.25s, background-color 0.25s, transform 0.25s;
+  transition: border-color 0.25s, transform 0.25s;
 }
 .card-hover:hover {
-  border-color: rgba(30, 58, 138, 0.25);
-  background: #F4F7FF;
+  border-color: rgba(15, 118, 110, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(30, 27, 24, 0.06);
 }
 
 /* ---- Scroll reveal ---- */
@@ -189,38 +163,38 @@ body {
 
 /* ---- Leaflet overrides (light map) ---- */
 .leaflet-container {
-  background: #F4F5F7 !important;
+  background: #FAF8F4 !important;
   font-family: var(--font-sans) !important;
 }
 
 .leaflet-popup-content-wrapper {
   background: #FFFFFF !important;
-  color: #0B0F19 !important;
-  border: 1px solid #ECEDF0 !important;
+  color: #1E1B18 !important;
+  border: 1px solid #E8E4DB !important;
   border-radius: 12px !important;
-  box-shadow: 0 8px 32px rgba(11, 15, 25, 0.12) !important;
+  box-shadow: 0 8px 32px rgba(30, 27, 24, 0.12) !important;
 }
 .leaflet-popup-tip {
   background: #FFFFFF !important;
 }
 .leaflet-popup-close-button {
-  color: #4B5468 !important;
+  color: #6B5E4A !important;
 }
 
 .leaflet-tooltip {
   background: #FFFFFF !important;
-  color: #0B0F19 !important;
-  border: 1px solid #ECEDF0 !important;
+  color: #1E1B18 !important;
+  border: 1px solid #E8E4DB !important;
   border-radius: 8px !important;
   padding: 6px 12px !important;
   font-size: 0.85rem !important;
-  box-shadow: 0 4px 16px rgba(11, 15, 25, 0.08) !important;
+  box-shadow: 0 4px 16px rgba(30, 27, 24, 0.08) !important;
 }
 .leaflet-tooltip::before {
   border-top-color: #FFFFFF !important;
 }
 
-/* ---- Map marker animation (cobalt) ---- */
+/* ---- Map marker animation (teal) ---- */
 .map-marker-icon {
   background: transparent !important;
   border: none !important;
@@ -229,13 +203,13 @@ body {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background: #1E3A8A;
-  box-shadow: 0 0 12px rgba(30, 58, 138, 0.5), 0 0 4px rgba(30, 58, 138, 0.3);
+  background: #0F766E;
+  box-shadow: 0 0 12px rgba(15, 118, 110, 0.5), 0 0 4px rgba(15, 118, 110, 0.3);
   animation: marker-pulse 2s ease-in-out infinite;
 }
 .map-marker-hub .map-marker-inner {
-  background: #1E3A8A;
-  box-shadow: 0 0 18px rgba(30, 58, 138, 0.6), 0 0 8px rgba(30, 58, 138, 0.4);
+  background: #0F766E;
+  box-shadow: 0 0 18px rgba(15, 118, 110, 0.6), 0 0 8px rgba(15, 118, 110, 0.4);
   animation: marker-pulse-hub 2s ease-in-out infinite;
 }
 
@@ -264,19 +238,19 @@ body {
   }
 }
 
-/* ---- Map legend (light) ---- */
+/* ---- Map legend ---- */
 .map-legend {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(8px);
-  border: 1px solid #ECEDF0;
+  border: 1px solid #E8E4DB;
   border-radius: 10px;
   padding: 10px 14px;
   font-size: 0.8rem;
-  color: #4B5468;
+  color: #6B5E4A;
   display: flex;
   flex-direction: column;
   gap: 6px;
-  box-shadow: 0 2px 12px rgba(11, 15, 25, 0.06);
+  box-shadow: 0 2px 12px rgba(30, 27, 24, 0.06);
 }
 .map-legend-item {
   display: flex;
@@ -290,17 +264,17 @@ body {
   flex-shrink: 0;
 }
 .map-legend-hub {
-  background: #1E3A8A;
-  box-shadow: 0 0 8px rgba(30, 58, 138, 0.4);
+  background: #0F766E;
+  box-shadow: 0 0 8px rgba(15, 118, 110, 0.4);
 }
 .map-legend-city {
-  background: #1E3A8A;
-  box-shadow: 0 0 6px rgba(30, 58, 138, 0.3);
+  background: #0F766E;
+  box-shadow: 0 0 6px rgba(15, 118, 110, 0.3);
 }
 .map-legend-line {
   width: 18px;
   height: 2px;
-  background: repeating-linear-gradient(90deg, #1E3A8A 0 8px, transparent 8px 14px);
+  background: repeating-linear-gradient(90deg, #0F766E 0 8px, transparent 8px 14px);
   opacity: 0.6;
 }
 
@@ -310,21 +284,21 @@ body {
 }
 .map-popup h4 {
   margin: 0 0 2px;
-  font-family: var(--font-display);
+  font-family: var(--font-serif);
   font-size: 1rem;
-  font-weight: 700;
-  color: #0B0F19;
+  font-weight: 600;
+  color: #1E1B18;
 }
 .map-popup-tag {
   font-size: 0.75rem;
-  color: #1E3A8A;
+  color: #0F766E;
   font-weight: 600;
 }
 .map-popup-services {
   margin: 8px 0 0;
   padding: 0 0 0 16px;
   font-size: 0.82rem;
-  color: #4B5468;
+  color: #6B5E4A;
 }
 .map-popup-services li {
   margin-bottom: 2px;
@@ -333,7 +307,7 @@ body {
 /* ---- Tooltip tag ---- */
 .map-tooltip-tag {
   font-size: 0.72rem;
-  color: #1E3A8A;
+  color: #0F766E;
   font-weight: 600;
 }
 
@@ -342,16 +316,16 @@ body {
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background: rgba(30, 58, 138, 0.10);
+  background: rgba(15, 118, 110, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1E3A8A;
+  color: #0F766E;
   margin-bottom: 12px;
   transition: background-color 0.2s, color 0.2s;
 }
 .service-icon:hover {
-  background: #1E3A8A;
+  background: #0F766E;
   color: #FFFFFF;
 }
 
@@ -360,11 +334,11 @@ body {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: rgba(30, 58, 138, 0.10);
+  background: rgba(15, 118, 110, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1E3A8A;
+  color: #0F766E;
   flex-shrink: 0;
   margin-top: 2px;
 }
@@ -374,11 +348,11 @@ body {
   width: 56px;
   height: 56px;
   border-radius: 14px;
-  background: rgba(30, 58, 138, 0.08);
+  background: rgba(15, 118, 110, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1E3A8A;
+  color: #0F766E;
   margin-bottom: 16px;
 }
 
@@ -391,7 +365,7 @@ body {
   scroll-snap-align: start;
   flex-shrink: 0;
   background: #FFFFFF;
-  border: 1px solid #ECEDF0;
+  border: 1px solid #E8E4DB;
   border-radius: 16px;
   padding: 24px;
   min-width: 300px;
@@ -400,11 +374,11 @@ body {
   flex-direction: column;
   justify-content: space-between;
   gap: 16px;
-  box-shadow: 0 1px 3px rgba(11, 15, 25, 0.04);
+  box-shadow: 0 1px 3px rgba(30, 27, 24, 0.04);
 }
 .testimonial-quote {
   font-size: 0.9rem;
-  color: #4B5468;
+  color: #6B5E4A;
   line-height: 1.7;
   margin: 0;
 }
@@ -412,8 +386,8 @@ body {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: rgba(30, 58, 138, 0.10);
-  color: #1E3A8A;
+  background: rgba(15, 118, 110, 0.08);
+  color: #0F766E;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -424,19 +398,19 @@ body {
 .testimonial-name {
   font-weight: 600;
   font-size: 0.9rem;
-  color: #0B0F19;
+  color: #1E1B18;
 }
 .testimonial-role {
   font-size: 0.78rem;
-  color: #4B5468;
+  color: #6B5E4A;
 }
 
 /* ---- Contact form ---- */
 .form-input {
   background: #FFFFFF;
-  border: 1px solid #D5D9E2;
+  border: 1px solid #D4CFC4;
   border-radius: 8px;
-  color: #0B0F19;
+  color: #1E1B18;
   padding: 10px 14px;
   font-size: 0.95rem;
   width: 100%;
@@ -444,8 +418,8 @@ body {
 }
 .form-input:focus {
   outline: none;
-  border-color: #1E3A8A;
-  box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15);
+  border-color: #0F766E;
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
 }
 .form-input::placeholder {
   color: #8A93A6;
@@ -454,12 +428,12 @@ body {
   display: block;
   font-size: 13px;
   font-weight: 500;
-  color: #0B0F19;
+  color: #1E1B18;
   margin-bottom: 6px;
 }
 .form-helper {
   font-size: 12px;
-  color: #4B5468;
+  color: #6B5E4A;
   margin-top: 4px;
 }
 .form-error {
@@ -472,7 +446,7 @@ body {
 .lightbox {
   position: fixed;
   inset: 0;
-  background: rgba(11, 15, 25, 0.92);
+  background: rgba(30, 27, 24, 0.92);
   z-index: 100;
   display: flex;
   align-items: center;
@@ -533,12 +507,12 @@ body {
   overflow: hidden;
   cursor: pointer;
   aspect-ratio: 4/3;
-  border: 1px solid #ECEDF0;
+  border: 1px solid #E8E4DB;
   transition: border-color 0.2s, transform 0.2s;
-  background: #F4F5F7;
+  background: #FAF8F4;
 }
 .gallery-item:hover {
-  border-color: rgba(30, 58, 138, 0.4);
+  border-color: rgba(15, 118, 110, 0.4);
   transform: scale(1.02);
 }
 .gallery-item img {
