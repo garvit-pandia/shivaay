@@ -1,50 +1,47 @@
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-
 export function HeroSection() {
   return (
-    <section className="relative bg-white text-[#0B0F19] min-h-[calc(100vh-72px)] flex items-center overflow-hidden divider-down" aria-labelledby="hero-heading">
-      <div className="absolute inset-0 hero-glow z-0" />
-      <div className="relative z-10 mx-auto max-w-[1280px] px-6 py-20 w-full grid lg:grid-cols-2 gap-12 items-center">
-        <div className="max-w-[540px]">
-          <span className="inline-block bg-[rgba(30,58,138,0.10)] text-[#1E3A8A] px-4 py-1.5 rounded-full text-sm font-semibold tracking-wider mb-6">
-            15+ Years Experience
-          </span>
-          <h1 id="hero-heading" className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.1] tracking-tight text-[#0B0F19] mb-6">
-            We Deliver Solutions,<br />
-            You <span className="text-[#1E3A8A]">Grow Your Business.</span>
-          </h1>
-          <p className="text-[#4B5468] text-lg leading-relaxed mb-8 max-w-[480px]">
-            Your trusted partner for customs clearance, freight forwarding, and end-to-end logistics solutions across India.
-          </p>
-          <div className="flex gap-4 flex-wrap">
-            <Link href="/contact" className="inline-flex items-center gap-2 btn-primary px-6 py-3 text-base no-underline">
-              Get a Quote
-              <ArrowRight size={18} aria-hidden="true" />
-            </Link>
-            <Link href="tel:+918847467790" className="inline-flex items-center gap-2 btn-outline px-6 py-3 text-base no-underline">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="18" height="18" aria-hidden="true">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+    <section className="bg-white" aria-labelledby="hero-heading">
+      <div className="mx-auto max-w-[1280px] px-6 pt-24 pb-20 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        {/* Left: Photo placeholder */}
+        <div className="relative aspect-[4/3] lg:aspect-[5/4] bg-cream rounded-2xl overflow-hidden order-2 lg:order-1">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-center text-ink-dim/30">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" width="64" height="64" aria-hidden="true">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
               </svg>
-              Call Now
-            </Link>
+              <p className="text-xs uppercase tracking-widest font-medium mt-4">Logistics Photography</p>
+            </div>
           </div>
         </div>
 
-        <div className="hidden lg:flex justify-center items-center">
-          <div className="relative w-[320px] h-[320px]">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center">
-                <div className="font-display text-5xl font-extrabold text-[#1E3A8A] leading-none">15+</div>
-                <div className="text-[#4B5468] text-sm mt-2">Years Experience</div>
+        {/* Right: Editorial type */}
+        <div className="order-1 lg:order-2">
+          <p className="text-[11px] font-semibold text-teal uppercase tracking-[0.2em] mb-4">
+            Customs Broker &middot; Ludhiana
+          </p>
+          <h1 id="hero-heading" className="font-serif text-4xl sm:text-5xl lg:text-[3.25rem] font-normal text-ink leading-[1.1] tracking-tight mb-6">
+            Customs brokerage with <span className="italic text-teal">integrity</span>
+          </h1>
+          <p className="text-base text-ink-dim leading-relaxed max-w-lg mb-8">
+            Pan-India customs clearance and freight forwarding. Zero detention, transparent pricing, real-time tracking. Ludhiana &middot; Delhi &middot; Mumbai &middot; Mundra.
+          </p>
+          <div className="flex flex-wrap gap-4 mb-10">
+            <a href="/contact" className="btn-primary">Get a Quote</a>
+            <a href="/services" className="btn-outline">Our Services</a>
+          </div>
+
+          {/* Micro stats — no cards, just type */}
+          <div className="flex gap-10 pt-6 border-t border-border">
+            {[
+              { value: "15+", label: "Years Experience" },
+              { value: "800+", label: "Happy Clients" },
+              { value: "5", label: "Major Ports" },
+            ].map((stat) => (
+              <div key={stat.label}>
+                <div className="text-2xl font-bold text-ink">{stat.value}</div>
+                <div className="text-xs text-ink-dim mt-0.5">{stat.label}</div>
               </div>
-            </div>
-            <div className="absolute bottom-3 right-0 bg-white border border-[#ECEDF0] rounded-xl px-5 py-4 max-w-[180px] card-hover shadow-[0_1px_3px_rgba(11,15,25,0.04)]">
-              <div className="text-center">
-                <div className="font-display text-3xl font-extrabold text-[#1E3A8A] leading-none">800+</div>
-                <div className="text-[#4B5468] text-xs mt-1">Happy Clients</div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
