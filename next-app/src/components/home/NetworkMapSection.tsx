@@ -20,7 +20,7 @@ export function NetworkMapSection() {
       <h2 className="font-serif text-3xl lg:text-4xl font-medium text-ink mb-8">
         Our coverage network
       </h2>
-      <div className="w-full aspect-[4/3] rounded-xl overflow-hidden border border-[#E8E4DB]">
+      <div className="w-full aspect-[4/3] rounded-xl overflow-hidden border border-[#E8E4DB] isolate">
         <NetworkMapClient />
       </div>
     </div>
