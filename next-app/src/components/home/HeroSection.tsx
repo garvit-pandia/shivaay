@@ -2,16 +2,13 @@ export function HeroSection() {
   return (
     <section className="bg-white" aria-labelledby="hero-heading">
       <div className="mx-auto max-w-[1280px] px-6 pt-12 pb-20 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-        {/* Left: Photo placeholder */}
+        {/* Left: Hero image */}
         <div className="relative aspect-[4/3] lg:aspect-[5/4] bg-cream rounded-2xl overflow-hidden order-2 lg:order-1">
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center text-ink-dim/30">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" width="64" height="64" aria-hidden="true">
-                <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-              </svg>
-              <p className="text-xs uppercase tracking-widest font-medium mt-4">Logistics Photography</p>
-            </div>
-          </div>
+          <img
+            src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=1200&q=80"
+            alt="Cargo containers at port — Shivaay Logistics"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
         </div>
 
         {/* Right: Editorial type */}
