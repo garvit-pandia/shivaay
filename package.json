@@ -8,8 +8,5 @@
     "build": "cd next-app && npm run build",
     "start": "cd next-app && npm run start",
     "lint": "cd next-app && npm run lint"
-  },
-  "devDependencies": {
-    "next": "16.2.9"
   }
 }
