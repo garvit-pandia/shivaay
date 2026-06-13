@@ -16,26 +16,26 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://shivaaylogistics.com/services",
   },
-  twitter: {
-    card: "summary_large_image",
-  },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function ServicesPage() {
   return (
     <>
-      <section className="bg-white border-b border-[#ECEDF0] py-16 text-center">
-        <h1 className="font-display text-3xl sm:text-4xl font-bold text-[#0B0F19]">
-          Our Forwarding Services
-        </h1>
-        <p className="text-[#4B5468] text-sm mt-2">
-          <Link href="/" className="text-[#4B5468] hover:text-[#1E3A8A] no-underline">Home</Link> / <span>Services</span>
-        </p>
+      <section className="bg-white pt-20 pb-12">
+        <div className="mx-auto max-w-[1280px] px-6 text-center">
+          <p className="text-sm text-ink-dim mb-3">
+            <Link href="/" className="text-ink-dim hover:text-teal transition-colors no-underline">Home</Link>
+            <span className="mx-2">/</span>
+            <span className="text-ink">Services</span>
+          </p>
+          <h1 className="font-serif text-4xl lg:text-5xl font-medium text-ink">Our forwarding services</h1>
+        </div>
       </section>
       <ServiceGrid />
       <GalleryLightbox />
       <TestimonialsSection />
-      <CTASection />
+      <CTASection heading="Need a logistics partner?" buttonText="Get in Touch" />
     </>
   );
 }

@@ -14,22 +14,14 @@ export function ContactForm() {
     const form = e.currentTarget;
     const data = new FormData(form);
     const honeypot = (data.get("website") as string || "").trim();
-    if (honeypot) {
-      // silently abort — spam bot filled the honeypot
-      return;
-    }
+    if (honeypot) return;
 
     const name = (data.get("name") as string || "").trim();
     const phone = (data.get("phone") as string || "").trim();
     const newErrors: { name?: string; phone?: string } = {};
-
     if (!name) newErrors.name = "Please enter your name";
     if (!phone) newErrors.phone = "Please enter your phone number";
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
+    if (Object.keys(newErrors).length > 0) { setErrors(newErrors); return; }
 
     setErrors({});
     setSending(true);
@@ -50,12 +42,12 @@ export function ContactForm() {
 
   if (submitted) {
     return (
-      <div className="bg-white border border-[#ECEDF0] rounded-2xl p-10 text-center">
-        <div className="w-16 h-16 rounded-full bg-[rgba(30,58,138,0.10)] flex items-center justify-center mx-auto mb-6">
-          <Check size={32} className="text-[#1E3A8A]" />
+      <div className="bg-white border border-border rounded-2xl p-10 text-center">
+        <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6" style={{ background: "rgba(15, 118, 110, 0.08)" }}>
+          <Check size={32} className="text-teal" />
         </div>
-        <h2 className="font-display text-2xl font-bold text-[#0B0F19] mb-2">Thank You!</h2>
-        <p className="text-[#4B5468] text-sm">
+        <h2 className="text-2xl font-semibold text-ink mb-2">Thank You!</h2>
+        <p className="text-ink-dim text-sm">
           Your inquiry has been received. You&apos;ll be redirected to your email client shortly. We&apos;ll get back to you within 24 hours.
         </p>
       </div>
@@ -63,120 +55,53 @@ export function ContactForm() {
   }
 
   return (
-    <div className="bg-white border border-[#ECEDF0] rounded-2xl p-8">
-      <h2 className="font-display text-2xl font-bold text-[#0B0F19] mb-1">Send an Inquiry</h2>
-      <p className="text-[#4B5468] text-sm mb-6">Fill the form below and we&apos;ll get back to you within 24 hours.</p>
+    <div className="bg-white border border-border rounded-2xl p-8">
+      <h2 className="text-2xl font-semibold text-ink mb-1">Send an Inquiry</h2>
+      <p className="text-ink-dim text-sm mb-6">Fill the form below and we&apos;ll get back to you within 24 hours.</p>
 
       <form onSubmit={handleSubmit} noValidate className="space-y-5">
-        {/* Honeypot — hidden from humans, visible to bots */}
-        <input
-          type="text"
-          name="website"
-          tabIndex={-1}
-          autoComplete="off"
-          aria-hidden="true"
-          className="absolute left-[-9999px]"
-        />
+        <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute left-[-9999px]" />
+
         <div>
-          <label htmlFor="name" className="form-label">
-            Full Name <span className="text-error">*</span>
-          </label>
-          <input
-            id="name"
-            name="name"
-            type="text"
-            className="form-input"
-            placeholder="Your full name..."
-            autoComplete="name"
-            required
-          />
+          <label htmlFor="name" className="form-label">Full Name <span className="text-error">*</span></label>
+          <input id="name" name="name" type="text" className="form-input" placeholder="Your full name..." autoComplete="name" required />
           {errors.name && <p className="form-error">{errors.name}</p>}
         </div>
 
         <div>
-          <label htmlFor="company" className="form-label">
-            Company Name
-          </label>
-          <input
-            id="company"
-            name="company"
-            type="text"
-            className="form-input"
-            placeholder="Your company (optional)..."
-            autoComplete="organization"
-          />
+          <label htmlFor="company" className="form-label">Company Name</label>
+          <input id="company" name="company" type="text" className="form-input" placeholder="Your company (optional)..." autoComplete="organization" />
         </div>
 
         <div>
-          <label htmlFor="phone" className="form-label">
-            Phone Number <span className="text-error">*</span>
-          </label>
-          <input
-            id="phone"
-            name="phone"
-            type="tel"
-            className="form-input"
-            placeholder="Your phone number..."
-            autoComplete="tel"
-            required
-          />
+          <label htmlFor="phone" className="form-label">Phone Number <span className="text-error">*</span></label>
+          <input id="phone" name="phone" type="tel" className="form-input" placeholder="Your phone number..." autoComplete="tel" required />
           {errors.phone && <p className="form-error">{errors.phone}</p>}
         </div>
 
         <div>
-          <label htmlFor="email" className="form-label">
-            Email Address
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            className="form-input"
-            placeholder="your@email.com..."
-            autoComplete="email"
-          />
+          <label htmlFor="email" className="form-label">Email Address</label>
+          <input id="email" name="email" type="email" className="form-input" placeholder="your@email.com..." autoComplete="email" />
         </div>
 
         <div>
-          <label htmlFor="service" className="form-label">
-            Service Interested In
-          </label>
+          <label htmlFor="service" className="form-label">Service Interested In</label>
           <select id="service" name="service" className="form-input">
             <option value="">Select a service...</option>
-            {serviceOptions.map((s) => (
-              <option key={s} value={s}>{s}</option>
-            ))}
+            {serviceOptions.map((s) => (<option key={s} value={s}>{s}</option>))}
           </select>
         </div>
 
         <div>
-          <label htmlFor="message" className="form-label">
-            Message
-          </label>
-          <textarea
-            id="message"
-            name="message"
-            rows={4}
-            className="form-input resize-y"
-            placeholder="Tell us about your requirements..."
-          />
+          <label htmlFor="message" className="form-label">Message</label>
+          <textarea id="message" name="message" rows={4} className="form-input resize-y" placeholder="Tell us about your requirements..." />
         </div>
 
         <div className="flex items-center gap-4">
-          <button
-            type="submit"
-            disabled={sending}
-            className="inline-flex items-center gap-2 btn-primary px-6 py-3 text-base font-semibold no-underline disabled:opacity-50"
-          >
+          <button type="submit" disabled={sending} className="inline-flex items-center gap-2 btn-primary px-6 py-3 text-base font-semibold no-underline disabled:opacity-50">
             <Send size={18} aria-hidden="true" />
             {sending ? "Sending..." : "Send Inquiry"}
           </button>
-          {sending && (
-            <svg className="animate-spin h-5 w-5 text-[#1E3A8A]" viewBox="0 0 24 24" aria-hidden="true">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-            </svg>
-          )}
         </div>
       </form>
     </div>

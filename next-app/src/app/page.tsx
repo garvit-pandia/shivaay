@@ -1,5 +1,4 @@
 import { HeroSection } from "@/components/home/HeroSection";
-import { NetworkMapSection } from "@/components/home/NetworkMapSection";
 import { ServiceTags } from "@/components/home/ServiceTags";
 import { WhyPartnerSection } from "@/components/home/WhyPartnerSection";
 import { MissionSection } from "@/components/home/MissionSection";
@@ -17,23 +16,14 @@ const structuredData = {
   email: contactInfo.email,
   address: contactInfo.address,
   openingHours: "Mo-Sa 09:00-19:00",
-  areaServed: {
-    "@type": "Country",
-    name: "India",
-  },
+  areaServed: { "@type": "Country", name: "India" },
 };
 
 export default function Home() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(structuredData),
-        }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       <HeroSection />
-      <NetworkMapSection />
       <ServiceTags />
       <WhyPartnerSection />
       <MissionSection />

@@ -4,61 +4,60 @@ import { MapPin, Phone, Mail, Clock, Calendar } from "lucide-react";
 export function ContactInfo() {
   return (
     <div>
-      <h2 className="font-display text-2xl sm:text-3xl font-bold text-[#0B0F19] mb-3">Contact Information</h2>
-      <p className="text-[#4B5468] mb-8">Reach out to us for any logistics requirements</p>
-      <ul className="list-none m-0 p-0 space-y-5">
+      <h2 className="font-serif text-3xl font-medium text-ink mb-8">Contact Information</h2>
+      <ul className="list-none m-0 p-0 space-y-6">
         <li className="flex items-start gap-4">
-          <div className="why-us-check">
-            <MapPin size={16} strokeWidth={2} aria-hidden="true" />
+          <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ background: "rgba(15, 118, 110, 0.08)" }}>
+            <MapPin size={15} className="text-teal" aria-hidden="true" />
           </div>
           <div>
-            <div className="text-[#4B5468] text-xs font-semibold uppercase tracking-wide mb-1">Office Address</div>
-            <div className="text-[#0B0F19] text-sm leading-relaxed">{contactInfo.address}</div>
+            <div className="text-ink-dim text-xs font-semibold uppercase tracking-wide mb-1">Office Address</div>
+            <div className="text-ink text-sm leading-relaxed">{contactInfo.address}</div>
           </div>
         </li>
         <li className="flex items-start gap-4">
-          <div className="why-us-check">
-            <Phone size={16} strokeWidth={2} aria-hidden="true" />
+          <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ background: "rgba(15, 118, 110, 0.08)" }}>
+            <Phone size={15} className="text-teal" aria-hidden="true" />
           </div>
           <div>
-            <div className="text-[#4B5468] text-xs font-semibold uppercase tracking-wide mb-1">Phone</div>
-            <div className="text-[#0B0F19] text-sm leading-relaxed">
+            <div className="text-ink-dim text-xs font-semibold uppercase tracking-wide mb-1">Phone</div>
+            <div className="text-ink text-sm leading-relaxed">
               {contactInfo.phones.map((p, i) => (
                 <span key={p}>
                   {i > 0 && " / "}
-                  <a href={`tel:${p.replace(/\s/g, "")}`} className="text-[#0B0F19] hover:text-[#1E3A8A] transition-colors no-underline">{p}</a>
+                  <a href={`tel:${p.replace(/\s/g, "")}`} className="text-ink hover:text-teal transition-colors no-underline">{p}</a>
                 </span>
               ))}
             </div>
           </div>
         </li>
         <li className="flex items-start gap-4">
-          <div className="why-us-check">
-            <Mail size={16} strokeWidth={2} aria-hidden="true" />
+          <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ background: "rgba(15, 118, 110, 0.08)" }}>
+            <Mail size={15} className="text-teal" aria-hidden="true" />
           </div>
           <div>
-            <div className="text-[#4B5468] text-xs font-semibold uppercase tracking-wide mb-1">Email</div>
-            <div className="text-[#0B0F19] text-sm">
-              <a href={`mailto:${contactInfo.email}`} className="text-[#0B0F19] hover:text-[#1E3A8A] transition-colors no-underline">{contactInfo.email}</a>
+            <div className="text-ink-dim text-xs font-semibold uppercase tracking-wide mb-1">Email</div>
+            <div className="text-ink text-sm">
+              <a href={`mailto:${contactInfo.email}`} className="text-ink hover:text-teal transition-colors no-underline">{contactInfo.email}</a>
             </div>
           </div>
         </li>
         <li className="flex items-start gap-4">
-          <div className="why-us-check">
-            <Clock size={16} strokeWidth={2} aria-hidden="true" />
+          <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ background: "rgba(15, 118, 110, 0.08)" }}>
+            <Clock size={15} className="text-teal" aria-hidden="true" />
           </div>
           <div>
-            <div className="text-[#4B5468] text-xs font-semibold uppercase tracking-wide mb-1">Service Locations</div>
-            <div className="text-[#0B0F19] text-sm">Ludhiana &middot; Amritsar &middot; Delhi &middot; Mumbai &middot; Mundra</div>
+            <div className="text-ink-dim text-xs font-semibold uppercase tracking-wide mb-1">Service Locations</div>
+            <div className="text-ink text-sm">Ludhiana &middot; Amritsar &middot; Delhi &middot; Mumbai &middot; Mundra</div>
           </div>
         </li>
         <li className="flex items-start gap-4">
-          <div className="why-us-check">
-            <Calendar size={16} strokeWidth={2} aria-hidden="true" />
+          <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ background: "rgba(15, 118, 110, 0.08)" }}>
+            <Calendar size={15} className="text-teal" aria-hidden="true" />
           </div>
           <div>
-            <div className="text-[#4B5468] text-xs font-semibold uppercase tracking-wide mb-1">Business Hours</div>
-            <div className="text-[#0B0F19] text-sm">{contactInfo.hours}</div>
+            <div className="text-ink-dim text-xs font-semibold uppercase tracking-wide mb-1">Business Hours</div>
+            <div className="text-ink text-sm">{contactInfo.hours}</div>
           </div>
         </li>
       </ul>
