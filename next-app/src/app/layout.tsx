@@ -49,10 +49,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${playfair.variable}`}
+      className={`no-js ${inter.variable} ${playfair.variable}`}
+      suppressHydrationWarning
     >
       <head>
         <meta name="theme-color" content="#FFFFFF" />
+        <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.replace('no-js','js')` }} />
       </head>
       <body className="min-h-screen antialiased overflow-x-hidden bg-white text-ink font-sans">
         <a href="#main-content" className="skip-link">

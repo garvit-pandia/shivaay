@@ -25,7 +25,7 @@ export function Navbar() {
       <div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between px-6">
         <Link href="/" className="no-underline" aria-label="Shivaay Logistics Home">
           <span className="font-serif text-xl font-semibold text-ink tracking-tight">
-            Shivaay
+            Shivaay <span className="text-teal">Logistics</span>
           </span>
         </Link>
 

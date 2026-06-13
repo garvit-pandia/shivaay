@@ -48,3 +48,9 @@ screenshot-*.png
 .idea/
 *.swp
 *.swo
+
+# Legacy vanilla HTML — deleted on redesign-v2, defensively ignored
+/contact.html
+/index.html
+/services.html
+/assets/

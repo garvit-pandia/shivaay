@@ -13,16 +13,16 @@ const iconMap: Record<string, LucideIcon> = {
 
 export function ServiceGrid() {
   return (
-    <section className="py-24 bg-white" aria-labelledby="services-grid-heading">
+    <section className="py-16 bg-white" aria-labelledby="services-grid-heading">
       <div className="mx-auto max-w-[1280px] px-6">
-        <h2 id="services-grid-heading" className="font-serif text-3xl lg:text-4xl font-medium text-ink text-center mb-12">
+        <h2 id="services-grid-heading" className="font-serif text-3xl lg:text-4xl font-medium text-ink text-center mb-8">
           All forwarding services
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {services.map((s, i) => {
             const Icon = iconMap[s.icon] || Box;
             return (
-              <div key={i} className="reveal bg-white border border-border rounded-2xl p-6 border-l-[3px] border-l-teal card-hover">
+              <div key={i} className="reveal bg-white border border-border rounded-2xl p-5 border-l-[3px] border-l-teal card-hover">
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0" style={{ background: "rgba(15, 118, 110, 0.08)" }}>
                     <Icon size={18} className="text-teal" aria-hidden="true" />

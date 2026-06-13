@@ -1,31 +1,56 @@
 # Shivaay Logistics
 
-A professional website for **Shivaay Logistics** — a customs brokerage and logistics facilitation company based in Ludhiana, Punjab, serving clients across India.
+Official website for **Shivaay Logistics** — customs broker and logistics facilitator based in Ludhiana, Punjab. 15+ years serving businesses across India with customs clearance, freight forwarding, and end-to-end supply chain solutions.
 
-**Live Site:** [shivaaylogistics.com](https://shivaaylogistics.com)
+**Live site:** [shivaaylogistics.com](https://shivaaylogistics.com)
 
-## About
+## Tech stack
 
-Shivaay Logistics has 15+ years of experience providing end-to-end logistics solutions including customs clearance, freight forwarding, and supply chain management across major Indian ports and cities (Ludhiana, Delhi, Mumbai, Amritsar, Mundra).
+- **Next.js 16** (App Router) + **React 19** + **TypeScript**
+- **Tailwind CSS v4**
+- **Lucide** icons
+- **OpenStreetMap** for the coverage map — shows complete Indian national boundary via embed (free, no API key)
+- Hosted on Vercel
 
 ## Pages
 
-- **Home** — Hero section, services overview, why partner with us, stats
-- **Services** — Detailed breakdown of customs clearance, freight forwarding, logistics solutions
-- **Contact** — Office address, phone numbers, email, service locations, and embedded map
+- `/` — Hero, services overview, coverage network, mission, testimonials, CTA
+- `/services` — All 12 forwarding services, gallery, CTA
+- `/contact` — Office info, inquiry form, office map, phone CTA
+- `/not-found` — Custom 404
 
-## Tech Stack
-
-- HTML5, CSS3, Vanilla JavaScript
-- [Lucide](https://lucide.dev) icons
-- [Leaflet.js](https://leafletjs.com) for maps (contact page)
-- Google Fonts (Inter & Outfit)
-
-## Setup
+## Development
 
 ```bash
-# Serve locally with any static server
-python3 -m http.server 8000
-# or
-npx serve .
+cd next-app
+npm install
+npm run dev          # http://localhost:3000
+npm run build        # production build
+npm run lint         # eslint
 ```
+
+## Project structure
+
+```
+.
+├── next-app/              # the actual Next.js application
+│   ├── src/
+│   │   ├── app/           # routes (App Router)
+│   │   ├── components/    # React components
+│   │   └── lib/           # data + utilities
+│   └── public/            # static assets (logo, etc.)
+├── docs/                  # design specs & implementation plans
+├── tasks/                 # session todo + lessons learned
+└── .agents/               # custom skills
+```
+
+## Design documentation
+
+See `docs/superpowers/specs/` for design specs and `docs/superpowers/plans/` for implementation plans.
+
+## Contact
+
+**Shivaay Logistics**
+Plot No. 116, Street No. 8, Ganesh Nagar, Ludhiana-141015 (Pb.)
++91 88474-67790
+shivaaylogistics2022@gmail.com
