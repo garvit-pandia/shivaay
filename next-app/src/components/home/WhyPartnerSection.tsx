@@ -14,7 +14,7 @@ const iconMap: Record<string, LucideIcon> = {
 export function WhyPartnerSection() {
   return (
     <section className="py-24 bg-white border-t border-border" aria-labelledby="why-us-heading">
-      <div className="mx-auto max-w-[1280px] px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div className="mx-auto max-w-[1280px] px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
         <div>
           <h2 id="why-us-heading" className="font-serif text-3xl lg:text-4xl font-medium text-ink mb-8">
             Why partner with us
