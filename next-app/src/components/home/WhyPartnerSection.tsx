@@ -1,6 +1,7 @@
 import { whyUsItems } from "@/lib/data";
 import * as Icons from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { Icon as IconWrapper } from "@/components/ui/Icon";
 import { NetworkMapSection } from "./NetworkMapSection";
 
 const iconMap: Record<string, LucideIcon> = {
@@ -24,8 +25,8 @@ export function WhyPartnerSection() {
               const Icon = iconMap[item.icon] || Icons.Check;
               return (
                 <li key={i} className="reveal flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ background: "rgba(15, 118, 110, 0.08)" }}>
-                    <Icon size={16} className="text-teal" aria-hidden="true" />
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 bg-teal-tint">
+                    <IconWrapper icon={Icon} size={16} className="text-teal" aria-hidden={true} />
                   </div>
                   <div>
                     <h3 className="font-semibold text-ink">{item.title}</h3>

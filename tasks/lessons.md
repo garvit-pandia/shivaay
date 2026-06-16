@@ -32,6 +32,10 @@
 - `brightness-110` and similar image filters were applied to compensate for dark-background logos. They become harmful on light backgrounds. Remove them in the same commit as the SVG fix.
 - 3-subagent parallel verification (build / spec-compliance / visual-screenshot) catches blind spots in one pass. The logo issue was flagged independently by both the spec reviewer and the visual reviewer.
 
+## Screenshot Hygiene
+- Save all screenshot artifacts to `screenshots/` at the project root, never to the root directly
+- `screenshots/` is gitignored — do not `git add` screenshots unless explicitly asked
+
 ## Workflow
 - Brainstorming skill produces good results even with one "do whatever is best" mandate — pick the simplest defensible option, write the spec, commit, proceed.
 - Subagent-driven implementation works well for mechanical class-name swaps across many files. Dispatch one subagent with the full plan + spec + foundation CSS context, let it commit per-task, then run parallel verification.

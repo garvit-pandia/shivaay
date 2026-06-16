@@ -1211,7 +1211,7 @@ git commit -m "style: 404 page light theme"
 
 **Files:**
 - Read: `next-app/package.json` (for scripts)
-- Output: `screenshot-redesign.png` (visual verification)
+- Output: `screenshots/redesign.png` (visual verification)
 
 - [ ] **Step 1: Run lint**
 
@@ -1240,7 +1240,7 @@ Wait for it to start (look for "Local: http://localhost:3000" output).
 Use the Playwright MCP tool to:
 1. Navigate to `http://localhost:3000`
 2. Take a full-page screenshot
-3. Save as `screenshot-redesign.png` in the project root
+3. Save as `screenshots/redesign.png`
 4. Navigate to `/services` and screenshot
 5. Navigate to `/contact` and screenshot
 
@@ -1265,7 +1265,7 @@ pkill -f "next dev" || true
 - [ ] **Step 6: Final commit**
 
 ```bash
-git add screenshot-redesign.png
+git add screenshots/redesign.png
 git commit -m "chore: redesign visual verification screenshot"
 ```
 

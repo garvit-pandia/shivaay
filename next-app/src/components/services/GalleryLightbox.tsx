@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { X } from "lucide-react";
+import { Icon } from "@/components/ui/Icon";
 import { galleryImages } from "@/lib/data";
 
 export function GalleryLightbox() {
@@ -79,7 +80,7 @@ export function GalleryLightbox() {
             onClick={close}
             aria-label="Close lightbox"
           >
-            <X size={20} />
+            <Icon icon={X} size={20} />
           </button>
         </div>
       )}

@@ -248,7 +248,7 @@ After implementation:
    - Active nav link shows cobalt underline.
    - Form inputs show cobalt focus ring.
    - Route map dots are cobalt, not teal.
-4. Take a screenshot of the new home page, save as `screenshot-redesign.png` (overwriting the old artifact).
+4. Take a screenshot of the new home page, save as `screenshots/redesign.png` (overwriting the old artifact).
 
 ---
 

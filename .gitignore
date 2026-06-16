@@ -36,6 +36,7 @@ playwright/.cache/
 
 # Screenshots (dev artifacts)
 screenshot-*.png
+screenshots/
 
 # Playwright MCP
 .playwright-mcp/

@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { Send, Check } from "lucide-react";
+import { Icon } from "@/components/ui/Icon";
 import { serviceOptions } from "@/lib/data";
 
 export function ContactForm() {
@@ -43,8 +44,8 @@ export function ContactForm() {
   if (submitted) {
     return (
       <div className="bg-white border border-border rounded-2xl p-10 text-center">
-        <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6" style={{ background: "rgba(15, 118, 110, 0.08)" }}>
-          <Check size={32} className="text-teal" />
+        <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 bg-teal-tint">
+          <Icon icon={Check} size={32} className="text-teal" />
         </div>
         <h2 className="text-2xl font-semibold text-ink mb-2">Thank You!</h2>
         <p className="text-ink-dim text-sm">
@@ -99,7 +100,7 @@ export function ContactForm() {
 
         <div className="flex items-center gap-4">
           <button type="submit" disabled={sending} className="inline-flex items-center gap-2 btn-primary px-6 py-3 text-base font-semibold no-underline disabled:opacity-50">
-            <Send size={18} aria-hidden="true" />
+            <Icon icon={Send} size={18} aria-hidden={true} />
             {sending ? "Sending..." : "Send Inquiry"}
           </button>
         </div>

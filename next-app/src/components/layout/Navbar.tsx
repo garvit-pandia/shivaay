@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Phone, Menu, X } from "lucide-react";
+import { Icon } from "@/components/ui/Icon";
 
 const links = [
   { href: "/", label: "Home" },
@@ -52,7 +53,7 @@ export function Navbar() {
           href="tel:+918847467790"
           className="hidden sm:inline-flex items-center gap-2 bg-ink text-white px-5 py-2.5 rounded-full text-sm font-semibold no-underline hover:bg-teal transition-colors duration-200"
         >
-          <Phone size={16} aria-hidden="true" />
+          <Icon icon={Phone} size={16} aria-hidden={true} />
           Call Now
         </Link>
 
@@ -62,7 +63,7 @@ export function Navbar() {
           aria-label={menuOpen ? "Close navigation menu" : "Toggle navigation menu"}
           aria-expanded={menuOpen}
         >
-          {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          {menuOpen ? <Icon icon={X} size={24} /> : <Icon icon={Menu} size={24} />}
         </button>
       </div>
 
@@ -86,7 +87,7 @@ export function Navbar() {
             ))}
             <li>
               <Link href="tel:+918847467790" onClick={() => setMenuOpen(false)} className="inline-flex items-center gap-2 bg-ink text-white px-6 py-3 rounded-full text-base font-semibold no-underline mt-4 hover:bg-teal transition-colors duration-200">
-                <Phone size={18} aria-hidden="true" />
+                <Icon icon={Phone} size={18} aria-hidden={true} />
                 Call Now
               </Link>
             </li>

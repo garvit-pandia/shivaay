@@ -4,6 +4,7 @@ import {
   Shield, Package, FileText, Boxes, Briefcase, Box,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { Icon as IconWrapper } from "@/components/ui/Icon";
 
 const iconMap: Record<string, LucideIcon> = {
   plane: Plane, ship: Ship, truck: Truck, "train-front": TrainFront,
@@ -24,8 +25,8 @@ export function ServiceGrid() {
             return (
               <div key={i} className="reveal bg-white border border-border rounded-2xl p-5 border-l-[3px] border-l-teal card-hover">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0" style={{ background: "rgba(15, 118, 110, 0.08)" }}>
-                    <Icon size={18} className="text-teal" aria-hidden="true" />
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 bg-teal-tint">
+                    <IconWrapper icon={Icon} size={18} className="text-teal" aria-hidden={true} />
                   </div>
                   <div>
                     <h3 className="font-semibold text-ink">{s.title}</h3>

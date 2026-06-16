@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Phone, Mail, MapPin } from "lucide-react";
+import { Icon } from "@/components/ui/Icon";
 
 export function Footer() {
   return (
@@ -27,18 +28,18 @@ export function Footer() {
           <h4 className="text-[13px] font-semibold text-ink uppercase tracking-wider mb-4">Contact</h4>
           <ul className="list-none m-0 p-0 space-y-3 text-ink-dim text-sm">
             <li className="flex items-start gap-2.5">
-              <MapPin size={14} className="shrink-0 mt-0.5 text-ink-dim" />
+              <Icon icon={MapPin} size={14} className="shrink-0 mt-0.5 text-ink-dim" />
               <span>Mundian Kalan, Ludhiana, Punjab 141015</span>
             </li>
             <li>
               <a href="mailto:shivaaylogistics2022@gmail.com" className="flex items-center gap-2.5 text-ink-dim hover:text-teal transition-colors no-underline">
-                <Mail size={14} className="shrink-0" />
+                <Icon icon={Mail} size={14} className="shrink-0" />
                 shivaaylogistics2022@gmail.com
               </a>
             </li>
             <li>
               <a href="tel:+918847467790" className="flex items-center gap-2.5 text-ink-dim hover:text-teal transition-colors no-underline">
-                <Phone size={14} className="shrink-0" />
+                <Icon icon={Phone} size={14} className="shrink-0" />
                 +91 88474-67790
               </a>
             </li>

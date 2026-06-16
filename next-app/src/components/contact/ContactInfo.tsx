@@ -1,5 +1,6 @@
 import { contactInfo } from "@/lib/data";
 import { MapPin, Phone, Mail, Clock, Calendar } from "lucide-react";
+import { Icon } from "@/components/ui/Icon";
 
 export function ContactInfo() {
   return (
@@ -7,8 +8,8 @@ export function ContactInfo() {
       <h1 className="font-serif text-3xl font-medium text-ink mb-8">Contact Information</h1>
       <ul className="list-none m-0 p-0 space-y-6">
         <li className="flex items-start gap-4">
-          <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ background: "rgba(15, 118, 110, 0.08)" }}>
-            <MapPin size={15} className="text-teal" aria-hidden="true" />
+          <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 bg-teal-tint">
+            <Icon icon={MapPin} size={15} className="text-teal" aria-hidden={true} />
           </div>
           <div>
             <div className="text-ink-dim text-xs font-semibold uppercase tracking-wide mb-1">Office Address</div>
@@ -16,8 +17,8 @@ export function ContactInfo() {
           </div>
         </li>
         <li className="flex items-start gap-4">
-          <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ background: "rgba(15, 118, 110, 0.08)" }}>
-            <Phone size={15} className="text-teal" aria-hidden="true" />
+          <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 bg-teal-tint">
+            <Icon icon={Phone} size={15} className="text-teal" aria-hidden={true} />
           </div>
           <div>
             <div className="text-ink-dim text-xs font-semibold uppercase tracking-wide mb-1">Phone</div>
@@ -32,8 +33,8 @@ export function ContactInfo() {
           </div>
         </li>
         <li className="flex items-start gap-4">
-          <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ background: "rgba(15, 118, 110, 0.08)" }}>
-            <Mail size={15} className="text-teal" aria-hidden="true" />
+          <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 bg-teal-tint">
+            <Icon icon={Mail} size={15} className="text-teal" aria-hidden={true} />
           </div>
           <div>
             <div className="text-ink-dim text-xs font-semibold uppercase tracking-wide mb-1">Email</div>
@@ -43,8 +44,8 @@ export function ContactInfo() {
           </div>
         </li>
         <li className="flex items-start gap-4">
-          <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ background: "rgba(15, 118, 110, 0.08)" }}>
-            <Clock size={15} className="text-teal" aria-hidden="true" />
+          <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 bg-teal-tint">
+            <Icon icon={Clock} size={15} className="text-teal" aria-hidden={true} />
           </div>
           <div>
             <div className="text-ink-dim text-xs font-semibold uppercase tracking-wide mb-1">Service Locations</div>
@@ -52,8 +53,8 @@ export function ContactInfo() {
           </div>
         </li>
         <li className="flex items-start gap-4">
-          <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ background: "rgba(15, 118, 110, 0.08)" }}>
-            <Calendar size={15} className="text-teal" aria-hidden="true" />
+          <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 bg-teal-tint">
+            <Icon icon={Calendar} size={15} className="text-teal" aria-hidden={true} />
           </div>
           <div>
             <div className="text-ink-dim text-xs font-semibold uppercase tracking-wide mb-1">Business Hours</div>

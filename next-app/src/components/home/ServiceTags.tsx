@@ -1,6 +1,7 @@
 import { homepageServices } from "@/lib/data";
 import { FileCheck, Ship, PackageCheck, ShieldCheck } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { Icon as IconWrapper } from "@/components/ui/Icon";
 
 const iconMap: Record<string, LucideIcon> = {
   "file-check": FileCheck,
@@ -25,8 +26,8 @@ export function ServiceTags() {
                 className="reveal bg-white border border-border rounded-2xl p-6 card-hover"
                 style={{ transitionDelay: `${i * 100}ms` }}
               >
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: "rgba(15, 118, 110, 0.08)" }}>
-                  <Icon size={22} className="text-teal" aria-hidden="true" />
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-teal-tint">
+                  <IconWrapper icon={Icon} size={22} className="text-teal" aria-hidden={true} />
                 </div>
                 <h3 className="font-semibold text-ink mb-2">{s.title}</h3>
                 <p className="text-ink-dim text-sm leading-relaxed">{s.description}</p>

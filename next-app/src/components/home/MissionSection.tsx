@@ -1,4 +1,5 @@
 import { Target, Eye, Handshake } from "lucide-react";
+import { Icon } from "@/components/ui/Icon";
 
 const cards = [
   {
@@ -31,8 +32,8 @@ export function MissionSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {cards.map((c, i) => (
             <div key={i} className="reveal bg-white border border-[rgba(30,27,24,0.06)] rounded-2xl p-8 card-hover">
-              <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4" style={{ background: "rgba(15, 118, 110, 0.08)" }}>
-                <c.icon size={26} className="text-teal" aria-hidden="true" />
+              <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 bg-teal-tint">
+                <Icon icon={c.icon} size={26} className="text-teal" aria-hidden={true} />
               </div>
               <h3 className="font-semibold text-ink text-lg mb-2">{c.title}</h3>
               <p className="text-ink-dim text-sm leading-relaxed">{c.description}</p>
