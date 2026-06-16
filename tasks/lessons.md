@@ -36,6 +36,10 @@
 - Save all screenshot artifacts to `screenshots/` at the project root, never to the root directly
 - `screenshots/` is gitignored — do not `git add` screenshots unless explicitly asked
 
+## README & Domain
+- Always verify the live domain against the project's actual deployment. The old `.com` domain was stale — check Vercel or ask the user before assuming.
+- Keep the live URL in the README accurate — it's the first thing visitors see.
+
 ## Workflow
 - Brainstorming skill produces good results even with one "do whatever is best" mandate — pick the simplest defensible option, write the spec, commit, proceed.
 - Subagent-driven implementation works well for mechanical class-name swaps across many files. Dispatch one subagent with the full plan + spec + foundation CSS context, let it commit per-task, then run parallel verification.

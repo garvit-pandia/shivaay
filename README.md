@@ -2,7 +2,7 @@
 
 Official website for **Shivaay Logistics** — customs broker and logistics facilitator based in Ludhiana, Punjab. 15+ years serving businesses across India with customs clearance, freight forwarding, and end-to-end supply chain solutions.
 
-**Live site:** [shivaaylogistics.com](https://shivaaylogistics.com)
+**Live site:** [shivaaylogistics.in](https://www.shivaaylogistics.in/)
 
 ## Tech stack
 
