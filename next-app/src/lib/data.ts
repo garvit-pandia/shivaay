@@ -104,6 +104,86 @@ export const routes: CityPair[] = [
   { from: "Mumbai", to: "Mundra" },
 ];
 
+export interface MapCity {
+  x: number;
+  y: number;
+  label: string;
+  tag: string;
+  isHub: boolean;
+}
+
+export const mapCities: Record<string, MapCity> = {
+  Ludhiana: { x: 308, y: 257, label: "Ludhiana", tag: "Headquarters", isHub: true },
+  Amritsar: { x: 279, y: 236, label: "Amritsar", tag: "Border Hub", isHub: false },
+  Delhi:    { x: 346, y: 323, label: "Delhi",    tag: "Distribution Hub", isHub: false },
+  Mundra:   { x: 130, y: 491, label: "Mundra",   tag: "Port Hub", isHub: false },
+  Mumbai:   { x: 221, y: 600, label: "Mumbai",   tag: "Major Port", isHub: false },
+};
+
+export interface StoryStep {
+  eyebrow: string;
+  headline: string;
+  body: string;
+  city: keyof typeof mapCities | null;
+  routeFrom: keyof typeof mapCities | null;
+  routeTo: keyof typeof mapCities | null;
+  stamp: string;
+  valueProp: string;
+}
+
+export const storySteps: StoryStep[] = [
+  {
+    eyebrow: "STEP 01",
+    headline: "Your cargo begins its journey in Ludhiana",
+    body: "Collected at your facility, surveyed, weighed, and packed for export-grade transport.",
+    city: "Ludhiana",
+    routeFrom: null,
+    routeTo: null,
+    stamp: "DEPARTURE · LUDHIANA",
+    valueProp: "24/7 Customer Support",
+  },
+  {
+    eyebrow: "STEP 02",
+    headline: "Documentation filed at Delhi ICD",
+    body: "ICEGATE filings, bills of lading, shipping bills, and DGFT compliance — handled end to end.",
+    city: "Delhi",
+    routeFrom: "Ludhiana",
+    routeTo: "Delhi",
+    stamp: "CUSTOMS FILED · DELHI",
+    valueProp: "Customs Compliance Assurance",
+  },
+  {
+    eyebrow: "STEP 03",
+    headline: "Transhipment at Mundra Port",
+    body: "Container stuffing, port handling, and vessel booking coordinated in a single window.",
+    city: "Mundra",
+    routeFrom: "Delhi",
+    routeTo: "Mundra",
+    stamp: "TRANSHIPMENT · MUNDRA",
+    valueProp: "Expertise & Experience",
+  },
+  {
+    eyebrow: "STEP 04",
+    headline: "Sea transit to Mumbai",
+    body: "FCL/LCL consolidation, vessel sailing, and tracking until discharge at destination port.",
+    city: "Mumbai",
+    routeFrom: "Mundra",
+    routeTo: "Mumbai",
+    stamp: "SAILED · MUMBAI",
+    valueProp: "Timely & Safe Delivery",
+  },
+  {
+    eyebrow: "STEP 05",
+    headline: "Door-to-door delivery",
+    body: "Last-mile road freight, proof of delivery, and a closed shipment file at your destination.",
+    city: null,
+    routeFrom: null,
+    routeTo: null,
+    stamp: "DELIVERED",
+    valueProp: "Cost Effective Solutions",
+  },
+];
+
 export const homepageServices: ServiceCard[] = [
   { icon: "file-check", title: "Customs Clearance", description: "Expert customs brokerage and documentation services" },
   { icon: "ship", title: "Freight Forwarding", description: "Sea, air, road, and rail freight solutions" },
