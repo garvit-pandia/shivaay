@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import type { Stat } from "@/lib/data";
 
 interface AnimatedCounterProps {
@@ -29,7 +29,6 @@ export function AnimatedCounter({ stat, index }: AnimatedCounterProps) {
   const displayRef = useRef<HTMLSpanElement | null>(null);
   const rafRef = useRef<number | null>(null);
   const startedRef = useRef(false);
-  const [hasStarted, setHasStarted] = useState(false);
 
   const finalText = `${formatValue(stat.value, stat)}${stat.suffix}`;
 
@@ -45,7 +44,6 @@ export function AnimatedCounter({ stat, index }: AnimatedCounterProps) {
     if (reduceMotion) {
       display.textContent = finalText;
       startedRef.current = true;
-      queueMicrotask(() => setHasStarted(true));
       return;
     }
 
@@ -54,7 +52,6 @@ export function AnimatedCounter({ stat, index }: AnimatedCounterProps) {
         entries.forEach((entry) => {
           if (entry.isIntersecting && !startedRef.current) {
             startedRef.current = true;
-            setHasStarted(true);
             observer.unobserve(entry.target);
 
             const startDelay = index * STAGGER;
@@ -100,7 +97,7 @@ export function AnimatedCounter({ stat, index }: AnimatedCounterProps) {
     <div ref={containerRef}>
       <span
         ref={displayRef}
-        className={`stat-counter text-2xl sm:text-3xl font-bold text-teal ${hasStarted ? "" : "opacity-0 sm:opacity-100"}`}
+        className="stat-counter text-2xl sm:text-3xl font-bold text-teal"
       >
         {finalText}
       </span>

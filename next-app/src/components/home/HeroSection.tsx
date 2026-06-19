@@ -4,7 +4,7 @@ import { heroStats } from "@/lib/data";
 export function HeroSection() {
   return (
     <section className="bg-white" aria-labelledby="hero-heading">
-      <div className="mx-auto max-w-[1280px] px-6 pt-12 pb-20 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div className="mx-auto max-w-[1280px] px-6 pt-10 pb-14 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         {/* Left: Hero image */}
         <div className="relative aspect-[4/3] lg:aspect-[5/4] bg-cream rounded-2xl overflow-hidden order-2 lg:order-1">
           <img
@@ -25,13 +25,13 @@ export function HeroSection() {
           <p className="text-base text-ink-dim leading-relaxed max-w-lg mb-8">
             Pan-India customs clearance and freight forwarding. Zero detention, transparent pricing, real-time tracking. Ludhiana &middot; Delhi &middot; Mumbai &middot; Mundra.
           </p>
-          <div className="flex flex-wrap gap-4 mb-10">
+          <div className="flex flex-wrap gap-4 mb-8">
             <a href="/contact" className="btn-primary">Get a Quote</a>
             <a href="/services" className="btn-outline">Our Services</a>
           </div>
 
           {/* Micro stats — animated counters, no cards, just type */}
-          <div className="flex flex-wrap gap-6 sm:gap-8 lg:gap-10 pt-6 border-t border-border">
+          <div className="grid grid-cols-3 sm:grid-cols-5 gap-3 sm:gap-4 pt-6 border-t border-border">
             {heroStats.map((stat, i) => (
               <AnimatedCounter key={stat.label} stat={stat} index={i} />
             ))}
