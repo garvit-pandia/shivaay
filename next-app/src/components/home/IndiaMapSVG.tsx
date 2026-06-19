@@ -72,6 +72,7 @@ export function IndiaMapSVG({ activeStep, reduceMotion }: IndiaMapSVGProps) {
   const routeRefs = useRef<Array<SVGPathElement | null>>([]);
   const ghostRef = useRef<SVGCircleElement | null>(null);
   const stampRef = useRef<SVGGElement | null>(null);
+  const stampInnerRef = useRef<SVGGElement | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);
   const flyRaf = useRef<number | null>(null);
   const ghostRaf = useRef<number | null>(null);
@@ -206,25 +207,44 @@ export function IndiaMapSVG({ activeStep, reduceMotion }: IndiaMapSVGProps) {
 
     // --- ink stamp ---
     const stamp = stampRef.current;
+    const stampInner = stampInnerRef.current;
     if (stamp) {
-      if (reduceMotion) {
-        stamp.style.opacity = "0.92";
-        stamp.style.animation = "none";
-        stamp.style.transform = "rotate(-12deg)";
-      } else {
-        stamp.style.opacity = "0";
-        stamp.style.animation = "";
-        void stamp.getBoundingClientRect();
-        stamp.style.animation = "stamp-slam 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards";
-      }
-      const stampText = stamp.querySelector("text");
-      if (stampText) stampText.textContent = step.stamp;
       if (activeCityData) {
         const sx = activeCityData.x;
         const sy = activeCityData.y - 60;
-        stamp.setAttribute("transform", `translate(${sx} ${sy}) rotate(-12deg)`);
+        stamp.setAttribute("transform", `translate(${sx} ${sy}) rotate(-12)`);
       } else {
-        stamp.setAttribute("transform", `translate(250 380) rotate(-12deg)`);
+        stamp.setAttribute("transform", `translate(250 380) rotate(-12)`);
+      }
+      const stampText = stamp.querySelector("text");
+      if (stampText) stampText.textContent = step.stamp;
+    }
+    if (stampInner) {
+      if (reduceMotion) {
+        stampInner.style.opacity = "0.92";
+        stampInner.style.transform = "scale(1)";
+      } else {
+        const dur = 450;
+        const t0 = performance.now();
+        const overshoot = (t: number) => {
+          if (t < 0.6) return 2.2 - (2.2 - 0.94) * (t / 0.6);
+          const t2 = (t - 0.6) / 0.4;
+          return 0.94 + (1 - 0.94) * (1 - Math.pow(1 - t2, 3));
+        };
+        const stampTick = (now: number) => {
+          const t = Math.min((now - t0) / dur, 1);
+          const s = overshoot(t);
+          stampInner.style.transform = `scale(${s})`;
+          stampInner.style.opacity = String(Math.min(t * 2.5, 0.92));
+          if (t < 1) requestAnimationFrame(stampTick);
+          else {
+            stampInner.style.transform = "scale(1)";
+            stampInner.style.opacity = "0.92";
+          }
+        };
+        stampInner.style.opacity = "0";
+        stampInner.style.transform = "scale(2.2)";
+        requestAnimationFrame(stampTick);
       }
     }
 
@@ -339,11 +359,13 @@ export function IndiaMapSVG({ activeStep, reduceMotion }: IndiaMapSVGProps) {
           ))}
 
           {/* Ink stamp */}
-          <g ref={stampRef} filter="url(#ink-bleed)" opacity={0} style={{ transformBox: "fill-box", transformOrigin: "center" }}>
-            <rect x={-90} y={-16} width={180} height={32} rx={3} fill="none" stroke="#0F766E" strokeWidth={2} />
-            <text x={0} y={6} textAnchor="middle" fontSize={14} fontWeight={700} fill="#0F766E" fontFamily="var(--font-sans)" letterSpacing={1}>
-              {step.stamp}
-            </text>
+          <g ref={stampRef}>
+            <g ref={stampInnerRef} filter="url(#ink-bleed)" opacity={0} style={{ transformBox: "fill-box", transformOrigin: "center" }}>
+              <rect x={-90} y={-16} width={180} height={32} rx={3} fill="none" stroke="#0F766E" strokeWidth={2} />
+              <text x={0} y={6} textAnchor="middle" fontSize={14} fontWeight={700} fill="#0F766E" fontFamily="var(--font-sans)" letterSpacing={1}>
+                {step.stamp}
+              </text>
+            </g>
           </g>
         </g>
       </svg>

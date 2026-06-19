@@ -214,9 +214,9 @@ body {
 
 /* ---- Map story: ink stamp ---- */
 @keyframes stamp-slam {
-  0%   { transform: scale(2.2) rotate(-14deg); opacity: 0; }
-  60%  { transform: scale(0.94) rotate(-12deg); opacity: 1; }
-  100% { transform: scale(1) rotate(-12deg); opacity: 0.92; }
+  0%   { transform: scale(2.2); opacity: 0; }
+  60%  { transform: scale(0.94); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.92; }
 }
 .map-stamp {
   transform-origin: center;
@@ -243,7 +243,6 @@ body {
   }
   .map-stamp {
     animation: none;
-    transform: rotate(-12deg);
     opacity: 0.92;
   }
   .map-city-card {
