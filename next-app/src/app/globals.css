@@ -532,3 +532,77 @@ body {
   height: 100%;
   object-fit: cover;
 }
+
+/* ---- Shipment ticker ---- */
+.ticker-bar {
+  background: #FAF8F4;
+  border-bottom: 1px solid #E8E4DB;
+  height: 32px;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  position: relative;
+}
+.ticker-label {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #6B5E4A;
+  background: #FFFFFF;
+  border-right: 1px solid #E8E4DB;
+  white-space: nowrap;
+}
+.ticker-track {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  white-space: nowrap;
+  will-change: transform;
+  animation: ticker-scroll 40s linear infinite;
+}
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 22px;
+  font-size: 12px;
+  color: #1E1B18;
+}
+.ticker-item::after {
+  content: "·";
+  margin-left: 22px;
+  color: #C9C2B5;
+}
+.ticker-item:last-child::after {
+  content: "";
+  margin-left: 0;
+}
+.ticker-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #0F766E;
+  flex: 0 0 auto;
+}
+
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .ticker-track::-webkit-scrollbar { display: none; }
+}
