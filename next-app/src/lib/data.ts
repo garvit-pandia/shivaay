@@ -194,3 +194,43 @@ export const serviceOptions = [
   "Third Party Logistics (3PL)",
   "Other / Multiple Services",
 ];
+
+export interface TickerItem {
+  event: string;
+  ref: string;
+  route: string;
+  time: string;
+}
+
+export const tickerItems: TickerItem[] = [
+  { event: "Customs cleared",        ref: "MSCU-4729384", route: "Mundra → Ludhiana",      time: "8m ago" },
+  { event: "ICEGATE filing approved", ref: "SH-2841",     route: "Ludhiana export",         time: "14m ago" },
+  { event: "Container loaded",       ref: "TCLU-8816204", route: "Mumbai → Hamburg",        time: "23m ago" },
+  { event: "BL issued",              ref: "HLCU-2024477", route: "Mundra sea FCL",          time: "31m ago" },
+  { event: "Dispatched",             ref: "CON-7702341", route: "Delhi ICD → Ludhiana",     time: "42m ago" },
+  { event: "Arrived",                ref: "MSKU-1190382", route: "Mundra port",             time: "1h ago" },
+  { event: "Door delivery",          ref: "TRK-5520",    route: "Mumbai → Pune",           time: "1h ago" },
+  { event: "Customs cleared",        ref: "TEMU-6641029", route: "Amritsar border",         time: "1h ago" },
+  { event: "Loaded",                 ref: "MAEU-4470821", route: "Mundra → Rotterdam",      time: "2h ago" },
+  { event: "Filing approved",        ref: "SH-3018",     route: "Delhi ICD import",        time: "2h ago" },
+  { event: "Sailed",                 ref: "MSCU-7720193", route: "Mumbai → Jebel Ali",      time: "3h ago" },
+  { event: "Arrived",                ref: "CRXU-3001847", route: "Chennai port",            time: "3h ago" },
+  { event: "Dispatched",             ref: "TRK-9182",    route: "Ludhiana → Jalandhar",    time: "4h ago" },
+  { event: "Customs cleared",        ref: "TCLU-5592107", route: "Mundra → Delhi",          time: "5h ago" },
+  { event: "Booked",                 ref: "SH-4190",     route: "Ludhiana → Mundra FCL",   time: "6h ago" },
+];
+
+export interface Credential {
+  label: string;
+  value: string;
+}
+
+// DEMO VALUES — replace with real credentials before production.
+// Internally consistent: IEC and GSTIN share PAN prefix AALCS8394K.
+export const credentials: Credential[] = [
+  { label: "IEC Code",                  value: "AALCS8394K" },
+  { label: "Customs Broker License",    value: "CB/PUN/2021/00847" },
+  { label: "GSTIN",                     value: "03AALCS8394K1Z5" },
+  { label: "ISO 9001:2015",             value: "Certified" },
+  { label: "ISO 28000",                 value: "Certified" },
+];
