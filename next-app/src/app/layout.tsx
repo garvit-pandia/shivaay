@@ -4,6 +4,8 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
 import { ScrollReveal } from "@/components/layout/ScrollReveal";
+import { ShipmentTicker } from "@/components/layout/ShipmentTicker";
+import { ComplianceStrip } from "@/components/layout/ComplianceStrip";
 import { companyInfo } from "@/lib/data";
 import "./globals.css";
 
@@ -60,8 +62,10 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
+        <ShipmentTicker />
         <Navbar />
         <main id="main-content">{children}</main>
+        <ComplianceStrip />
         <Footer />
         <WhatsAppFloat />
         <ScrollReveal />
