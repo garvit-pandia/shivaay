@@ -1,5 +1,11 @@
 # Shivaay Logistics
 
+![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-38BDF8?logo=tailwindcss)
+![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?logo=vercel)
+
 Official website for **Shivaay Logistics** — customs broker and logistics facilitator based in Ludhiana, Punjab. 15+ years serving businesses across India with customs clearance, freight forwarding, and end-to-end supply chain solutions.
 
 **Live site:** [shivaaylogistics.in](https://www.shivaaylogistics.in/)
@@ -14,10 +20,12 @@ Official website for **Shivaay Logistics** — customs broker and logistics faci
 
 ## Pages
 
-- `/` — Hero, services overview, coverage network, mission, testimonials, CTA
-- `/services` — All 12 forwarding services, gallery, CTA
-- `/contact` — Office info, inquiry form, office map, phone CTA
-- `/not-found` — Custom 404
+| Route | Description |
+|-------|-------------|
+| `/` | Hero, services overview, coverage network, mission, testimonials, CTA |
+| `/services` | All 12 forwarding services, gallery, CTA |
+| `/contact` | Office info, inquiry form, office map, phone CTA |
+| `/not-found` | Custom 404 |
 
 ## Development
 

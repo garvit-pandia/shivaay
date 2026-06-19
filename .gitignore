@@ -1,6 +1,8 @@
+# OS files
 .DS_Store
 Thumbs.db
 .DS_Store*
+Desktop.ini
 
 # Logs
 *.log
@@ -10,7 +12,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Env
+# Environment variables
 .env
 .env.local
 .env.*.local
@@ -33,6 +35,7 @@ next-env.d.ts
 test-results/
 playwright-report/
 playwright/.cache/
+coverage/
 
 # Screenshots (dev artifacts)
 screenshot-*.png
@@ -44,11 +47,22 @@ screenshots/
 # Brainstorming visual companion sessions
 .superpowers/
 
-# IDE / OS
+# Agent skills (user-level, managed globally)
+.agents/skills/
+
+# IDE / Editor
 .vscode/
 .idea/
 *.swp
 *.swo
+*.sublime-workspace
+*.sublime-project
+
+# Misc
+*.tgz
+*.tar.gz
+.cache/
+.vercel/
 
 # Legacy vanilla HTML — deleted on redesign-v2, defensively ignored
 /contact.html
