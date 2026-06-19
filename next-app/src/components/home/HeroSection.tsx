@@ -1,3 +1,6 @@
+import { AnimatedCounter } from "./AnimatedCounter";
+import { heroStats } from "@/lib/data";
+
 export function HeroSection() {
   return (
     <section className="bg-white" aria-labelledby="hero-heading">
@@ -27,17 +30,10 @@ export function HeroSection() {
             <a href="/services" className="btn-outline">Our Services</a>
           </div>
 
-          {/* Micro stats — no cards, just type */}
-          <div className="flex gap-10 pt-6 border-t border-border">
-            {[
-              { value: "15+", label: "Years Experience" },
-              { value: "800+", label: "Happy Clients" },
-              { value: "5", label: "Major Ports" },
-            ].map((stat) => (
-              <div key={stat.label}>
-                <div className="text-2xl font-bold text-ink">{stat.value}</div>
-                <div className="text-xs text-ink-dim mt-0.5">{stat.label}</div>
-              </div>
+          {/* Micro stats — animated counters, no cards, just type */}
+          <div className="flex flex-wrap gap-6 sm:gap-8 lg:gap-10 pt-6 border-t border-border">
+            {heroStats.map((stat, i) => (
+              <AnimatedCounter key={stat.label} stat={stat} index={i} />
             ))}
           </div>
         </div>
