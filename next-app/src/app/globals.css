@@ -177,6 +177,18 @@ body {
   }
 }
 
+/* ---- Animated stat counters ---- */
+.stat-counter {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stat-counter {
+    transition: none;
+  }
+}
+
 /* ---- Leaflet overrides (light map) ---- */
 .leaflet-container {
   background: #FAF8F4 !important;
