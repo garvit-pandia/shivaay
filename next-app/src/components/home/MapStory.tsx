@@ -6,13 +6,14 @@ import { IndiaMapSVG } from "./IndiaMapSVG";
 
 export function MapStory() {
   const [activeStep, setActiveStep] = useState(0);
-  const [reduceMotion, setReduceMotion] = useState(false);
+  const [reduceMotion, setReduceMotion] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
   const blockRefs = useRef<Array<HTMLElement | null>>([]);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduceMotion(mq.matches);
     const onChange = () => setReduceMotion(mq.matches);
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);
