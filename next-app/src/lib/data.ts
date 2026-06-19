@@ -32,6 +32,21 @@ export interface WhyUsItem {
   description: string;
 }
 
+export interface Stat {
+  value: number;
+  suffix: string;
+  label: string;
+  compact?: boolean;
+}
+
+export const heroStats: Stat[] = [
+  { value: 15, suffix: "+", label: "Years Experience" },
+  { value: 800, suffix: "+", label: "Happy Clients" },
+  { value: 5, suffix: "", label: "Major Ports" },
+  { value: 12000, suffix: "+", label: "Shipments Cleared", compact: true },
+  { value: 1200, suffix: "+", label: "Containers Moved" },
+];
+
 export const cities: Record<string, City> = {
   Ludhiana: {
     name: "Ludhiana",
