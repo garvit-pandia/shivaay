@@ -15,4 +15,5 @@ This version has breaking changes — APIs, conventions, and file structure may 
 ### Verification gotchas
 - Scroll-reveal pages (`.reveal`): scroll through before screenshots, or below-fold cards look "missing" (opacity 0 until observed)
 - Google Maps embed iframes need ~5s for tiles in headless browsers
+- Coverage map tiles: Esri Light Gray Canvas (keyless). Do not switch back to Carto — `basemaps.cartocdn.com` now watermarks keyless usage with "API KEY REQUIRED"
 

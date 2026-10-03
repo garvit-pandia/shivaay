@@ -9,7 +9,7 @@ Official website for **Shivaay Logistics** — customs broker and logistics faci
 - **Next.js 16** (App Router) + **React 19** + **TypeScript**
 - **Tailwind CSS v4**
 - **Lucide** icons
-- **OpenStreetMap** for the coverage map — shows complete Indian national boundary via embed (free, no API key)
+- **Esri Light Gray Canvas** basemap for the coverage map (Base + Reference overlay, no API key required)
 - Hosted on Vercel
 
 ## Pages

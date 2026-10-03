@@ -44,6 +44,9 @@
 - Fresh clones may have no git identity — check `git config user.email` before the first commit and set repo-local `user.name`/`user.email` to match the existing commit author (`git log -1 --format='%an <%ae>'`).
 - Vercel preview deployments are auth-protected (302 → `vercel.com/sso-api`). `curl` cannot verify them — verify locally (build + browser E2E); humans open previews while logged into Vercel.
 
+## External Services
+- Tile providers can change policy without notice: Carto began returning "API KEY REQUIRED" watermarked placeholder tiles for keyless usage (Oct 2026) — the coverage map broke with no code change. Swapped to Esri Light Gray Canvas (Base + Reference overlay, keyless). If a map goes blank/watermarked, verify the provider response and swap the `TileLayer` URL rather than debugging the app.
+
 ## Verification Tooling
 - Server-rendered HTML arrives as one long line: `grep -c` counts matching *lines* (always 1). Use `grep -o … | wc -l` for occurrence counts.
 - Scroll-reveal pages must be scrolled through and settled before screenshots, or below-fold `.reveal` cards appear missing (phantom bugs).
