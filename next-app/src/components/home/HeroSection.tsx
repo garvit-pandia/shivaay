@@ -21,15 +21,15 @@ export function HeroSection() {
       <div className="absolute inset-y-0 right-0 w-full lg:w-[62%] opacity-30 lg:opacity-100">
         <GlobeHero />
         <span
-          className="mono-label text-ink-dim/60 absolute bottom-8 right-8 hidden lg:block pointer-events-none"
+          className="mono-label text-ink-dim/60 absolute bottom-8 right-28 hidden lg:block pointer-events-none"
           aria-hidden="true"
         >
           Drag to spin
         </span>
       </div>
-      {/* readability scrim */}
+      {/* readability scrim — heavy on the text side, clear over the globe */}
       <div
-        className="absolute inset-0 bg-gradient-to-r from-cream via-cream/90 to-cream/20 lg:via-cream/45"
+        className="absolute inset-0 bg-gradient-to-r from-cream via-cream/75 to-transparent lg:via-cream/30"
         aria-hidden="true"
       />
 

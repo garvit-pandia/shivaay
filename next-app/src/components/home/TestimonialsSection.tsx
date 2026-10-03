@@ -2,6 +2,7 @@
 
 import { testimonials } from "@/lib/data";
 import { Conveyor } from "@/components/motion/Conveyor";
+import Link from "next/link";
 
 const CARD_COLORS = ["#0F766E", "#134E4A", "#0D9488"];
 
@@ -49,6 +50,33 @@ export function TestimonialsSection() {
             </div>
           </div>
         ))}
+        {/* branded filler cards — keep the conveyor wide enough that no
+            testimonial ever repeats within a single viewport */}
+        <div className="cargo-card bg-cream-deep border border-border !text-ink">
+          <div className="cargo-label !border-ink/25 text-ink-dim" aria-hidden="true">
+            <span>Shivaay · Record</span>
+            <span>Est. 2009</span>
+          </div>
+          <div className="font-serif text-5xl text-teal leading-none">800+</div>
+          <p className="text-sm text-ink-dim m-0">
+            happy clients across Ludhiana, Delhi, Mumbai, and Mundra.
+          </p>
+        </div>
+        <Link
+          href="/contact"
+          className="cargo-card corrugated-strong bg-orange no-underline"
+        >
+          <div className="cargo-label" aria-hidden="true">
+            <span>Next shipment</span>
+            <span>Yours →</span>
+          </div>
+          <p className="font-serif text-2xl leading-snug text-white m-0">
+            Your cargo could be the next one moving.
+          </p>
+          <span className="mono-label text-[10px] text-white/85 mt-auto">
+            Get a quote →
+          </span>
+        </Link>
       </Conveyor>
 
       <p className="mono-label text-[9px] text-ink-dim text-center mt-8">

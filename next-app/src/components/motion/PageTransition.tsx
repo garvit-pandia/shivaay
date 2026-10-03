@@ -71,8 +71,8 @@ export function PageTransition() {
       className={`page-wipe ${stage !== "idle" ? "active" : ""} ${stage}`}
       aria-hidden="true"
     >
-      <div className="wipe-panel left corrugated" />
-      <div className="wipe-panel right corrugated" />
+      <div className="wipe-panel left corrugated-strong" />
+      <div className="wipe-panel right corrugated-strong" />
     </div>
   );
 }

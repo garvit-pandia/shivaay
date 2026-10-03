@@ -31,8 +31,8 @@ const RouteLines = () => {
             ]}
             pathOptions={{
               color: "#0F766E",
-              weight: 2.5,
-              opacity: 0.6,
+              weight: 3,
+              opacity: 0.85,
               dashArray: "10 8",
             }}
           />

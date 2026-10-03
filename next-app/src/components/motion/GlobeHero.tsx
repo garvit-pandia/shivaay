@@ -61,7 +61,7 @@ export function GlobeHero() {
           0.1,
           100
         );
-        camera.position.z = 4.7;
+        camera.position.z = 7.6;
 
         const group = new THREE.Group();
         scene.add(group);
@@ -84,9 +84,9 @@ export function GlobeHero() {
           dotGeo,
           new THREE.PointsMaterial({
             color: 0x0f766e,
-            size: 0.018,
+            size: 0.028,
             transparent: true,
-            opacity: 0.5,
+            opacity: 0.55,
             sizeAttenuation: true,
           })
         );
@@ -112,7 +112,7 @@ export function GlobeHero() {
           cityVecs[city.name] = v;
 
           const marker = new THREE.Mesh(
-            new THREE.SphereGeometry(city.isHub ? 0.045 : 0.03, 16, 16),
+            new THREE.SphereGeometry(city.isHub ? 0.05 : 0.034, 16, 16),
             new THREE.MeshBasicMaterial({
               color: city.isHub ? 0xea580c : 0x0f766e,
             })
@@ -121,33 +121,39 @@ export function GlobeHero() {
           group.add(marker);
           markers.push(marker);
 
-          // Label sprite
-          const canvas = document.createElement("canvas");
-          canvas.width = 512;
-          canvas.height = 128;
-          const ctx = canvas.getContext("2d");
-          if (ctx) {
-            ctx.font = "700 52px 'JetBrains Mono', monospace";
-            ctx.fillStyle = city.isHub ? "#EA580C" : "#1E1B18";
-            ctx.textBaseline = "middle";
-            ctx.fillText(city.label.toUpperCase(), 10, 64);
-            const tex = new THREE.CanvasTexture(canvas);
-            tex.anisotropy = 4;
-            const sprite = new THREE.Sprite(
-              new THREE.SpriteMaterial({
-                map: tex,
-                transparent: true,
-                opacity: 0.95,
-                depthTest: false,
-              })
-            );
-            const w = 0.14 * (city.label.length * 0.62 + 0.4);
-            sprite.scale.set(w, 0.14 * 0.9, 1);
-            sprite.position.copy(
-              v.clone().multiplyScalar(1.06).add(new THREE.Vector3(0, 0.075, 0))
-            );
-            sprite.renderOrder = 10;
-            group.add(sprite);
+          // Label sprite — hub only (cities cluster on a globe; the
+          // Leaflet coverage map carries the full set of labels)
+          if (city.isHub) {
+            const canvas = document.createElement("canvas");
+            canvas.width = 512;
+            canvas.height = 128;
+            const ctx = canvas.getContext("2d");
+            if (ctx) {
+              ctx.font = "700 52px 'JetBrains Mono', monospace";
+              ctx.fillStyle = "#EA580C";
+              ctx.textBaseline = "middle";
+              ctx.fillText(city.label.toUpperCase(), 10, 64);
+              const tex = new THREE.CanvasTexture(canvas);
+              tex.anisotropy = 4;
+              const sprite = new THREE.Sprite(
+                new THREE.SpriteMaterial({
+                  map: tex,
+                  transparent: true,
+                  opacity: 0.95,
+                  depthTest: false,
+                })
+              );
+              const w = 0.15 * (city.label.length * 0.62 + 0.4);
+              sprite.scale.set(w, 0.15 * 0.9, 1);
+              sprite.position.copy(
+                v
+                  .clone()
+                  .multiplyScalar(1.08)
+                  .add(new THREE.Vector3(0, 0.16, 0))
+              );
+              sprite.renderOrder = 10;
+              group.add(sprite);
+            }
           }
         });
 

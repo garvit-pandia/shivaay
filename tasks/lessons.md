@@ -51,3 +51,13 @@
 - Server-rendered HTML arrives as one long line: `grep -c` counts matching *lines* (always 1). Use `grep -o … | wc -l` for occurrence counts.
 - Scroll-reveal pages must be scrolled through and settled before screenshots, or below-fold `.reveal` cards appear missing (phantom bugs).
 - Google Maps iframes need several seconds to load tiles in headless browsers; a blank map early on is not proof of failure.
+
+## Immersive Redesign (Oct 2026)
+- `style={{ background: color }}` shorthand wipes `background-image` from motif classes (`.corrugated`) — always use `backgroundColor` longhand when combining inline color with class textures.
+- `Math.random()` in a `useState` initializer causes SSR/client hydration mismatch (dev "N issues" badge) — use a seeded PRNG (mulberry32) for initial values; effect-internal randomness is fine.
+- Playwright `fullPage: true` screenshots defeat scroll-reveal animations (below-fold `.reveal` cards shoot invisible) — use scroll-settle loops + viewport shots per section.
+- Preloader capture needs a FRESH browser context (sessionStorage `sl-seen` skips it on repeat) and sub-1.5s timing, or you shoot the hero and think the preloader is broken.
+- Headless WebGL needs `--enable-unsafe-swiftshader --use-angle=swiftshader` flags, else three.js canvases mount at 0 size and look like code bugs.
+- `mask-image` with data-URI turbulence SVG can render elements fully transparent in Chromium — dropped it for the stamp badge rather than debugging the filter.
+- Tailwind v4 cascade layers: unlayered author CSS (e.g. `.mono-label { font-size }`) OVERRIDES `text-*` utilities — put component defaults in `@layer components` so utilities still win.
+- Ephemeral static-export preview: `python3 -m http.server <free-51xx>` inside `next-app/out/` verifies the real production build (no dev overlay, real `.html` URLs); kill it after the run.

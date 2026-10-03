@@ -56,14 +56,14 @@ export function Preloader() {
       </div>
 
       {/* Container doors */}
-      <div className="preloader-door left corrugated">
+      <div className="preloader-door left corrugated-strong">
         <div className="flex flex-col items-end gap-3 pr-6 text-cream">
           <span className="mono-label text-xs opacity-80">Shivaay</span>
           <span className="barcode block h-8 w-24 text-cream/80" />
           <span className="mono-label text-[9px] opacity-60">Waybill № 116 · LDH</span>
         </div>
       </div>
-      <div className="preloader-door right corrugated">
+      <div className="preloader-door right corrugated-strong">
         <div className="flex flex-col items-start gap-3 pl-6 text-cream">
           <span className="mono-label text-xs opacity-80">Logistics</span>
           <span className="mono-label text-[9px] opacity-60">Customs Broker · Est. 2009</span>

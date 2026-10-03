@@ -161,7 +161,7 @@ export function CratesField() {
             ref={(el) => {
               crateRefs.current[i] = el;
             }}
-            className="crate corrugated"
+            className="crate corrugated-strong"
             style={{
               width: c.size,
               height: c.size,
