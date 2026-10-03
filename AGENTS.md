@@ -19,6 +19,14 @@ Project context for agent sessions in this repo. The workflow rules below still 
 - `docs/resources-source-manifest.md` — provenance for downloadable documents
 - `tasks/lessons.md` — lessons/pitfalls (update after any correction)
 
+## Immersive redesign (in progress)
+- **Branch:** `redesign/immersive-2026` (off `feat/resources-section`) — all redesign work lands here; `main` stays production-safe
+- **Preview:** every push auto-deploys a Vercel preview (auth-protected); client reviews there before any merge
+- **Spec:** `docs/superpowers/specs/2026-10-03-immersive-redesign-design.md` · **Plan:** `docs/superpowers/plans/2026-10-03-immersive-redesign-plan.md`
+- **Motion components:** `next-app/src/components/motion/` (Preloader, Cursor, PageTransition, GlobeHero, RouteSpine, Conveyor, CratesField, Odometer, LiveTicker) — all client-only, lazy-loaded, reduced-motion safe
+- **Motif classes** (in `globals.css`): `corrugated` / `corrugated-strong`, `waybill`, `barcode`, `stamp-badge`, `mono-label`, `bg-blueprint` — pair with `backgroundColor` (never `background` shorthand) so textures survive inline colors
+- **three.js** is a lazy async chunk for the homepage hero only — never import it statically, or every page pays ~185KB gz
+
 ## Workflow Orchestration
 
 ### 1. Plan Mode Default
