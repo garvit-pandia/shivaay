@@ -2,6 +2,7 @@
 
 import { testimonials } from "@/lib/data";
 import { Conveyor } from "@/components/motion/Conveyor";
+import { SplitReveal } from "@/components/motion/SplitReveal";
 import Link from "next/link";
 
 const CARD_COLORS = ["#0F766E", "#134E4A", "#0D9488"];
@@ -15,13 +16,13 @@ export function TestimonialsSection() {
     >
       <div className="mx-auto max-w-[1280px] px-6 mb-12">
         <p className="mono-label text-[10px] text-orange mb-3">
-          Manifest · 04 — References
+          Manifest · 05 — References
         </p>
         <h2
           id="testimonials-heading"
           className="font-serif text-3xl lg:text-5xl font-medium text-ink"
         >
-          Trusted by businesses
+          <SplitReveal text="Trusted by businesses" />
         </h2>
       </div>
 
@@ -80,7 +81,15 @@ export function TestimonialsSection() {
       </Conveyor>
 
       <p className="mono-label text-[9px] text-ink-dim text-center mt-8">
-        Drag the conveyor · auto-rolls
+        Drag the conveyor · auto-rolls ·{" "}
+        <Link
+          href="https://wa.me/918847467790?text=Hi%20Shivaay%20Logistics%2C%20I%20want%20to%20share%20my%20experience%20working%20with%20you."
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-teal hover:text-orange transition-colors underline underline-offset-2"
+        >
+          cleared with us? leave a review
+        </Link>
       </p>
     </section>
   );

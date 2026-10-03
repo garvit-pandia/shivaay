@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { Icon } from "@/components/ui/Icon";
+import { companyInfo } from "@/lib/data";
 
 const headingClass = "mono-label text-[11px] text-[#FDBA74] mb-4";
 const linkClass = "text-white/75 text-sm hover:text-white transition-colors no-underline";
@@ -18,6 +19,10 @@ export function Footer() {
           </Link>
           <p className="text-white/70 text-sm leading-relaxed mt-3 max-w-xs">
             Pan-India customs clearance and freight forwarding. Trusted by 800+ businesses across Ludhiana, Delhi, Mumbai, and Mundra.
+          </p>
+          <p className="mono-label text-[10px] text-[#FDBA74] mt-4">
+            Licensed Customs Broker
+            {companyInfo.chaLicense ? ` · CHA ${companyInfo.chaLicense}` : ""}
           </p>
         </div>
 

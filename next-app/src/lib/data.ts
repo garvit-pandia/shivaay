@@ -161,7 +161,61 @@ export const companyInfo = {
   description: "Shivaay Logistics is a trusted customs broker and logistics facilitator based in Ludhiana, Punjab. We serve businesses across India with reliable, cost-effective freight solutions.",
   phone: "+918847467790",
   whatsapp: "+918847467790",
+  // TODO(client): fill in the CHA license number — the hero badge and
+  // footer render "Licensed Customs Broker" without a number until set.
+  chaLicense: "",
 };
+
+export interface Faq {
+  q: string;
+  a: string;
+}
+
+export const servicesFaqs: Faq[] = [
+  {
+    q: "What documents do I need for customs clearance?",
+    a: "Typically your IEC, GST registration, invoice, packing list, and bill of lading or airway bill. Product-specific shipments may need FSSAI, BIS, or drug-controller NOCs. Share your invoice on WhatsApp and we will confirm the exact list for your cargo before it sails.",
+  },
+  {
+    q: "How long does customs clearance take?",
+    a: "A clean filing with complete documents usually clears in 1–3 working days at most ports and ICDs. Delays almost always come from document mismatches or examination holds — we pre-check every filing so your shipment stays in the green channel.",
+  },
+  {
+    q: "How do you help avoid detention and demurrage?",
+    a: "We file the bill of entry before the cargo lands wherever possible, track vessel arrival daily, and coordinate transport the moment the out-of-charge is issued. Most of our clients pay zero detention, most of the time.",
+  },
+  {
+    q: "Who pays the customs duty — you or us?",
+    a: "You do, directly to the government. We compute the exact duty from the current tariff, share the challan with you for approval, and only debit after you confirm. No handling margins hidden inside duty payments.",
+  },
+  {
+    q: "Do you handle both imports and exports?",
+    a: "Yes. Imports (clearance, duty, last-mile), exports (shipping bill, drawback/RODTEP paperwork, FCL/LCL stuffing), and domestic door-to-door across all four freight modes.",
+  },
+  {
+    q: "Can I track my shipment?",
+    a: "Yes — you get milestone updates on WhatsApp (vessel arrival, filing, examination, out-of-charge, dispatch) plus live tracking links for road movement. One message reaches the person handling your file, not a call center.",
+  },
+];
+
+export const contactFaqs: Faq[] = [
+  {
+    q: "How fast will I get a quote?",
+    a: "Within 24 hours on working days — usually much faster. Share your invoice, packing list, and the load/discharge ports and we will revert with an all-in landed-cost estimate.",
+  },
+  {
+    q: "What are your working hours?",
+    a: "Monday to Saturday, 9:00 AM to 7:00 PM IST. For cargo stuck at port over a weekend, message us on WhatsApp — urgent clearance does not wait for Monday.",
+  },
+  {
+    q: "I have never imported before. Where do I start?",
+    a: "With a 10-minute call. We will tell you whether you need an IEC, what your product's duty rate is, and the cheapest compliant route — before you spend a rupee. First-time importers are a large part of our practice.",
+  },
+  {
+    q: "Which ports do you cover?",
+    a: "Our home base is Ludhiana (ICD/CFS), with regular clearance at Mundra, Nhava Sheva (Mumbai), Delhi (ICD + air cargo), and Amritsar. Other gateways can be handled through partner brokers.",
+  },
+];
 
 export const serviceOptions = [
   "Customs Clearance",

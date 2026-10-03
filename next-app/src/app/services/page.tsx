@@ -3,6 +3,8 @@ import { ServiceGrid } from "@/components/services/ServiceGrid";
 import { GalleryLightbox } from "@/components/services/GalleryLightbox";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { CTASection } from "@/components/home/CTASection";
+import { Faq } from "@/components/faq/Faq";
+import { servicesFaqs } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Our Services | Shivaay Logistics",
@@ -23,6 +25,23 @@ export default function ServicesPage() {
     <>
       <ServiceGrid />
       <GalleryLightbox />
+      <section
+        className="py-24 bg-cream border-t border-border"
+        aria-labelledby="services-faq-heading"
+      >
+        <div className="mx-auto max-w-[1280px] px-6">
+          <p className="mono-label text-[10px] text-orange mb-3">
+            Manifest — Questions
+          </p>
+          <h2
+            id="services-faq-heading"
+            className="font-serif text-3xl lg:text-5xl font-medium text-ink mb-12"
+          >
+            Before you ask
+          </h2>
+          <Faq items={servicesFaqs} idPrefix="services-faq" />
+        </div>
+      </section>
       <TestimonialsSection />
       <CTASection heading="Need a logistics partner?" buttonText="Get in Touch" />
     </>

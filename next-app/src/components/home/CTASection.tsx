@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CratesField } from "@/components/motion/CratesField";
+import { Magnetic } from "@/components/motion/Magnetic";
 
 interface CTASectionProps {
   heading?: string;
@@ -41,13 +42,15 @@ export function CTASection({
             <p className="text-base text-white/85 mb-8 max-w-md mx-auto leading-relaxed">
               {subtext}
             </p>
-            <Link
-              href={buttonHref}
-              data-stamp
-              className="inline-block bg-white text-teal font-semibold text-sm px-8 py-3.5 rounded-full hover:bg-ink hover:text-white transition-all duration-200"
-            >
-              {buttonText}
-            </Link>
+            <Magnetic>
+              <Link
+                href={buttonHref}
+                data-stamp
+                className="inline-block bg-white text-teal font-semibold text-sm px-8 py-3.5 rounded-full hover:bg-ink hover:text-white transition-all duration-200"
+              >
+                {buttonText}
+              </Link>
+            </Magnetic>
           </div>
         </div>
       </div>

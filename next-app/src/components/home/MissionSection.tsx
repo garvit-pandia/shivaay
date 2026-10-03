@@ -1,5 +1,6 @@
 import { Target, Eye, Handshake } from "lucide-react";
 import { Icon } from "@/components/ui/Icon";
+import { SplitReveal } from "@/components/motion/SplitReveal";
 
 const cards = [
   {
@@ -34,13 +35,13 @@ export function MissionSection() {
     >
       <div className="mx-auto max-w-[1280px] px-6">
         <p className="mono-label text-[10px] text-orange mb-3">
-          Manifest · 03 — Promise
+          Manifest · 04 — Promise
         </p>
         <h2
           id="promise-heading"
           className="font-serif text-3xl lg:text-5xl font-medium text-ink mb-12"
         >
-          Our promise
+          <SplitReveal text="Our promise" />
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {cards.map((c, i) => (

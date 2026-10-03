@@ -1,7 +1,10 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, BadgeCheck } from "lucide-react";
 import { GlobeHero } from "@/components/motion/GlobeHero";
 import { Odometer } from "@/components/motion/Odometer";
+import { Magnetic } from "@/components/motion/Magnetic";
+import { SplitReveal } from "@/components/motion/SplitReveal";
+import { companyInfo } from "@/lib/data";
 
 const stats = [
   { value: "15+", label: "Years Experience" },
@@ -43,23 +46,34 @@ export function HeroSection() {
             id="hero-heading"
             className="font-serif text-5xl sm:text-6xl lg:text-[4.6rem] font-normal text-ink leading-[1.04] tracking-tight mb-6"
           >
-            Customs brokerage with{" "}
-            <span className="italic text-teal">integrity</span>
+            <SplitReveal text="Customs brokerage with integrity" accent="integrity" />
           </h1>
           <p className="text-base lg:text-lg text-ink-dim leading-relaxed max-w-lg mb-9">
             Pan-India customs clearance and freight forwarding. Zero detention,
             transparent pricing, real-time tracking. Ludhiana &middot; Delhi
             &middot; Mumbai &middot; Mundra.
           </p>
-          <div className="flex flex-wrap gap-4 mb-12">
-            <Link href="/contact" className="btn-primary" data-stamp>
-              Get a Quote
-              <ArrowRight size={16} aria-hidden="true" />
-            </Link>
-            <Link href="/services" className="btn-outline">
-              Our Services
-            </Link>
+          <div className="flex flex-wrap gap-4 mb-7">
+            <Magnetic>
+              <Link href="/contact" className="btn-primary" data-stamp>
+                Get a Quote
+                <ArrowRight size={16} aria-hidden="true" />
+              </Link>
+            </Magnetic>
+            <Magnetic>
+              <Link href="/services" className="btn-outline">
+                Our Services
+              </Link>
+            </Magnetic>
           </div>
+          {/* CHA trust chip — number appears once the client shares it */}
+          <p className="inline-flex items-center gap-2 border border-teal/30 bg-teal-tint rounded-full px-4 py-1.5 mb-12">
+            <BadgeCheck size={14} className="text-teal" aria-hidden="true" />
+            <span className="mono-label text-[10px] text-teal">
+              Licensed Customs Broker
+              {companyInfo.chaLicense ? ` · CHA ${companyInfo.chaLicense}` : ""}
+            </span>
+          </p>
 
           {/* Micro stats — odometer roll */}
           <div className="flex gap-10 lg:gap-14 pt-7 border-t border-ink/10">

@@ -3,6 +3,8 @@ import { ContactInfo } from "@/components/contact/ContactInfo";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { OfficeMap } from "@/components/contact/OfficeMap";
 import { CTASection } from "@/components/home/CTASection";
+import { Faq } from "@/components/faq/Faq";
+import { contactFaqs } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Contact Us | Shivaay Logistics",
@@ -38,6 +40,23 @@ export default function ContactPage() {
       </section>
 
       <OfficeMap />
+      <section
+        className="py-24 bg-cream border-t border-border"
+        aria-labelledby="contact-faq-heading"
+      >
+        <div className="mx-auto max-w-[1280px] px-6">
+          <p className="mono-label text-[11px] text-teal mb-4">
+            Questions · Answered upfront
+          </p>
+          <h2
+            id="contact-faq-heading"
+            className="font-serif text-3xl lg:text-4xl font-medium text-ink mb-10"
+          >
+            Good to know
+          </h2>
+          <Faq items={contactFaqs} idPrefix="contact-faq" />
+        </div>
+      </section>
       <CTASection heading="Need immediate assistance?" subtext="Call us directly for urgent customs clearance queries." buttonText="Call +91 88474-67790" buttonHref="tel:+918847467790" />
     </>
   );

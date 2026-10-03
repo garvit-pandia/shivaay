@@ -3,6 +3,7 @@ import * as Icons from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Icon as IconWrapper } from "@/components/ui/Icon";
 import { NetworkMapSection } from "./NetworkMapSection";
+import { SplitReveal } from "@/components/motion/SplitReveal";
 
 const iconMap: Record<string, LucideIcon> = {
   "shield-check": Icons.ShieldCheck,
@@ -22,13 +23,13 @@ export function WhyPartnerSection() {
       <div className="mx-auto max-w-[1280px] px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
         <div>
           <p className="mono-label text-[10px] text-orange mb-3">
-            Manifest · 02 — Why us
+            Manifest · 03 — Why us
           </p>
           <h2
             id="why-us-heading"
             className="font-serif text-3xl lg:text-5xl font-medium text-ink mb-8"
           >
-            Why partner with us
+            <SplitReveal text="Why partner with us" />
           </h2>
           <ul className="list-none m-0 p-0 space-y-5">
             {whyUsItems.map((item, i) => {

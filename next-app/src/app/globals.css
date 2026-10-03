@@ -1066,6 +1066,68 @@ html.preloaded .preloader {
   60%, 100% { top: 110%; }
 }
 
+/* ---- Scroll progress hairline ---- */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 8000;
+  background: linear-gradient(90deg, #0F766E, #0D9488 55%, #EA580C);
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
+}
+
+/* ---- Split-text reveal ---- */
+.split-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.split-word {
+  display: inline-block;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+/* hidden state only when JS runs (else content stays visible for no-JS/crawlers) */
+html.js .split-word {
+  transform: translateY(110%);
+}
+html.js .split-scope.split-in .split-word {
+  transform: translateY(0);
+}
+.split-word.split-accent {
+  font-style: italic;
+  color: #0F766E;
+}
+
+/* ---- FAQ accordion ---- */
+.faq-answer {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.35, 0.1, 0.2, 1);
+}
+/* collapsed state only when JS runs (answers stay readable without JS) */
+html.js .faq-answer {
+  grid-template-rows: 0fr;
+}
+html.js .faq-item.faq-open .faq-answer {
+  grid-template-rows: 1fr;
+}
+.faq-answer > div {
+  overflow: hidden;
+}
+.faq-item .faq-chevron {
+  transition: transform 0.3s;
+}
+.faq-item.faq-open .faq-chevron {
+  transform: rotate(180deg);
+}
+
 /* ---- Reduced motion (extend) ---- */
 @media (prefers-reduced-motion: reduce) {
   .marquee-strip,
@@ -1093,6 +1155,14 @@ html.preloaded .preloader {
   }
   .crate {
     display: none;
+  }
+  .split-word {
+    transform: none;
+    transition: none;
+  }
+  html.js .split-word {
+    transform: none;
+    transition: none;
   }
   .cursor-follow,
   .cursor-stamp-el {
