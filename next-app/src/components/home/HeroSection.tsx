@@ -1,46 +1,84 @@
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { GlobeHero } from "@/components/motion/GlobeHero";
+import { Odometer } from "@/components/motion/Odometer";
+
+const stats = [
+  { value: "15+", label: "Years Experience" },
+  { value: "800+", label: "Happy Clients" },
+  { value: "5", label: "Major Ports" },
+];
+
 export function HeroSection() {
   return (
-    <section className="bg-white" aria-labelledby="hero-heading">
-      <div className="mx-auto max-w-[1280px] px-6 pt-12 pb-20 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-        {/* Left: Hero image */}
-        <div className="relative aspect-[4/3] lg:aspect-[5/4] bg-cream rounded-2xl overflow-hidden order-2 lg:order-1">
-          <img
-            src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=1200&q=80"
-            alt="Cargo containers at port — Shivaay Logistics"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-        </div>
+    <section
+      className="relative overflow-hidden bg-cream"
+      aria-labelledby="hero-heading"
+    >
+      <div className="absolute inset-0 bg-blueprint" aria-hidden="true" />
 
-        {/* Right: Editorial type */}
-        <div className="order-1 lg:order-2">
-          <p className="text-[11px] font-semibold text-teal uppercase tracking-[0.2em] mb-4">
-            Customs Broker &middot; Ludhiana
+      {/* 3D globe — right side on desktop, soft backdrop on mobile */}
+      <div className="absolute inset-y-0 right-0 w-full lg:w-[62%] opacity-30 lg:opacity-100">
+        <GlobeHero />
+      </div>
+      {/* readability scrim */}
+      <div
+        className="absolute inset-0 bg-gradient-to-r from-cream via-cream/90 to-cream/20 lg:via-cream/45"
+        aria-hidden="true"
+      />
+
+      <div className="relative mx-auto max-w-[1280px] px-6 min-h-[94vh] flex items-center pt-24 pb-20">
+        <div className="max-w-2xl">
+          <p className="mono-label text-[11px] text-teal mb-6 flex items-center gap-2.5">
+            <span className="ticker-dot" aria-hidden="true" />
+            Customs Broker · Ludhiana
           </p>
-          <h1 id="hero-heading" className="font-serif text-4xl sm:text-5xl lg:text-[3.25rem] font-normal text-ink leading-[1.1] tracking-tight mb-6">
-            Customs brokerage with <span className="italic text-teal">integrity</span>
+          <h1
+            id="hero-heading"
+            className="font-serif text-5xl sm:text-6xl lg:text-[4.6rem] font-normal text-ink leading-[1.04] tracking-tight mb-6"
+          >
+            Customs brokerage with{" "}
+            <span className="italic text-teal">integrity</span>
           </h1>
-          <p className="text-base text-ink-dim leading-relaxed max-w-lg mb-8">
-            Pan-India customs clearance and freight forwarding. Zero detention, transparent pricing, real-time tracking. Ludhiana &middot; Delhi &middot; Mumbai &middot; Mundra.
+          <p className="text-base lg:text-lg text-ink-dim leading-relaxed max-w-lg mb-9">
+            Pan-India customs clearance and freight forwarding. Zero detention,
+            transparent pricing, real-time tracking. Ludhiana &middot; Delhi
+            &middot; Mumbai &middot; Mundra.
           </p>
-          <div className="flex flex-wrap gap-4 mb-10">
-            <a href="/contact" className="btn-primary">Get a Quote</a>
-            <a href="/services" className="btn-outline">Our Services</a>
+          <div className="flex flex-wrap gap-4 mb-12">
+            <Link href="/contact" className="btn-primary" data-stamp>
+              Get a Quote
+              <ArrowRight size={16} aria-hidden="true" />
+            </Link>
+            <Link href="/services" className="btn-outline">
+              Our Services
+            </Link>
           </div>
 
-          {/* Micro stats — no cards, just type */}
-          <div className="flex gap-10 pt-6 border-t border-border">
-            {[
-              { value: "15+", label: "Years Experience" },
-              { value: "800+", label: "Happy Clients" },
-              { value: "5", label: "Major Ports" },
-            ].map((stat) => (
+          {/* Micro stats — odometer roll */}
+          <div className="flex gap-10 lg:gap-14 pt-7 border-t border-ink/10">
+            {stats.map((stat) => (
               <div key={stat.label}>
-                <div className="text-2xl font-bold text-ink">{stat.value}</div>
-                <div className="text-xs text-ink-dim mt-0.5">{stat.label}</div>
+                <Odometer
+                  value={stat.value}
+                  className="text-3xl lg:text-4xl font-grotesk font-bold text-ink"
+                />
+                <div className="mono-label text-[9px] text-ink-dim mt-1.5">
+                  {stat.label}
+                </div>
               </div>
             ))}
           </div>
         </div>
+      </div>
+
+      {/* scroll cue */}
+      <div
+        className="absolute bottom-7 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2.5"
+        aria-hidden="true"
+      >
+        <span className="mono-label text-[9px] text-ink-dim">Scroll</span>
+        <span className="scroll-cue block w-px h-10 bg-ink/15" />
       </div>
     </section>
   );

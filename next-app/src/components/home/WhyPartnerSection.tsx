@@ -14,10 +14,20 @@ const iconMap: Record<string, LucideIcon> = {
 
 export function WhyPartnerSection() {
   return (
-    <section className="py-24 bg-white border-t border-border" aria-labelledby="why-us-heading">
+    <section
+      className="py-24 bg-white border-t border-border"
+      aria-labelledby="why-us-heading"
+      data-station
+    >
       <div className="mx-auto max-w-[1280px] px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
         <div>
-          <h2 id="why-us-heading" className="font-serif text-3xl lg:text-4xl font-medium text-ink mb-8">
+          <p className="mono-label text-[10px] text-orange mb-3">
+            Manifest · 02 — Why us
+          </p>
+          <h2
+            id="why-us-heading"
+            className="font-serif text-3xl lg:text-5xl font-medium text-ink mb-8"
+          >
             Why partner with us
           </h2>
           <ul className="list-none m-0 p-0 space-y-5">
@@ -26,11 +36,20 @@ export function WhyPartnerSection() {
               return (
                 <li key={i} className="reveal flex items-start gap-4">
                   <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 bg-teal-tint">
-                    <IconWrapper icon={Icon} size={16} className="text-teal" aria-hidden={true} />
+                    <IconWrapper
+                      icon={Icon}
+                      size={16}
+                      className="text-teal"
+                      aria-hidden={true}
+                    />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-ink">{item.title}</h3>
-                    <p className="text-ink-dim text-sm mt-0.5">{item.description}</p>
+                    <h3 className="font-grotesk font-semibold text-ink">
+                      {item.title}
+                    </h3>
+                    <p className="text-ink-dim text-sm mt-0.5">
+                      {item.description}
+                    </p>
                   </div>
                 </li>
               );

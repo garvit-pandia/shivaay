@@ -1,4 +1,5 @@
 import { HeroSection } from "@/components/home/HeroSection";
+import { HomeShell } from "@/components/home/HomeShell";
 import { ServiceTags } from "@/components/home/ServiceTags";
 import { WhyPartnerSection } from "@/components/home/WhyPartnerSection";
 import { MissionSection } from "@/components/home/MissionSection";
@@ -23,12 +24,14 @@ export default function Home() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
-      <HeroSection />
-      <ServiceTags />
-      <WhyPartnerSection />
-      <MissionSection />
-      <TestimonialsSection />
-      <CTASection />
+      <HomeShell>
+        <HeroSection />
+        <ServiceTags />
+        <WhyPartnerSection />
+        <MissionSection />
+        <TestimonialsSection />
+        <CTASection />
+      </HomeShell>
     </>
   );
 }

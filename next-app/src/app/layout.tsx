@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Playfair_Display, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
 import { ScrollReveal } from "@/components/layout/ScrollReveal";
+import { Preloader } from "@/components/motion/Preloader";
+import { Cursor } from "@/components/motion/Cursor";
+import { PageTransition } from "@/components/motion/PageTransition";
 import { companyInfo } from "@/lib/data";
 import "./globals.css";
 
@@ -19,6 +22,20 @@ const playfair = Playfair_Display({
   display: "swap",
   weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
+});
+
+const grotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-grotesk",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+});
+
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+  weight: ["400", "500", "700"],
 });
 
 export const metadata: Metadata = {
@@ -49,22 +66,25 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`no-js ${inter.variable} ${playfair.variable}`}
+      className={`no-js ${inter.variable} ${playfair.variable} ${grotesk.variable} ${mono.variable}`}
       suppressHydrationWarning
     >
       <head>
         <meta name="theme-color" content="#FFFFFF" />
-        <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.replace('no-js','js')` }} />
+        <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.replace('no-js','js');try{if(sessionStorage.getItem('sl-seen')==='1')document.documentElement.classList.add('preloaded')}catch(e){}` }} />
       </head>
       <body className="min-h-screen antialiased overflow-x-hidden bg-white text-ink font-sans">
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
+        <Preloader />
         <Navbar />
         <main id="main-content">{children}</main>
         <Footer />
         <WhatsAppFloat />
         <ScrollReveal />
+        <Cursor />
+        <PageTransition />
       </body>
     </html>
   );

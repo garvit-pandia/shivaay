@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { LiveTicker } from "@/components/motion/LiveTicker";
 
 const NetworkMapClient = dynamic(
   () => import("./NetworkMap").then((mod) => ({ default: mod.NetworkMap })),
@@ -17,9 +18,12 @@ const NetworkMapClient = dynamic(
 export function NetworkMapSection() {
   return (
     <div>
-      <h2 className="font-serif text-3xl lg:text-4xl font-medium text-ink mb-8">
-        Our coverage network
-      </h2>
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-8">
+        <h2 className="font-serif text-3xl lg:text-4xl font-medium text-ink">
+          Our coverage network
+        </h2>
+        <LiveTicker />
+      </div>
       <div className="w-full aspect-[4/3] rounded-xl overflow-hidden border border-[#E8E4DB] isolate">
         <NetworkMapClient />
       </div>
