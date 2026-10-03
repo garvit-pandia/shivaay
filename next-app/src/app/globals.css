@@ -1074,11 +1074,13 @@ html.preloaded .preloader {
   .preloader-bar > span {
     animation: none !important;
   }
-  .preloader {
-    display: none;
+  html.js:not(.preloaded) .preloader,
+  html .preloader {
+    display: none !important;
   }
-  .page-wipe {
-    display: none;
+  .page-wipe,
+  .page-wipe.active {
+    display: none !important;
   }
   .container-card {
     opacity: 1;
