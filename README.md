@@ -53,6 +53,13 @@ npm run lint         # eslint
 
 See `docs/superpowers/specs/` for design specs and `docs/superpowers/plans/` for implementation plans.
 
+## Resources content
+
+The `/resources` pages are data-driven from `next-app/src/lib/resources.ts` (portal links, document checklists, download entries, port facilities).
+
+- Downloadable documents live in `next-app/public/downloads/`
+- Provenance (display titles, original filenames, sizes, SHA-256) is recorded in [`docs/resources-source-manifest.md`](docs/resources-source-manifest.md)
+
 ## Contact
 
 **Shivaay Logistics**
