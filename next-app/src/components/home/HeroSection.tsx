@@ -20,6 +20,12 @@ export function HeroSection() {
       {/* 3D globe — right side on desktop, soft backdrop on mobile */}
       <div className="absolute inset-y-0 right-0 w-full lg:w-[62%] opacity-30 lg:opacity-100">
         <GlobeHero />
+        <span
+          className="mono-label text-ink-dim/60 absolute bottom-8 right-8 hidden lg:block pointer-events-none"
+          aria-hidden="true"
+        >
+          Drag to spin
+        </span>
       </div>
       {/* readability scrim */}
       <div

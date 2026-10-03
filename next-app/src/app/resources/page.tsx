@@ -60,19 +60,22 @@ export default function ResourcesHubPage() {
         title="Resources"
         description="Transport and customs references — portals, document checklists, downloads and Ludhiana clearance facilities."
       />
-      <section className="pb-20 bg-white" aria-label="Resource sections">
+      <section className="pb-20 bg-cream" aria-label="Resource sections">
         <div className="mx-auto max-w-[1280px] px-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-4xl mx-auto">
-            {sections.map((section) => (
+            {sections.map((section, i) => (
               <Link
                 key={section.href}
                 href={section.href}
-                className="reveal flex items-start gap-4 bg-white border border-border rounded-2xl p-6 border-l-[3px] border-l-teal card-hover no-underline"
+                className="reveal waybill flex items-start gap-4 bg-white rounded-2xl p-6 card-hover no-underline"
               >
                 <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 bg-teal-tint">
                   <Icon icon={section.icon} size={18} className="text-teal" aria-hidden={true} />
                 </div>
                 <div>
+                  <p className="mono-label text-[9px] text-orange mb-1.5">
+                    Section {String(i + 1).padStart(2, "0")}
+                  </p>
                   <h2 className="font-semibold text-ink">{section.label}</h2>
                   <p className="text-ink-dim text-sm mt-1 leading-relaxed">{section.description}</p>
                 </div>

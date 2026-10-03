@@ -40,14 +40,15 @@ export function Navbar() {
   }, [menuOpen]);
 
   const linkClass = (active: boolean) =>
-    `text-sm font-medium transition-colors no-underline ${
+    `mono-label text-[11px] transition-colors no-underline ${
       active
         ? "text-teal relative after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-[2px] after:rounded after:bg-teal"
         : "text-ink-dim hover:text-teal"
     }`;
 
   return (
-    <nav className={`sticky top-0 ${menuOpen ? "z-[70]" : "z-50"} bg-white border-b border-border`} aria-label="Primary navigation">
+    <nav className={`sticky top-0 ${menuOpen ? "z-[70]" : "z-50"} nav-blur`} aria-label="Primary navigation">
+      <div className="h-[2px] w-full bg-gradient-to-r from-teal to-orange" aria-hidden="true" />
       <div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between px-6">
         <Link href="/" className="no-underline" aria-label="Shivaay Logistics Home">
           <span className="font-serif text-xl font-semibold text-ink tracking-tight">
@@ -98,7 +99,7 @@ export function Navbar() {
                       <Link
                         href={r.href}
                         onClick={() => setResourcesOpen(false)}
-                        className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm no-underline transition-colors ${
+                        className={`mono-label flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-[10px] no-underline transition-colors ${
                           pathname === r.href
                             ? "text-teal bg-teal-tint font-semibold"
                             : "text-ink-dim hover:text-teal hover:bg-teal-tint"
@@ -146,14 +147,14 @@ export function Navbar() {
 
       {/* Mobile Sheet */}
       {menuOpen && (
-        <div className="fixed inset-0 top-16 z-40 bg-white md:hidden overflow-y-auto pb-12">
+        <div className="fixed inset-0 top-16 z-40 bg-cream md:hidden overflow-y-auto pb-12">
           <ul className="flex flex-col items-center gap-6 pt-12 list-none m-0 p-0">
             {links.map((l) => (
               <li key={l.href}>
                 <Link
                   href={l.href}
                   onClick={() => setMenuOpen(false)}
-                  className={`text-lg font-semibold no-underline ${
+                  className={`mono-label text-base no-underline ${
                     pathname === l.href ? "text-teal" : "text-ink-dim"
                   }`}
                   {...(pathname === l.href ? { "aria-current": "page" as const } : {})}
@@ -164,7 +165,7 @@ export function Navbar() {
             ))}
 
             <li className="w-full max-w-xs">
-              <p className="text-ink-dim text-xs font-semibold uppercase tracking-[0.18em] text-center mb-4">
+              <p className="mono-label text-teal text-[10px] text-center mb-4">
                 Resources
               </p>
               <ul className="flex flex-col items-center gap-4 list-none m-0 p-0">
@@ -173,7 +174,7 @@ export function Navbar() {
                     <Link
                       href={r.href}
                       onClick={() => setMenuOpen(false)}
-                      className={`flex items-center gap-2 text-base font-semibold no-underline ${
+                      className={`mono-label flex items-center gap-2 text-xs no-underline ${
                         pathname === r.href ? "text-teal" : "text-ink-dim"
                       }`}
                       {...(pathname === r.href ? { "aria-current": "page" as const } : {})}
@@ -190,7 +191,7 @@ export function Navbar() {
               <Link
                 href="/contact"
                 onClick={() => setMenuOpen(false)}
-                className={`text-lg font-semibold no-underline ${
+                className={`mono-label text-base no-underline ${
                   contactActive ? "text-teal" : "text-ink-dim"
                 }`}
                 {...(contactActive ? { "aria-current": "page" as const } : {})}

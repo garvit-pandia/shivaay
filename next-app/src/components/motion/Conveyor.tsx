@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { Children, useEffect, useRef } from "react";
 
 /**
  * Infinite draggable conveyor. Auto-scrolls slowly, pauses on hover,
@@ -108,12 +108,18 @@ export function Conveyor({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
+  // Rotate the duplicate copy by half the items so the same card never
+  // shows twice within one viewport at the wrap seam.
+  const items = Children.toArray(children);
+  const offset = Math.floor(items.length / 2);
+  const rotated = [...items.slice(offset), ...items.slice(0, offset)];
+
   return (
     <div ref={wrapRef} className="conveyor" role="region" aria-label="Testimonials">
       <div ref={trackRef} className="conveyor-track">
-        <div className="flex gap-5 pr-5">{children}</div>
+        <div className="flex gap-5 pr-5">{items}</div>
         <div className="flex gap-5 pr-5" aria-hidden="true">
-          {children}
+          {rotated}
         </div>
       </div>
     </div>

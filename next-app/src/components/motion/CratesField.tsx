@@ -16,12 +16,24 @@ interface CrateState {
 
 const COLORS = [
   { bg: "#0F766E", fg: "#FAF8F4" },
-  { bg: "#1E1B18", fg: "#FAF8F4" },
+  { bg: "#134E4A", fg: "#FAF8F4" },
   { bg: "#EA580C", fg: "#FAF8F4" },
   { bg: "#0D9488", fg: "#FAF8F4" },
 ];
 
 const COUNT = 10;
+
+/** Deterministic seeded PRNG — identical on server and client (no hydration drift). */
+function mulberry32(seed: number) {
+  let a = seed;
+  return () => {
+    a |= 0;
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
 
 /**
  * Physics crates — mini containers drop from above and pile up behind
@@ -31,19 +43,30 @@ const COUNT = 10;
 export function CratesField() {
   const fieldRef = useRef<HTMLDivElement>(null);
   const crateRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [crates] = useState<CrateState[]>(() =>
-    Array.from({ length: COUNT }, (_, i) => ({
-      x: 0.06 + (0.88 / COUNT) * i + Math.random() * 0.04,
-      y: 0,
-      vx: 0,
-      vy: 0,
-      rot: Math.random() * 30 - 15,
-      vr: 0,
-      size: 34 + Math.random() * 26,
-      settled: false,
-      delay: i * 130 + Math.random() * 200,
-    }))
-  );
+  const [crates] = useState<CrateState[]>(() => {
+    const rand = mulberry32(0x5eed);
+    const perCluster = COUNT / 2;
+    return Array.from({ length: COUNT }, (_, i) => {
+      // Two edge clusters (6–30% and 70–94%) keep the center clear for the CTA
+      const cluster = Math.floor(i / perCluster);
+      const j = i % perCluster;
+      const x =
+        (cluster === 0 ? 0.06 : 0.7) +
+        (j / (perCluster - 1)) * 0.22 +
+        rand() * 0.02;
+      return {
+        x,
+        y: 0,
+        vx: 0,
+        vy: 0,
+        rot: rand() * 30 - 15,
+        vr: 0,
+        size: 34 + rand() * 26,
+        settled: false,
+        delay: i * 130 + rand() * 200,
+      };
+    });
+  });
 
   useEffect(() => {
     const field = fieldRef.current;
@@ -142,11 +165,24 @@ export function CratesField() {
             style={{
               width: c.size,
               height: c.size,
-              background: color.bg,
+              backgroundColor: color.bg,
               color: color.fg,
               transform: `translate(-100px, -200px)`,
             }}
-          />
+          >
+            <span
+              className="absolute left-1 top-0.5"
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "8px",
+                lineHeight: 1.2,
+                letterSpacing: "0.08em",
+                opacity: 0.7,
+              }}
+            >
+              SHV
+            </span>
+          </div>
         );
       })}
     </div>

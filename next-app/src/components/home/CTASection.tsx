@@ -20,7 +20,7 @@ export function CTASection({
       aria-labelledby="cta-heading"
       data-station
     >
-      <div className="mx-auto max-w-3xl px-6">
+      <div className="mx-auto max-w-[1280px] px-6">
         <div className="relative bg-teal rounded-3xl px-8 py-16 md:px-16 md:py-20 text-center overflow-hidden isolate">
           {/* physics crates drop behind the heading */}
           <CratesField />
@@ -28,7 +28,7 @@ export function CTASection({
             className="absolute inset-0 corrugated opacity-60 pointer-events-none"
             aria-hidden="true"
           />
-          <div className="relative">
+          <div className="relative z-10">
             <p className="mono-label text-[10px] text-white/70 mb-4">
               Final mile · LDH → Your port
             </p>

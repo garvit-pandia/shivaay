@@ -38,6 +38,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Anchor offset for the sticky navbar */
+section[id],
+[data-station] {
+  scroll-margin-top: 90px;
+}
+
 /* ---- Utility ---- */
 .font-serif-display {
   font-family: var(--font-serif);
@@ -535,11 +541,15 @@ body {
 .font-grotesk {
   font-family: var(--font-grotesk);
 }
-.mono-label {
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-weight: 500;
+/* In @layer components so text-* utilities still override the default size */
+@layer components {
+  .mono-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-weight: 500;
+  }
 }
 
 /* ---- Motifs ---- */
@@ -805,6 +815,16 @@ html.preloaded .preloader {
     radial-gradient(ellipse 40% 35% at 30% 70%, rgba(234, 88, 12, 0.06), transparent 70%),
     #FAF8F4;
 }
+/* Static no-WebGL composition; fades out once the canvas mounts */
+.globe-fallback-ui {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+.globe-fallback-ui.is-hidden {
+  opacity: 0;
+}
 
 /* ---- Route spine ---- */
 .spine-svg {
@@ -831,7 +851,7 @@ html.preloaded .preloader {
   z-index: 10;
   pointer-events: none;
   will-change: transform;
-  color: #0F766E;
+  color: #EA580C;
 }
 .spine-station {
   position: absolute;
@@ -877,21 +897,21 @@ html.preloaded .preloader {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #10b981;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+  background: #EA580C;
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.2);
   animation: ticker-pulse 2s ease-in-out infinite;
 }
 @keyframes ticker-pulse {
-  0%, 100% { box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2); }
-  50% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.08); }
+  0%, 100% { box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.2); }
+  50% { box-shadow: 0 0 0 6px rgba(234, 88, 12, 0.08); }
 }
 
 /* ---- Testimonial conveyor ---- */
 .conveyor {
   overflow: hidden;
   cursor: grab;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
 }
 .conveyor.dragging {
   cursor: grabbing;
@@ -940,6 +960,10 @@ html.preloaded .preloader {
 }
 .container-card {
   perspective: 1200px;
+  opacity: 1;
+}
+/* Only pre-hide when JS is on and can deal the cards in */
+.js .container-card:not(.dealt) {
   opacity: 0;
 }
 .js .container-card.dealt {
@@ -981,6 +1005,7 @@ html.preloaded .preloader {
   inset: 0;
   overflow: hidden;
   pointer-events: none;
+  z-index: 0;
 }
 .crate {
   position: absolute;
@@ -988,7 +1013,9 @@ html.preloaded .preloader {
   left: 0;
   border-radius: 6px;
   will-change: transform;
-  box-shadow: 0 8px 20px rgba(30, 27, 24, 0.12);
+  box-shadow:
+    inset 0 3px 0 rgba(0, 0, 0, 0.22),
+    0 8px 20px rgba(30, 27, 24, 0.12);
 }
 
 /* ---- Big marquee strip ---- */

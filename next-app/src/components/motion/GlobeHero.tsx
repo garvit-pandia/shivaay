@@ -51,6 +51,8 @@ export function GlobeHero() {
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.setSize(mount.clientWidth, mount.clientHeight);
         mount.appendChild(renderer.domElement);
+        // WebGL is up — fade out the static fallback composition
+        mount.querySelector(".globe-fallback-ui")?.classList.add("is-hidden");
 
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(
@@ -254,9 +256,9 @@ export function GlobeHero() {
 
         // --- Render loop ---
         let raf = 0;
-        const clock = new THREE.Clock();
+        const t0 = performance.now();
         const renderFrame = () => {
-          const t = clock.getElapsedTime();
+          const t = (performance.now() - t0) / 1000;
           if (idleSpin) targetRotY += 0.0016;
           group.rotation.y += (targetRotY - group.rotation.y) * 0.08;
           group.rotation.x += (targetRotX - group.rotation.x) * 0.08;
@@ -322,7 +324,36 @@ export function GlobeHero() {
 
   return (
     <div ref={mountRef} className="globe-wrap" aria-hidden="true">
-      <div className="globe-fallback" />
+      {/* Static no-WebGL composition: dashed trade arcs + city dots */}
+      <div className="globe-fallback-ui">
+        <div className="globe-fallback" />
+        <svg
+          className="absolute inset-0 h-full w-full opacity-50"
+          viewBox="0 0 800 600"
+          preserveAspectRatio="xMidYMid slice"
+          focusable="false"
+        >
+          <g
+            fill="none"
+            stroke="#0F766E"
+            strokeWidth="1.5"
+            strokeDasharray="7 9"
+            strokeLinecap="round"
+          >
+            <path d="M 180 310 Q 290 160 450 195" />
+            <path d="M 180 310 Q 380 250 565 305" />
+            <path d="M 180 310 Q 300 445 465 435" />
+            <path d="M 180 310 Q 425 135 645 235" />
+          </g>
+          <g fill="#0F766E">
+            <circle cx="450" cy="195" r="4.5" />
+            <circle cx="565" cy="305" r="4.5" />
+            <circle cx="465" cy="435" r="4.5" />
+            <circle cx="645" cy="235" r="4.5" />
+          </g>
+          <circle cx="180" cy="310" r="7" fill="#EA580C" />
+        </svg>
+      </div>
     </div>
   );
 }

@@ -9,7 +9,7 @@ export function PortsAccordion() {
   const [openId, setOpenId] = useState<number | null>(null);
 
   return (
-    <section className="pb-20 bg-white" aria-label="Clearance ports, ICDs and CFS facilities">
+    <section className="pb-20 bg-cream" aria-label="Clearance ports, ICDs and CFS facilities">
       <div className="mx-auto max-w-4xl px-6 space-y-4">
         {portFacilities.map((facility) => {
           const open = openId === facility.id;
@@ -26,6 +26,9 @@ export function PortsAccordion() {
                 className="w-full flex items-center justify-between gap-4 p-5 text-left cursor-pointer bg-transparent border-0"
               >
                 <div>
+                  <p className="mono-label text-[9px] text-orange mb-1.5">
+                    Facility № {String(facility.id).padStart(2, "0")}
+                  </p>
                   <h2 className="font-semibold text-ink text-sm sm:text-base">
                     {facility.name}
                   </h2>

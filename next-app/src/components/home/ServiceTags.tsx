@@ -11,7 +11,7 @@ const iconMap: Record<string, LucideIcon> = {
   "shield-check": ShieldCheck,
 };
 
-const CONTAINER_COLORS = ["#0F766E", "#1E1B18", "#0D9488", "#EA580C"];
+const CONTAINER_COLORS = ["#0F766E", "#134E4A", "#0D9488", "#EA580C"];
 
 export function ServiceTags() {
   return (
@@ -55,7 +55,7 @@ export function ServiceTags() {
                 {/* container top bar */}
                 <div
                   className="corrugated h-14 flex items-center justify-between px-4"
-                  style={{ background: color }}
+                  style={{ backgroundColor: color }}
                 >
                   <span className="mono-label text-[9px] text-white/90">
                     SHV-{String(i + 1).padStart(3, "0")}

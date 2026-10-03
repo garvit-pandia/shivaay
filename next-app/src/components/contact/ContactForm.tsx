@@ -43,7 +43,10 @@ export function ContactForm() {
 
   if (submitted) {
     return (
-      <div className="bg-white border border-border rounded-2xl p-10 text-center">
+      <div className="waybill rounded-2xl bg-white p-10 text-center">
+        <span className="stamp-badge w-24 h-24 text-[10px] text-teal mx-auto mb-6">
+          Received
+        </span>
         <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 bg-teal-tint">
           <Icon icon={Check} size={32} className="text-teal" />
         </div>
@@ -56,49 +59,59 @@ export function ContactForm() {
   }
 
   return (
-    <div className="bg-white border border-border rounded-2xl p-8">
-      <h2 className="text-2xl font-semibold text-ink mb-1">Send an Inquiry</h2>
+    <div className="bg-white border border-border rounded-2xl p-8 shadow-[0_1px_3px_rgba(30,27,24,0.04)]">
+      <p className="mono-label text-[10px] text-orange mb-2">Waybill · New Inquiry</p>
+      <h2 className="font-serif text-2xl font-medium text-ink mb-1">Send an Inquiry</h2>
       <p className="text-ink-dim text-sm mb-6">Fill the form below and we&apos;ll get back to you within 24 hours.</p>
 
-      <form onSubmit={handleSubmit} noValidate className="space-y-5">
+      <form onSubmit={handleSubmit} noValidate className="space-y-6">
         <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute left-[-9999px]" />
 
-        <div>
-          <label htmlFor="name" className="form-label">Full Name <span className="text-error">*</span></label>
-          <input id="name" name="name" type="text" className="form-input" placeholder="Your full name..." autoComplete="name" required />
-          {errors.name && <p className="form-error">{errors.name}</p>}
+        <div className="space-y-5">
+          <p className="mono-label text-[9px] text-ink-dim">01 · Sender</p>
+          <div>
+            <label htmlFor="name" className="form-label mono-label">Full Name <span className="text-error">*</span></label>
+            <input id="name" name="name" type="text" className="form-input" placeholder="Your full name..." autoComplete="name" required />
+            {errors.name && <p className="form-error">{errors.name}</p>}
+          </div>
+
+          <div>
+            <label htmlFor="company" className="form-label mono-label">Company Name</label>
+            <input id="company" name="company" type="text" className="form-input" placeholder="Your company (optional)..." autoComplete="organization" />
+          </div>
         </div>
 
-        <div>
-          <label htmlFor="company" className="form-label">Company Name</label>
-          <input id="company" name="company" type="text" className="form-input" placeholder="Your company (optional)..." autoComplete="organization" />
+        <div className="space-y-5 border-t-[1.5px] border-dashed border-ink/25 pt-6">
+          <p className="mono-label text-[9px] text-ink-dim">02 · Contact</p>
+          <div>
+            <label htmlFor="phone" className="form-label mono-label">Phone Number <span className="text-error">*</span></label>
+            <input id="phone" name="phone" type="tel" className="form-input" placeholder="Your phone number..." autoComplete="tel" required />
+            {errors.phone && <p className="form-error">{errors.phone}</p>}
+          </div>
+
+          <div>
+            <label htmlFor="email" className="form-label mono-label">Email Address</label>
+            <input id="email" name="email" type="email" className="form-input" placeholder="your@email.com..." autoComplete="email" />
+          </div>
         </div>
 
-        <div>
-          <label htmlFor="phone" className="form-label">Phone Number <span className="text-error">*</span></label>
-          <input id="phone" name="phone" type="tel" className="form-input" placeholder="Your phone number..." autoComplete="tel" required />
-          {errors.phone && <p className="form-error">{errors.phone}</p>}
+        <div className="space-y-5 border-t-[1.5px] border-dashed border-ink/25 pt-6">
+          <p className="mono-label text-[9px] text-ink-dim">03 · Shipment</p>
+          <div>
+            <label htmlFor="service" className="form-label mono-label">Service Interested In</label>
+            <select id="service" name="service" className="form-input">
+              <option value="">Select a service...</option>
+              {serviceOptions.map((s) => (<option key={s} value={s}>{s}</option>))}
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="message" className="form-label mono-label">Message</label>
+            <textarea id="message" name="message" rows={4} className="form-input resize-y" placeholder="Tell us about your requirements..." />
+          </div>
         </div>
 
-        <div>
-          <label htmlFor="email" className="form-label">Email Address</label>
-          <input id="email" name="email" type="email" className="form-input" placeholder="your@email.com..." autoComplete="email" />
-        </div>
-
-        <div>
-          <label htmlFor="service" className="form-label">Service Interested In</label>
-          <select id="service" name="service" className="form-input">
-            <option value="">Select a service...</option>
-            {serviceOptions.map((s) => (<option key={s} value={s}>{s}</option>))}
-          </select>
-        </div>
-
-        <div>
-          <label htmlFor="message" className="form-label">Message</label>
-          <textarea id="message" name="message" rows={4} className="form-input resize-y" placeholder="Tell us about your requirements..." />
-        </div>
-
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 border-t-[1.5px] border-dashed border-ink/25 pt-6">
           <button type="submit" disabled={sending} className="inline-flex items-center gap-2 btn-primary px-6 py-3 text-base font-semibold no-underline disabled:opacity-50">
             <Icon icon={Send} size={18} aria-hidden={true} />
             {sending ? "Sending..." : "Send Inquiry"}

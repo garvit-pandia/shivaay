@@ -8,7 +8,7 @@ export function DocumentRequirements() {
   const activeCategory = documentCategories[activeIndex];
 
   return (
-    <section className="pb-20 bg-white" aria-label="Documents required by process">
+    <section className="pb-20 bg-cream" aria-label="Documents required by process">
       <div className="mx-auto max-w-[1280px] px-6">
         <div
           role="tablist"
@@ -26,7 +26,7 @@ export function DocumentRequirements() {
                 aria-selected={selected}
                 aria-controls={`doc-panel-${i}`}
                 onClick={() => setActiveIndex(i)}
-                className={`cursor-pointer px-4 py-2 rounded-full text-sm font-medium transition-colors border ${
+                className={`mono-label cursor-pointer px-4 py-2 rounded-full text-[10px] transition-colors border ${
                   selected
                     ? "bg-teal text-white border-teal"
                     : "bg-white text-ink-dim border-border hover:bg-teal-tint hover:text-teal"
@@ -43,9 +43,9 @@ export function DocumentRequirements() {
           role="tabpanel"
           aria-labelledby={`doc-tab-${activeIndex}`}
           tabIndex={0}
-          className="reveal max-w-3xl mx-auto bg-white border border-border rounded-2xl p-6 lg:p-8 shadow-[0_1px_3px_rgba(30,27,24,0.04)]"
+          className="reveal waybill max-w-3xl mx-auto bg-white rounded-2xl p-6 lg:p-8 shadow-[0_1px_3px_rgba(30,27,24,0.04)]"
         >
-          <h2 className="font-serif text-xl font-semibold text-ink mb-5">
+          <h2 className="text-xl font-semibold text-ink mb-5">
             {activeCategory.category} Documents
           </h2>
           <ul className="list-none m-0 p-0 space-y-3">
@@ -54,8 +54,8 @@ export function DocumentRequirements() {
                 key={doc}
                 className="flex items-center gap-3 bg-cream border border-border rounded-xl p-3"
               >
-                <span className="w-7 h-7 rounded-full bg-teal-tint text-teal text-xs font-semibold flex items-center justify-center shrink-0">
-                  {n + 1}
+                <span className="mono-label w-7 h-7 rounded-full bg-teal-tint text-teal text-[10px] flex items-center justify-center shrink-0">
+                  {String(n + 1).padStart(2, "0")}
                 </span>
                 <span className="text-ink text-sm leading-relaxed">{doc}</span>
               </li>

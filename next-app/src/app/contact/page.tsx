@@ -21,10 +21,19 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <section className="pt-10 pb-20 bg-white">
-        <div className="mx-auto max-w-[1280px] px-6 grid lg:grid-cols-2 gap-12">
-          <ContactInfo />
-          <ContactForm />
+      <section className="relative pt-16 pb-20 bg-cream overflow-hidden">
+        <div className="absolute inset-0 bg-blueprint" aria-hidden="true" />
+        <div className="relative mx-auto max-w-[1280px] px-6">
+          <p className="mono-label text-[11px] text-teal mb-4">
+            Contact · Response within 24h
+          </p>
+          <h1 className="font-serif text-4xl lg:text-5xl font-normal text-ink tracking-tight mb-12">
+            Get in touch
+          </h1>
+          <div className="grid lg:grid-cols-2 gap-12">
+            <ContactInfo />
+            <ContactForm />
+          </div>
         </div>
       </section>
 

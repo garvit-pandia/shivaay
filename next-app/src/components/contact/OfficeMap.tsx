@@ -2,7 +2,8 @@ export function OfficeMap() {
   return (
     <section className="py-20 bg-white border-t border-border" aria-labelledby="office-heading">
       <div className="mx-auto max-w-[1280px] px-6">
-        <h2 id="office-heading" className="font-serif text-3xl lg:text-4xl font-medium text-ink text-center mb-10">
+        <p className="mono-label text-[11px] text-teal mb-3">Headquarters · Ludhiana</p>
+        <h2 id="office-heading" className="font-serif text-3xl lg:text-4xl font-medium text-ink mb-10">
           Visit our office
         </h2>
         <div className="w-full aspect-[16/9] max-h-[500px] rounded-xl overflow-hidden border border-border">

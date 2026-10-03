@@ -52,9 +52,14 @@ export function GalleryLightbox() {
     <>
       <section className="py-24 bg-white border-t border-border" aria-labelledby="gallery-heading">
         <div className="mx-auto max-w-[1280px] px-6">
-          <h2 id="gallery-heading" className="font-serif text-3xl lg:text-4xl font-medium text-ink text-center mb-12">
-            Our network
-          </h2>
+          <div className="mb-12">
+            <p className="mono-label text-[10px] text-orange mb-3">
+              Manifest — Network · 03
+            </p>
+            <h2 id="gallery-heading" className="font-serif text-3xl lg:text-5xl font-medium text-ink">
+              Our network
+            </h2>
+          </div>
           <div className="gallery-grid">
             {galleryImages.map((img, i) => (
               <div

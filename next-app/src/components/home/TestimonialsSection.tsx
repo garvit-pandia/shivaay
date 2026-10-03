@@ -3,7 +3,7 @@
 import { testimonials } from "@/lib/data";
 import { Conveyor } from "@/components/motion/Conveyor";
 
-const CARD_COLORS = ["#0F766E", "#1E1B18", "#0D9488"];
+const CARD_COLORS = ["#0F766E", "#134E4A", "#0D9488"];
 
 export function TestimonialsSection() {
   return (
@@ -29,7 +29,7 @@ export function TestimonialsSection() {
           <div
             key={i}
             className="cargo-card corrugated"
-            style={{ background: CARD_COLORS[i % CARD_COLORS.length] }}
+            style={{ backgroundColor: CARD_COLORS[i % CARD_COLORS.length] }}
           >
             <div className="cargo-label" aria-hidden="true">
               <span>Client · {t.initials}</span>

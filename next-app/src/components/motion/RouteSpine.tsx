@@ -67,8 +67,12 @@ export function RouteSpine({
       });
       if (pts.length < 2) return;
       pts[0] = { x: 80, y: Math.max(pts[0].y, 40) };
+      // Draw the route ~80px past the final station (station dot stays put)
+      const drawPts = pts.map((p, i) =>
+        i === pts.length - 1 ? { x: p.x, y: p.y + 80 } : p
+      );
 
-      const d = smooth(pts);
+      const d = smooth(drawPts);
       path.setAttribute("d", d);
       prog.setAttribute("d", d);
       L = path.getTotalLength();

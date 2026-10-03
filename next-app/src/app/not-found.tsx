@@ -2,13 +2,31 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="min-h-[70vh] flex flex-col items-center justify-center bg-white px-4">
-      <h1 className="font-serif text-6xl lg:text-8xl font-normal text-ink mb-4">404</h1>
-      <div className="w-12 h-0.5 bg-teal mb-6" />
-      <p className="text-ink-dim mb-8 text-lg">Page not found</p>
-      <Link href="/" className="btn-primary px-6 py-3 text-base font-semibold no-underline">
-        Back to Home
-      </Link>
+    <div className="relative min-h-[80vh] flex flex-col items-center justify-center bg-cream px-6 overflow-hidden">
+      <div className="absolute inset-0 bg-blueprint" aria-hidden="true" />
+
+      <div className="relative flex flex-col items-center text-center">
+        <p className="mono-label text-[11px] text-teal mb-8">
+          Shivaay Logistics · Lost Shipment Desk
+        </p>
+
+        <div className="relative">
+          <h1 className="font-serif text-[7rem] sm:text-[10rem] lg:text-[13rem] font-normal text-ink leading-none tracking-tight">
+            404
+          </h1>
+          <span className="stamp-badge absolute -right-4 -top-2 sm:-right-16 sm:top-4 w-24 h-24 sm:w-32 sm:h-32 p-4 text-[9px] sm:text-[11px] text-orange">
+            Route not found
+          </span>
+        </div>
+
+        <p className="mono-label text-[10px] text-ink-dim mt-10 mb-8">
+          This page is off the manifest — check the address and try again
+        </p>
+
+        <Link href="/" className="btn-primary">
+          Back to Home
+        </Link>
+      </div>
     </div>
   );
 }

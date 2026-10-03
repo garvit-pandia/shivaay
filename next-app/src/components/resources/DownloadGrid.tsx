@@ -17,7 +17,7 @@ function FileCard({ file }: { file: DownloadFile }) {
     <a
       href={file.file}
       download
-      className="flex h-full items-center justify-between gap-3 p-4 min-h-[84px] bg-white border border-border rounded-2xl text-ink font-medium text-sm text-left hover:bg-teal hover:border-teal hover:text-white transition-colors"
+      className="flex h-full items-center justify-between gap-3 p-4 min-h-[84px] bg-white border border-border rounded-2xl text-ink font-medium text-sm text-left card-hover hover:bg-teal hover:border-teal hover:text-white transition-colors"
     >
       <span>{file.label}</span>
       <Icon icon={Download} size={16} className="shrink-0" aria-hidden={true} />
@@ -42,7 +42,7 @@ function GroupCard({
         type="button"
         onClick={onToggle}
         aria-expanded={open}
-        className="flex h-full w-full items-center justify-between gap-3 p-4 min-h-[84px] bg-white border border-border rounded-2xl text-ink font-medium text-sm text-left hover:bg-teal hover:border-teal hover:text-white transition-colors cursor-pointer"
+        className="flex h-full w-full items-center justify-between gap-3 p-4 min-h-[84px] bg-white border border-border rounded-2xl text-ink font-medium text-sm text-left card-hover hover:bg-teal hover:border-teal hover:text-white transition-colors cursor-pointer"
       >
         <span>{title}</span>
         <Icon
@@ -95,7 +95,7 @@ export function DownloadGrid() {
   }, [openGroup]);
 
   return (
-    <section className="pb-20 bg-white" aria-label="Downloadable documents">
+    <section className="pb-20 bg-cream" aria-label="Downloadable documents">
       <div ref={rootRef} className="mx-auto max-w-5xl px-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {directDownloads.map((file) => (
