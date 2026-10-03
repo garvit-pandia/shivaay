@@ -17,6 +17,11 @@ Official website for **Shivaay Logistics** — customs broker and logistics faci
 - `/` — Hero, services overview, coverage network, mission, testimonials, CTA
 - `/services` — All 12 forwarding services, gallery, CTA
 - `/contact` — Office info, inquiry form, office map, phone CTA
+- `/resources` — Resources hub
+- `/resources/links` — Transport & customs portals (ICE Gate, DGFT, etc.)
+- `/resources/documents` — Required-documents checklists by process
+- `/resources/files` — Downloadable circulars, declarations and forms
+- `/resources/ports` — Clearance ports/ICDs/CFS in Ludhiana with maps
 - `/not-found` — Custom 404
 
 ## Development
@@ -24,7 +29,7 @@ Official website for **Shivaay Logistics** — customs broker and logistics faci
 ```bash
 cd next-app
 npm install
-npm run dev          # http://localhost:3000
+npm run dev          # http://localhost:5182 (port pinned — see projects2/PORT-REGISTRY.md)
 npm run build        # production build
 npm run lint         # eslint
 ```
