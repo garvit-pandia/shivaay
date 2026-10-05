@@ -69,11 +69,19 @@ section[id],
 
 /* ---- Navbar ---- */
 .nav-blur {
-  background: rgba(250, 248, 244, 0.97);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  /* Opaque by default: backdrop-filter is unavailable in some environments
+     (and costs compositing on mobile), where the 3% translucency let scrolled
+     content ghost through under the logo. Blur is a desktop-only nicety. */
+  background: #FAF8F4;
   border-bottom: 1px solid #E8E4DB;
   box-shadow: 0 1px 12px rgba(30, 27, 24, 0.05);
+}
+@media (min-width: 768px) {
+  .nav-blur {
+    background: rgba(250, 248, 244, 0.97);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
 }
 
 /* ---- Buttons ---- */
