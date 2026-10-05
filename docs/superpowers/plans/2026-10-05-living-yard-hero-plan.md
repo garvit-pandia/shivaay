@@ -661,7 +661,7 @@ export function HeroStageMount({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <div className="hero-track" ref={trackRef} data-phase="dive">
+    <div className="hero-track" ref={trackRef} data-phase="settled">
       <div className="hero-sticky">
         <div className="absolute inset-0 bg-blueprint" aria-hidden="true" />
         <div className="hero-canvas-wrap" aria-hidden="true">
@@ -811,8 +811,8 @@ export interface Pose {
 export const POSES: Pose[] = [
   { pos: [0, 420, 260], target: [0, 0, 0] },     // high over the network map
   { pos: [4, 210, 150], target: [+6, 0, 14] },   // descending, beacons visible
-  { pos: [16, 64, 84], target: [0, 2, 4] },      // yard approach
-  { pos: [10, 7.5, 22], target: [0, 2.5, -2] },  // settled, eye-level
+  { pos: [18, 80, 120], target: [0, 2, 4] },     // yard approach
+  { pos: [20, 10, 48], target: [0, 2.5, -2] },   // settled — matches the Canvas camera in HeroStage.tsx
 ];
 
 export const CAMERA_SPAN = { near: 0.5, far: 4000 } as const;
@@ -881,7 +881,7 @@ In `HeroStage.tsx`: add `progress: React.RefObject<number>` to `HeroStageProps`,
 
 - [ ] **Step 4: Verify**
 
-Build + lint, then re-run the smoke script and read the screenshot. The settled composition should now be deliberate (camera at `[10, 7.5, 22]` looking slightly left-down at the stacks) — copy left, yard right. No console errors.
+Build + lint, then re-run the smoke script and read the screenshot. The settled composition should match Task 5's framing (camera at `[20, 10, 48]` looking slightly left-down at the stacks) — copy left, yard right. No console errors.
 
 - [ ] **Step 5: Commit**
 
@@ -1087,7 +1087,7 @@ export function useHeroProgress({ trackRef, desktop, reduced }: Options) {
 
 - [ ] **Step 2: Wire into the mount (phase attr, skip button, live ref)**
 
-In `HeroStageMount.tsx`, destructure the hook — it owns and returns the progress ref, so no extra ref or bridge is needed: `const { phase, progress, skip } = useHeroProgress({ trackRef, desktop, reduced });` — add the `desktop` / `reduced` state shown below, pass `progress={progress}` to `<HeroStage>`, replace the track's hardcoded `data-phase="dive"` with `data-phase={phase}`, and render the skip control:
+In `HeroStageMount.tsx`, destructure the hook — it owns and returns the progress ref, so no extra ref or bridge is needed: `const { phase, progress, skip } = useHeroProgress({ trackRef, desktop, reduced });` — add the `desktop` / `reduced` state shown below, pass `progress={progress}` to `<HeroStage>`, replace the track's hardcoded `data-phase="settled"` with `data-phase={phase}`, and render the skip control:
 
 ```tsx
 const [desktop, setDesktop] = useState(true);
