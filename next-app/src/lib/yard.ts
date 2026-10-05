@@ -55,6 +55,7 @@ export function createYard(
     for (let c = 0; c < cols; c++) {
       if (rand() < 0.16) continue; // breathing gaps
       const x = -76 + c * (CONTAINER.w + 2.2) + rand() * 0.6 - 0.3;
+      if (Math.abs(x + 34) < 5) continue; // gantry crane lane — keep legs and pick/place slots clear
       const tierCount = 1 + Math.floor(rand() * (c % 7 === 0 ? 2 : 4));
       for (let tier = 0; tier < tierCount; tier++) {
         n += 1;
@@ -120,9 +121,9 @@ export const CRANE = {
   cycle: 16,
   railZ: 46,
   pickX: -34,
-  pickZ: -24,
+  pickZ: -20,
   placeX: -34,
-  placeZ: 24,
+  placeZ: 20,
   beamY: 16,
   hoistHigh: 13,
   hoistLow: 1.6,
