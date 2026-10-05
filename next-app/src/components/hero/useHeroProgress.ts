@@ -81,16 +81,21 @@ export function useHeroProgress({ trackRef, desktop, reduced }: Options) {
       }
       progress.current += (target.current - progress.current) * (1 - Math.exp(-6 * dt));
 
-      if (Math.abs(target.current - progress.current) < 0.002 || progress.current >= 0.999) {
-        progress.current = target.current >= 1 ? 1 : progress.current;
-        if (target.current >= 1) {
+      const settledNow = Math.abs(target.current - progress.current) < 0.002;
+      if (settledNow) {
+        progress.current = target.current;
+        if (progress.current >= 1) {
           progress.current = 1;
           modeRef.current = "done";
           setPhaseSafe("settled");
-          cancelAnimationFrame(rafRef.current);
         }
+        // Converged (settled or mid-scrub): idle until the next scroll/skip.
+        cancelAnimationFrame(rafRef.current);
       }
-      track.dataset.progress = progress.current.toFixed(3);
+      const prev = Number.parseFloat(track.dataset.progress ?? "");
+      if (settledNow || !Number.isFinite(prev) || Math.abs(prev - progress.current) > 0.004) {
+        track.dataset.progress = progress.current.toFixed(3);
+      }
     };
 
     const ensureLoop = () => {
