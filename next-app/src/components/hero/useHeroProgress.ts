@@ -88,9 +88,12 @@ export function useHeroProgress({ trackRef, desktop, reduced }: Options) {
           progress.current = 1;
           modeRef.current = "done";
           setPhaseSafe("settled");
+          cancelAnimationFrame(rafRef.current);
+        } else if (modeRef.current !== "auto") {
+          // Converged mid-scrub: idle until the next scroll/skip.
+          // (An in-flight auto-dive keeps looping so target keeps advancing.)
+          cancelAnimationFrame(rafRef.current);
         }
-        // Converged (settled or mid-scrub): idle until the next scroll/skip.
-        cancelAnimationFrame(rafRef.current);
       }
       const prev = Number.parseFloat(track.dataset.progress ?? "");
       if (settledNow || !Number.isFinite(prev) || Math.abs(prev - progress.current) > 0.004) {

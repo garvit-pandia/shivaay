@@ -1217,7 +1217,7 @@ const t2 = setTimeout(() => {
 
 - [ ] **Step 2: Verify sequencing**
 
-Playwright: fresh context (no sessionStorage), load `/`, assert the dive starts only after the doors begin opening — sample `window.__slHero.getState().progress` at t≈1.2 s (must be 0, still pre-dive), at t≈4.8 s (must be between 0.2 and 0.95, diving — the preloader finishes at 2.75 s and the dive runs 3 s), and at t≈7.5 s (must be 1 / `settled`). Then reload in the same context: progress starts at 0.72 and settles within ~1.5 s (revisit path).
+Playwright: fresh context (no sessionStorage), load `/`, assert the dive starts only after the doors begin opening — `progress` must be 0 at t≈1.2 s. **Poll, don't trust wall-clock**: the preloader timers start at hydration, not navigation, so a cold dev-server load shifts every timestamp. Assert: first movement satisfies `0 < progress < 1` in phase `dive`; then `phase === "settled"` with `progress === 1` within 15 s. Reload in the same context: `progress` reaches ≥ 0.7 within 4 s and settles within 5 s (revisit path). Console errors 0.
 
 - [ ] **Step 3: Commit**
 
