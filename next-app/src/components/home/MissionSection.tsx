@@ -5,21 +5,21 @@ import { SplitReveal } from "@/components/motion/SplitReveal";
 const cards = [
   {
     icon: Target,
-    index: "03.1",
+    index: "04.1",
     title: "Our Mission",
     description:
       "To provide seamless logistics solutions worldwide, enabling businesses to move goods efficiently across borders and within India.",
   },
   {
     icon: Eye,
-    index: "03.2",
+    index: "04.2",
     title: "Our Vision",
     description:
       "To be India's most trusted global logistics partner for every business — from small traders to large enterprises.",
   },
   {
     icon: Handshake,
-    index: "03.3",
+    index: "04.3",
     title: "Our Commitment",
     description:
       "Reliable Service. Transparent Process. Customer Satisfaction. These aren't just words — they're our promise.",

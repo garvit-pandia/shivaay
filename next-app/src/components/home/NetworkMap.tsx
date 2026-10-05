@@ -186,7 +186,9 @@ const FitBounds = () => {
     const bounds = L.latLngBounds(
       Object.values(cities).map((c) => [c.lat, c.lng] as [number, number])
     );
-    map.fitBounds(bounds, { padding: [40, 40] });
+    // Extra top headroom so Esri tile labels and hub tooltips near the
+    // northern edge (Ludhiana/Amritsar) aren't clipped by the map frame.
+    map.fitBounds(bounds, { paddingTopLeft: [40, 84], paddingBottomRight: [40, 40] });
   }, [map]);
   return null;
 };
@@ -196,6 +198,7 @@ export function NetworkMap() {
     <MapContainer
       center={INDIA_CENTER}
       zoom={5.5}
+      zoomSnap={0.25}
       className="w-full h-full rounded-xl"
       zoomControl={false}
       scrollWheelZoom={false}
