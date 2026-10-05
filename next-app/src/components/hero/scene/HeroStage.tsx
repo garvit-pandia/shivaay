@@ -5,6 +5,7 @@ import { Instance, Instances } from "@react-three/drei";
 import { useMemo } from "react";
 import * as THREE from "three";
 import { CONTAINER, YARD, createYard } from "@/lib/yard";
+import { CameraRig } from "./CameraRig";
 
 export type QualityTier = "full" | "lite";
 
@@ -45,11 +46,12 @@ function StackField({ tier }: { tier: QualityTier }) {
 
 export interface HeroStageProps {
   tier: QualityTier;
+  progress: React.RefObject<number>;
   active: boolean;
   onContextLost: () => void;
 }
 
-export function HeroStage({ tier, active, onContextLost }: HeroStageProps) {
+export function HeroStage({ tier, progress, active, onContextLost }: HeroStageProps) {
   return (
     <Canvas
       aria-hidden
@@ -79,6 +81,8 @@ export function HeroStage({ tier, active, onContextLost }: HeroStageProps) {
         <planeGeometry args={[YARD.w, YARD.d]} />
         <meshStandardMaterial color="#E9E5DC" roughness={1} />
       </mesh>
+
+      <CameraRig progress={progress} />
 
       <StackField tier={tier} />
     </Canvas>

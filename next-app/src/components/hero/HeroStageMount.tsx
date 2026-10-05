@@ -46,6 +46,7 @@ export function HeroStageMount({ children }: { children: React.ReactNode }) {
   const [contextLost, setContextLost] = useState(false);
   const [active, setActive] = useState(true);
   const trackRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef(1);
 
   // Pause the render loop when the hero is offscreen.
   useEffect(() => {
@@ -64,7 +65,12 @@ export function HeroStageMount({ children }: { children: React.ReactNode }) {
         <div className="absolute inset-0 bg-blueprint" aria-hidden="true" />
         <div className="hero-canvas-wrap" aria-hidden="true">
           {webgl === true && !contextLost && (
-            <HeroStage tier={tier} active={active} onContextLost={() => setContextLost(true)} />
+            <HeroStage
+              tier={tier}
+              progress={progressRef}
+              active={active}
+              onContextLost={() => setContextLost(true)}
+            />
           )}
           {webgl !== true || contextLost ? <YardFallback /> : null}
         </div>
