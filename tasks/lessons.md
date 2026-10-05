@@ -42,7 +42,7 @@
 
 ## Git & Deploy
 - Fresh clones may have no git identity — check `git config user.email` before the first commit and set repo-local `user.name`/`user.email` to match the existing commit author (`git log -1 --format='%an <%ae>'`).
-- Vercel preview deployments are auth-protected (302 → `vercel.com/sso-api`). `curl` cannot verify them — verify locally (build + browser E2E); humans open previews while logged into Vercel.
+- Vercel preview deployments are **publicly accessible** as of Oct 2026 — Vercel Authentication was disabled at the project level so the client can review without a Vercel account. Previews CAN now be verified with `curl` (expect 200, not 302 → `vercel.com/sso-api`). If auth is ever re-enabled, this reverts and they must be verified locally instead.
 
 ## External Services
 - Tile providers can change policy without notice: Carto began returning "API KEY REQUIRED" watermarked placeholder tiles for keyless usage (Oct 2026) — the coverage map broke with no code change. Swapped to Esri Light Gray Canvas (Base + Reference overlay, keyless). If a map goes blank/watermarked, verify the provider response and swap the `TileLayer` URL rather than debugging the app.
@@ -61,3 +61,9 @@
 - `mask-image` with data-URI turbulence SVG can render elements fully transparent in Chromium — dropped it for the stamp badge rather than debugging the filter.
 - Tailwind v4 cascade layers: unlayered author CSS (e.g. `.mono-label { font-size }`) OVERRIDES `text-*` utilities — put component defaults in `@layer components` so utilities still win.
 - Ephemeral static-export preview: `python3 -m http.server <free-51xx>` inside `next-app/out/` verifies the real production build (no dev overlay, real `.html` URLs); kill it after the run.
+
+## Agent Tooling (Oct 2026)
+- **Model capabilities change under you.** `deepseek-flash` gained native image input, but OpenCode's `~/.cache/opencode/models.json` (dated Sep 4) still said `attachment: false`, and the global `AGENTS.md` still forbade reading images directly. Verify capability empirically — a blind test image (random number + word + shape) settles it in one call — rather than trusting cached metadata or written rules.
+- **Provider migrations break pinned subagent models silently.** `agent/vision.md` pinned `commandcode/deepseek-v4.1-flash`, which fails with `Invalid 'Authorization' header` after the GOAT subscription lapsed. `opencode-go/*` also fails without an active Go subscription. Check that subagent `model:` pins still resolve before relying on them.
+- Screenshots are now read **directly** by the main model — no vision subagent round-trip (it returned a lossy text description, not pixels).
+- **Browser automation:** `webapp-testing` skill (Python Playwright, verified installed) is the primary path. The `agent-browser` skill's CLI is NOT installed globally. The Playwright MCP was removed from `opencode.json` — it pinned `chromium-1226`, which no longer existed.

@@ -11,8 +11,16 @@ Project context for agent sessions in this repo. The workflow rules below still 
 
 ## Deploy model (Vercel)
 - `main` → production (auto-deploy on push)
-- Any pushed branch → Preview deployment (auth-protected; opens while logged into Vercel)
+- Any pushed branch → Preview deployment (**publicly accessible** — Vercel Authentication is currently disabled so the client can review without a Vercel account; anyone with the URL can view)
 - Flow: feature branch → PR → review preview → merge → production
+- To re-protect: Settings → Deployment Protection → Vercel Authentication → enable
+
+## Browser & QA
+- **Primary path:** `webapp-testing` skill — headless Python Playwright scripts + `scripts/with_server.py` for dev-server lifecycle (port 5182)
+- **Screenshots:** read directly with the read tool. The main model (`deepseek-flash`) has **native vision** — no vision subagent, no vision MCP.
+- **Ad-hoc/interactive:** `agent-browser` skill exists but its CLI is **not installed** — run `npm i -g agent-browser && agent-browser install` first. Only needed for hand-driven clicking.
+- **Playwright MCP: removed** from `opencode.json`. Its `--executable-path` pinned `chromium-1226`, which no longer exists (installed: 1228/1234/1237/1243).
+- List installed browsers: `ls ~/.cache/ms-playwright/`
 
 ## Key docs
 - `README.md` — routes, stack, dev commands
