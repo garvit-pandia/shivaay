@@ -178,9 +178,13 @@ section[id],
   transform: translateY(0);
 }
 
+/* Reveals must be visible immediately under reduced motion. The extra
+   `html.js .reveal:not(.visible)` selector matches the hiding rule above so
+   it wins on specificity instead of leaving content hidden until scroll. */
 @media (prefers-reduced-motion: reduce) {
   .reveal,
-  .reveal.visible {
+  .reveal.visible,
+  html.js .reveal:not(.visible) {
     opacity: 1;
     transform: none;
     transition: none;
