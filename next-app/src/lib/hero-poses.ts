@@ -9,8 +9,8 @@ export interface Pose {
 export const POSES: Pose[] = [
   { pos: [0, 420, 260], target: [0, 0, 0] },     // high over the network map
   { pos: [4, 210, 150], target: [+6, 0, 14] },   // descending, beacons visible
-  { pos: [18, 80, 120], target: [0, 2, 4] },     // yard approach
-  { pos: [20, 10, 48], target: [0, 2.5, -2] },   // settled — matches the Canvas camera in HeroStage.tsx
+  { pos: [61, 168, 164], target: [-30, 4, 6] },  // yard approach — high three-quarter, descending
+  { pos: [82, 128, 182], target: [-48, 4, 2] },  // settled — wide diorama; yard right, copy left
 ];
 
 export const CAMERA_SPAN = { near: 0.5, far: 4000 } as const;

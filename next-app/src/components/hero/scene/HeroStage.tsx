@@ -58,7 +58,7 @@ export function HeroStage({ tier, progress, active, onContextLost }: HeroStagePr
       frameloop={active ? "always" : "never"}
       dpr={[1, tier === "lite" ? 1.5 : 2]}
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-      camera={{ position: [20, 10, 48], fov: 38, near: 0.5, far: 4000 }}
+      camera={{ position: [82, 128, 182], fov: 38, near: 0.5, far: 4000 }}
       onCreated={({ gl }) => {
         gl.setClearColor(0x000000, 0);
         gl.domElement.addEventListener("webglcontextlost", (e) => {
