@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { YardFallback } from "./fallback/YardFallback";
+import { useHeroProgress } from "./useHeroProgress";
 
 const HeroStage = dynamic(
   () => import("./scene/HeroStage").then((m) => m.HeroStage),
@@ -36,6 +37,22 @@ const getTier = (): "full" | "lite" =>
   window.matchMedia("(max-width: 1023px)").matches ? "lite" : "full";
 const getServerTier = (): "full" | "lite" => "full";
 
+const subscribeDesktop = (cb: () => void) => {
+  const mq = window.matchMedia("(min-width: 1024px)");
+  mq.addEventListener("change", cb);
+  return () => mq.removeEventListener("change", cb);
+};
+const getDesktop = (): boolean => window.matchMedia("(min-width: 1024px)").matches;
+const getServerDesktop = (): boolean => true;
+
+const subscribeReduced = (cb: () => void) => {
+  const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+  mq.addEventListener("change", cb);
+  return () => mq.removeEventListener("change", cb);
+};
+const getReduced = (): boolean => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const getServerReduced = (): boolean => false;
+
 /**
  * Client boundary for the hero. Renders the sticky track, the lazy 3D stage,
  * the SVG fallback contract, and hosts the server-rendered copy as children.
@@ -43,10 +60,12 @@ const getServerTier = (): "full" | "lite" => "full";
 export function HeroStageMount({ children }: { children: React.ReactNode }) {
   const webgl = useSyncExternalStore(subscribeNil, probeWebGL, getServerWebgl);
   const tier = useSyncExternalStore(subscribeTier, getTier, getServerTier);
+  const desktop = useSyncExternalStore(subscribeDesktop, getDesktop, getServerDesktop);
+  const reduced = useSyncExternalStore(subscribeReduced, getReduced, getServerReduced);
   const [contextLost, setContextLost] = useState(false);
   const [active, setActive] = useState(true);
   const trackRef = useRef<HTMLDivElement>(null);
-  const progressRef = useRef(1);
+  const { phase, progress, skip } = useHeroProgress({ trackRef, desktop, reduced });
 
   // Pause the render loop when the hero is offscreen.
   useEffect(() => {
@@ -60,14 +79,14 @@ export function HeroStageMount({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <div className="hero-track" ref={trackRef} data-phase="settled">
+    <div className="hero-track" ref={trackRef} data-phase={phase}>
       <div className="hero-sticky">
         <div className="absolute inset-0 bg-blueprint" aria-hidden="true" />
         <div className="hero-canvas-wrap" aria-hidden="true">
           {webgl === true && !contextLost && (
             <HeroStage
               tier={tier}
-              progress={progressRef}
+              progress={progress}
               active={active}
               onContextLost={() => setContextLost(true)}
             />
@@ -79,6 +98,11 @@ export function HeroStageMount({ children }: { children: React.ReactNode }) {
           aria-hidden="true"
         />
         <div className="hero-copy relative z-10">{children}</div>
+        {phase !== "settled" && !reduced && (
+          <button type="button" className="hero-skip mono-label" onClick={skip}>
+            Skip intro
+          </button>
+        )}
       </div>
     </div>
   );
