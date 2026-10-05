@@ -74,7 +74,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#FFFFFF" />
         <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.replace('no-js','js');try{if(sessionStorage.getItem('sl-seen')==='1')document.documentElement.classList.add('preloaded')}catch(e){}` }} />
       </head>
-      <body className="min-h-screen antialiased overflow-x-hidden bg-white text-ink font-sans">
+      <body className="min-h-screen antialiased overflow-x-clip bg-white text-ink font-sans">
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
