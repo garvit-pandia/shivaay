@@ -58,7 +58,7 @@ export function HeroStage({ tier, progress, active, onContextLost }: HeroStagePr
       frameloop={active ? "always" : "never"}
       dpr={[1, tier === "lite" ? 1.5 : 2]}
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-      camera={{ position: [82, 128, 182], fov: 38, near: 0.5, far: 4000 }}
+      camera={{ position: [64, 100, 142], fov: 38, near: 0.5, far: 4000 }}
       onCreated={({ gl }) => {
         gl.setClearColor(0x000000, 0);
         gl.domElement.addEventListener("webglcontextlost", (e) => {
@@ -79,7 +79,7 @@ export function HeroStage({ tier, progress, active, onContextLost }: HeroStagePr
       {/* yard apron */}
       <mesh rotation-x={-Math.PI / 2} position={[0, 0.01, 0]}>
         <planeGeometry args={[YARD.w, YARD.d]} />
-        <meshStandardMaterial color="#E9E5DC" roughness={1} />
+        <meshStandardMaterial color="#E4DFD2" roughness={1} />
       </mesh>
 
       <CameraRig progress={progress} />
