@@ -24,6 +24,7 @@ import {
 import type { LucideIcon } from "lucide-react";
 import { Icon } from "@/components/ui/Icon";
 import { services } from "@/lib/data";
+import { containerColor } from "@/lib/palette";
 
 /**
  * Name → icon resolution, keyed EXACTLY by the `icon` strings in
@@ -50,15 +51,6 @@ const serviceIcons: Record<string, LucideIcon> = {
   boxes: Boxes,
   briefcase: Briefcase,
 };
-
-const TEAL_CYCLE = ["#0F766E", "#134E4A", "#0D9488"];
-const ACCENT_ORANGE = "#EA580C";
-
-/** Corrugated panel palette: teals cycle, every 5th container is orange. */
-function containerColor(index: number): string {
-  if ((index + 1) % 5 === 0) return ACCENT_ORANGE;
-  return TEAL_CYCLE[index % TEAL_CYCLE.length];
-}
 
 export function ServiceGrid() {
   const wallRef = useRef<HTMLDivElement>(null);
