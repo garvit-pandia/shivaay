@@ -20,16 +20,23 @@ export function Preloader() {
       seen = false;
     }
     if (seen) {
-      const t = setTimeout(() => setStage("gone"), 0);
+      const t = setTimeout(() => {
+        window.dispatchEvent(new Event("sl:preloader-done"));
+        setStage("gone");
+      }, 0);
       return () => clearTimeout(t);
     }
-    const t1 = setTimeout(() => setStage("exit"), 1600);
+    const t1 = setTimeout(() => {
+      window.dispatchEvent(new Event("sl:preloader-open"));
+      setStage("exit");
+    }, 1600);
     const t2 = setTimeout(() => {
       try {
         sessionStorage.setItem("sl-seen", "1");
       } catch {
         /* private mode */
       }
+      window.dispatchEvent(new Event("sl:preloader-done"));
       setStage("gone");
     }, 2750);
     return () => {
