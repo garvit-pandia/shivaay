@@ -51,6 +51,8 @@
 - Server-rendered HTML arrives as one long line: `grep -c` counts matching *lines* (always 1). Use `grep -o … | wc -l` for occurrence counts.
 - Scroll-reveal pages must be scrolled through and settled before screenshots, or below-fold `.reveal` cards appear missing (phantom bugs).
 - Google Maps iframes need several seconds to load tiles in headless browsers; a blank map early on is not proof of failure.
+- Stitched `fullPage: true` captures are not evidence either way: on reveal-heavy pages they produced phantom blanks (sections looked empty but were fine) and phantom "fine" (a 0px wall looked like an intentional strip design). Element screenshots + DOM geometry assertions (`offsetHeight`, computed `opacity`) are the source of truth.
+- Playwright `.focus()` does not trigger `:focus-visible` — test focus rings with real `keyboard.press('Tab')` before declaring them broken.
 
 ## Immersive Redesign (Oct 2026)
 - `style={{ background: color }}` shorthand wipes `background-image` from motif classes (`.corrugated`) — always use `backgroundColor` longhand when combining inline color with class textures.
@@ -60,6 +62,8 @@
 - Headless WebGL needs `--enable-unsafe-swiftshader --use-angle=swiftshader` flags, else three.js canvases mount at 0 size and look like code bugs.
 - `mask-image` with data-URI turbulence SVG can render elements fully transparent in Chromium — dropped it for the stamp badge rather than debugging the filter.
 - Tailwind v4 cascade layers: unlayered author CSS (e.g. `.mono-label { font-size }`) OVERRIDES `text-*` utilities — put component defaults in `@layer components` so utilities still win.
+- The nastier variant of that collision: unlayered `height: 100%` on a child beats the Tailwind height utility on the SAME element — `.container-card-inner`'s `h-64` lost, and with absolutely-positioned faces the whole services wall rendered 0px tall. Put sizing on the parent (`height: 16rem`) or in `@layer components`; geometry checks (`offsetHeight`), not screenshots, catch this.
+- Reduced-motion overrides must repeat the hiding rule's specificity: `.reveal { opacity: 1 }` lost to `.js .reveal:not(.visible)`. Match it (`html.js .reveal:not(.visible)`) — same pattern for `.js .container-card:not(.dealt)`.
 - Ephemeral static-export preview: `python3 -m http.server <free-51xx>` inside `next-app/out/` verifies the real production build (no dev overlay, real `.html` URLs); kill it after the run.
 
 ## Agent Tooling (Oct 2026)
