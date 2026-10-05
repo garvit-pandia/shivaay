@@ -88,6 +88,7 @@ export function HeroStageMount({ children }: { children: React.ReactNode }) {
               tier={tier}
               progress={progress}
               active={active}
+              reduced={reduced}
               onContextLost={() => setContextLost(true)}
             />
           )}

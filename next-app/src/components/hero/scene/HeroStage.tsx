@@ -6,6 +6,7 @@ import { useMemo } from "react";
 import * as THREE from "three";
 import { CONTAINER, YARD, createYard } from "@/lib/yard";
 import { CameraRig } from "./CameraRig";
+import { NetworkLayer } from "./NetworkLayer";
 
 export type QualityTier = "full" | "lite";
 
@@ -48,10 +49,11 @@ export interface HeroStageProps {
   tier: QualityTier;
   progress: React.RefObject<number>;
   active: boolean;
+  reduced: boolean;
   onContextLost: () => void;
 }
 
-export function HeroStage({ tier, progress, active, onContextLost }: HeroStageProps) {
+export function HeroStage({ tier, progress, active, reduced, onContextLost }: HeroStageProps) {
   return (
     <Canvas
       aria-hidden
@@ -69,7 +71,7 @@ export function HeroStage({ tier, progress, active, onContextLost }: HeroStagePr
     >
       <hemisphereLight args={[0xfff6e8, 0xd9d2c4, 1.15]} />
       <directionalLight position={[42, 70, 24]} intensity={1.5} color={0xfff1dc} />
-      <fog attach="fog" args={["#FAF8F4", 140, 900]} />
+      <fog attach="fog" args={["#FAF8F4", 280, 1700]} />
 
       {/* map paper */}
       <mesh rotation-x={-Math.PI / 2} position={[0, -0.3, 0]}>
@@ -83,6 +85,8 @@ export function HeroStage({ tier, progress, active, onContextLost }: HeroStagePr
       </mesh>
 
       <CameraRig progress={progress} />
+
+      <NetworkLayer progress={progress} reduced={reduced} />
 
       <StackField tier={tier} />
     </Canvas>
