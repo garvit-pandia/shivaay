@@ -33,6 +33,18 @@ export function GlobeHero() {
     let cleanup: (() => void) | undefined;
 
     (async () => {
+      // Feature-detect before touching three.js: constructing WebGLRenderer
+      // without WebGL support logs context-creation errors to the console
+      // before throwing. Bail early and let the static fallback show.
+      let hasWebGL = false;
+      try {
+        const probe = document.createElement("canvas");
+        hasWebGL = !!(probe.getContext("webgl2") || probe.getContext("webgl"));
+      } catch {
+        hasWebGL = false;
+      }
+      if (!hasWebGL) return;
+
       let THREE: typeof import("three");
       try {
         THREE = await import("three");
