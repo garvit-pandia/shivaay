@@ -3,7 +3,7 @@
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import * as THREE from "three";
-import { containerColor } from "@/lib/palette";
+import { ACCENT_ORANGE } from "@/lib/palette";
 import { CONTAINER, CRANE } from "@/lib/yard";
 
 /** Crane timeline keys: t seconds → trolley (0 pick…1 place), hoist (1 high…0 low), carrying. */
@@ -62,17 +62,41 @@ function cableSpan(spreaderY: number) {
 
 const PARK_CABLE = cableSpan(SPREADER_GRIP_Y);
 
+/** A-frame end supports: legs splay outward toward the ground and X-brace each pair. */
+const LEG_FOOT = 3.4; // half-separation at the ground — outer faces stay inside the cleared lane
+const LEG_TOP = 1.5; // half-separation where the legs meet the beam
+const LEG_T = 2.2; // leg cross-section
+const BRACE_T = 0.5; // brace thickness
+
+/** Leg centreline half-separation at height y. */
+const legXAt = (y: number) => LEG_FOOT + (LEG_TOP - LEG_FOOT) * (y / CRANE.beamY);
+
+/** One X-brace per A-frame, spanning between the two leg centrelines. */
+const BRACE = (() => {
+  const y0 = 1.2;
+  const y1 = CRANE.beamY - 1.2;
+  const x0 = legXAt(y0);
+  const x1 = legXAt(y1);
+  const length = Math.hypot(x0 + x1, y1 - y0);
+  return {
+    cx: (x1 - x0) / 2,
+    cy: (y0 + y1) / 2,
+    length,
+    angle: Math.atan2(x0 + x1, y1 - y0),
+  };
+})();
+
 export interface GantryCraneProps {
   progress: React.RefObject<number>;
   reduced: boolean;
 }
 
 /**
- * Gantry crane: static legs/beam straddling the cleared lane at x = pickX, a
- * trolley that rides the beam between the pick and place slots, and a spreader
- * that hoists a container along the KEYS timeline. The hoist clamps at the
- * grip station so the spreader settles on a grounded container instead of
- * sinking through it.
+ * Gantry crane: two X-braced A-frame supports carrying a beam over the cleared
+ * lane at x = pickX, a trolley that rides the beam between the pick and place
+ * slots, and a spreader that hoists a container along the KEYS timeline. The
+ * hoist clamps at the grip station so the spreader settles on a grounded
+ * container instead of sinking through it.
  */
 export function GantryCrane({ progress, reduced }: GantryCraneProps) {
   const trolleyRef = useRef<THREE.Group>(null);
@@ -121,17 +145,40 @@ export function GantryCrane({ progress, reduced }: GantryCraneProps) {
 
   return (
     <group>
-      {/* static frame: legs + beam */}
+      {/* static frame: two X-braced A-frames + beam */}
       <group position={[CRANE.pickX, 0, 0]}>
-        {[-1, 1].map((s) => (
-          <mesh key={s} position={[0, CRANE.beamY / 2, s * (CRANE.railZ / 2)]}>
-            <boxGeometry args={[1.4, CRANE.beamY, 1.4]} />
-            <meshStandardMaterial color="#0F766E" roughness={0.7} />
-          </mesh>
+        {[-1, 1].map((z) => (
+          <group key={z} position={[0, 0, z * (CRANE.railZ / 2)]}>
+            {[-1, 1].map((sx) => {
+              const legTilt = Math.atan2(LEG_FOOT - LEG_TOP, CRANE.beamY);
+              return (
+                <mesh
+                  key={sx}
+                  position={[sx * ((LEG_FOOT + LEG_TOP) / 2), CRANE.beamY / 2, 0]}
+                  rotation-z={sx * legTilt}
+                >
+                  <boxGeometry
+                    args={[LEG_T, Math.hypot(LEG_FOOT - LEG_TOP, CRANE.beamY), LEG_T]}
+                  />
+                  <meshStandardMaterial color="#1E1B18" roughness={0.6} />
+                </mesh>
+              );
+            })}
+            {[-1, 1].map((sb) => (
+              <mesh
+                key={sb}
+                position={[sb * BRACE.cx, BRACE.cy, 0]}
+                rotation-z={-sb * BRACE.angle}
+              >
+                <boxGeometry args={[BRACE_T, BRACE.length, BRACE_T]} />
+                <meshStandardMaterial color="#1E1B18" roughness={0.6} />
+              </mesh>
+            ))}
+          </group>
         ))}
         <mesh position={[0, CRANE.beamY, 0]}>
-          <boxGeometry args={[1.6, 1.2, CRANE.railZ + 4]} />
-          <meshStandardMaterial color="#134E4A" roughness={0.7} />
+          <boxGeometry args={[2.4, 1.4, CRANE.railZ + 4]} />
+          <meshStandardMaterial color="#1E1B18" roughness={0.6} />
         </mesh>
       </group>
       {/* trolley + hoist, initialised at the parked pose */}
@@ -163,7 +210,7 @@ export function GantryCrane({ progress, reduced }: GantryCraneProps) {
       {/* carried container — grounded at the pick slot while parked */}
       <mesh ref={boxRef} position={[CRANE.pickX, GROUND_BOX_Y, CRANE.pickZ]}>
         <boxGeometry args={[CONTAINER.w, CONTAINER.h, CONTAINER.d]} />
-        <meshStandardMaterial color={containerColor(3)} roughness={0.82} />
+        <meshStandardMaterial color={ACCENT_ORANGE} roughness={0.82} />
       </mesh>
     </group>
   );
