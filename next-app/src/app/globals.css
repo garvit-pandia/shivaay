@@ -978,6 +978,15 @@ html.preloaded .preloader {
 .container-card {
   perspective: 1200px;
   opacity: 1;
+  /* Explicit height: this custom CSS is unlayered and therefore beats the
+     Tailwind `h-64` utility on .container-card-inner (v4 layers utilities),
+     whose `height: 100%` would otherwise collapse the whole wall to 0px. */
+  height: 16rem;
+}
+.container-card:focus-visible {
+  outline: 2px solid #0F766E;
+  outline-offset: 3px;
+  border-radius: 10px;
 }
 /* Only pre-hide when JS is on and can deal the cards in */
 .js .container-card:not(.dealt) {
@@ -1144,7 +1153,8 @@ html.js .faq-item.faq-open .faq-answer {
   .page-wipe.active {
     display: none !important;
   }
-  .container-card {
+  .container-card,
+  html.js .container-card:not(.dealt) {
     opacity: 1;
   }
   .container-card-inner {
