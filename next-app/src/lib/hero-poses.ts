@@ -9,8 +9,8 @@ export interface Pose {
 export const POSES: Pose[] = [
   { pos: [0, 420, 260], target: [0, 0, 0] },     // high over the network map
   { pos: [4, 210, 150], target: [+6, 0, 14] },   // descending, beacons visible
-  { pos: [50, 132, 165], target: [-28, 3, 4] },  // yard approach — high three-quarter, descending
-  { pos: [64, 100, 142], target: [-40, 3, 0] },  // settled — yard right, copy left; closer, grounded apron
+  { pos: [58, 130, 162], target: [-14, 3, 4] },  // yard approach — high three-quarter, descending
+  { pos: [78, 98, 140], target: [-18, 3, 0] },  // settled — yard right, copy left; closer, grounded apron
 ];
 
 export const CAMERA_SPAN = { near: 0.5, far: 4000 } as const;

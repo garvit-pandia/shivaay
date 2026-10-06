@@ -17,14 +17,14 @@ export function HeroSection() {
     <section className="relative bg-cream" aria-labelledby="hero-heading">
       <HeroStageMount>
         <div className="mx-auto max-w-[1280px] px-6 min-h-[94vh] flex items-center pt-24 pb-20">
-          <div className="hero-copy-block max-w-2xl">
+          <div className="hero-copy-block max-w-xl">
             <p className="mono-label text-[11px] text-teal mb-6 flex items-center gap-2.5">
               <span className="ticker-dot" aria-hidden="true" />
               Customs Broker · Ludhiana
             </p>
             <h1
               id="hero-heading"
-              className="font-serif text-5xl sm:text-6xl lg:text-[4.6rem] font-normal text-ink leading-[1.04] tracking-tight mb-6"
+              className="font-serif text-5xl sm:text-6xl lg:text-[3.6rem] font-normal text-ink leading-[1.06] tracking-tight mb-6"
             >
               <SplitReveal text="Customs brokerage with integrity" accent="integrity" />
             </h1>
@@ -47,7 +47,7 @@ export function HeroSection() {
               </Magnetic>
             </div>
             {/* CHA trust chip — number appears once the client shares it */}
-            <p className="inline-flex items-center gap-2 border border-teal/30 bg-teal-tint rounded-full px-4 py-1.5 mb-12">
+            <p className="inline-flex items-center gap-2 border border-teal/30 bg-teal-tint rounded-full px-4 py-1.5 mb-8">
               <BadgeCheck size={14} className="text-teal" aria-hidden="true" />
               <span className="mono-label text-[10px] text-teal">
                 Licensed Customs Broker
@@ -56,12 +56,12 @@ export function HeroSection() {
             </p>
 
             {/* Micro stats — odometer roll */}
-            <div className="flex gap-10 lg:gap-14 pt-7 border-t border-ink/10">
+            <div className="flex gap-8 lg:gap-10 pt-6 border-t border-ink/10">
               {stats.map((stat) => (
                 <div key={stat.label}>
                   <Odometer
                     value={stat.value}
-                    className="text-3xl lg:text-4xl font-grotesk font-bold text-ink"
+                    className="text-2xl lg:text-3xl font-grotesk font-bold text-ink"
                   />
                   <div className="mono-label text-[9px] text-ink-dim mt-1.5">
                     {stat.label}

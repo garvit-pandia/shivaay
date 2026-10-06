@@ -95,7 +95,7 @@ export function HeroStageMount({ children }: { children: React.ReactNode }) {
           {webgl !== true || contextLost ? <YardFallback /> : null}
         </div>
         <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-cream via-cream/75 to-transparent lg:via-cream/30"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-cream via-cream/85 via-[60%] to-transparent lg:via-cream/60"
           aria-hidden="true"
         />
         <div className="hero-copy relative z-10">

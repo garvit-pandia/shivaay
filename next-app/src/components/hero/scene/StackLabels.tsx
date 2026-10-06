@@ -11,26 +11,30 @@ export interface StackLabelsProps {
 }
 
 /**
- * Floating waybills above the container stacks (drei `<Html>`): up to 8 mono
- * labels from the same seeded yard plan the instanced stacks use. Opacity is
+ * Floating waybills above the container stacks (drei `<Html>`): up to 6 mono
+ * labels on the yard's east half, clear of the copy block. Opacity is
  * driven by the shared progress ref — they fade in over the settled third of
  * the dive (smoothstep 0.62 → 0.95) and never intercept pointer events. Lite
  * tier renders none at all.
  */
 export function StackLabels({ tier, progress }: StackLabelsProps) {
-  const refs = useRef<(HTMLDivElement | null)[]>(
-    Array.from({ length: 8 }, () => null)
-  );
   const { labels } = useMemo(
     () => createYard(116, tier === "lite" ? "lite" : "full"),
     [tier]
   );
 
-  // Stagger each label's appearance across the settle so eight chips don't
+  // Calm-left: keep labels on the yard's east half (world x > 8) so chips
+  // never float over the copy block. Cap at 6 to cut text noise.
+  const visible = useMemo(
+    () => labels.filter((l) => l.x > 8).slice(0, 6),
+    [labels]
+  );
+  const refs = useRef<(HTMLDivElement | null)[]>([]);
+  // Stagger each label's appearance across the settle so chips don't
   // blink on at once — reads as a waybill system updating rather than a pop.
   const stagger = useMemo(
-    () => labels.slice(0, 8).map((_, i) => 0.62 + (i / 8) * 0.24),
-    [labels]
+    () => visible.map((_, i) => 0.62 + (i / Math.max(visible.length, 1)) * 0.24),
+    [visible]
   );
   // Mount the Html roots one commit after the initial pass: React's dev
   // StrictMode remount would otherwise unmount drei's per-label roots inside
@@ -47,7 +51,7 @@ export function StackLabels({ tier, progress }: StackLabelsProps) {
     let raf = 0;
     const tick = () => {
       const p = progress.current ?? 1;
-      for (let i = 0; i < refs.current.length; i++) {
+      for (let i = 0; i < visible.length; i++) {
         const el = refs.current[i];
         if (el) el.style.opacity = String(smoothstep(stagger[i], stagger[i] + 0.12, p));
       }
@@ -55,13 +59,13 @@ export function StackLabels({ tier, progress }: StackLabelsProps) {
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [progress, stagger, tier]);
+  }, [progress, stagger, tier, visible.length]);
 
   if (tier === "lite" || !ready) return null;
 
   return (
     <>
-      {labels.slice(0, 8).map((l, i) => (
+      {visible.map((l, i) => (
         <Html
           key={l.id}
           position={[l.x, l.y, l.z]}
