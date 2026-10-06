@@ -1226,8 +1226,10 @@ html.js .hero-track[data-phase="scrub"] .hero-scroll-cue { opacity: 0; }
   padding: 8px 14px; border: 1px solid var(--color-border);
   background: rgba(250, 248, 244, 0.9); color: var(--color-ink-dim);
   border-radius: 999px; cursor: pointer;
+  transition: opacity 0.3s ease, color 0.2s, border-color 0.2s;
 }
 .hero-skip:hover { color: var(--color-ink); border-color: var(--color-ink-dim); }
+.hero-scroll-cue { transition: opacity 0.5s ease; }
 .yard-fallback { position: absolute; inset: 0; }
 .hero-stack-label {
   font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em;
