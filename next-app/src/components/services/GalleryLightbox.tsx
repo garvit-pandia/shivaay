@@ -65,6 +65,8 @@ export function GalleryLightbox() {
               <div
                 key={i}
                 className="gallery-item"
+                data-scan
+                data-stamp="scanned"
                 onClick={(e) => { triggerRef.current = e.currentTarget; open(i); }}
                 role="button"
                 tabIndex={0}

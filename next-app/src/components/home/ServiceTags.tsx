@@ -51,6 +51,13 @@ export function ServiceTags() {
                 href="/services"
                 className="reveal group block bg-white border border-border rounded-xl overflow-hidden card-hover"
                 style={{ transitionDelay: `${i * 100}ms` }}
+                data-scan
+                data-waybill={JSON.stringify({
+                  id: `SHV-${String(i + 1).padStart(2, "0")}`,
+                  label: s.title,
+                  route: "LDH → PAN-INDIA",
+                  eta: "24–72H",
+                })}
               >
                 {/* container top bar */}
                 <div

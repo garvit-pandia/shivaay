@@ -138,6 +138,13 @@ export function ServiceGrid() {
                 aria-pressed={!!flipped[i]}
                 onClick={() => toggleFlip(i)}
                 onKeyDown={(e) => onCardKeyDown(e, i)}
+                data-scan
+                data-waybill={JSON.stringify({
+                  id: code,
+                  label: s.title,
+                  route: "CUSTOMS → CLEARED",
+                })}
+                data-stamp="stacked"
               >
                 <div className="container-card-inner h-64">
                   {/* front — corrugated container door */}

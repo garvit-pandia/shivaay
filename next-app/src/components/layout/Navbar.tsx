@@ -50,7 +50,7 @@ export function Navbar() {
     <nav className={`sticky top-0 ${menuOpen ? "z-[70]" : "z-50"} nav-blur`} aria-label="Primary navigation">
       <div className="h-[2px] w-full bg-gradient-to-r from-teal to-orange" aria-hidden="true" />
       <div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between px-6">
-        <Link href="/" className="no-underline" aria-label="Shivaay Logistics Home">
+        <Link href="/" className="no-underline" aria-label="Shivaay Logistics Home" data-scan>
           <span className="font-serif text-xl font-semibold text-ink tracking-tight">
             Shivaay <span className="text-teal">Logistics</span>
           </span>
@@ -63,6 +63,7 @@ export function Navbar() {
               <Link
                 href={l.href}
                 className={linkClass(pathname === l.href)}
+                data-scan
                 {...(pathname === l.href ? { "aria-current": "page" as const } : {})}
               >
                 {l.label}
@@ -99,6 +100,7 @@ export function Navbar() {
                       <Link
                         href={r.href}
                         onClick={() => setResourcesOpen(false)}
+                        data-scan
                         className={`mono-label flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-[10px] no-underline transition-colors ${
                           pathname === r.href
                             ? "text-teal bg-teal-tint font-semibold"
@@ -120,6 +122,7 @@ export function Navbar() {
             <Link
               href="/contact"
               className={linkClass(contactActive)}
+              data-scan
               {...(contactActive ? { "aria-current": "page" as const } : {})}
             >
               Contact
@@ -130,6 +133,7 @@ export function Navbar() {
         <Link
           href="tel:+918847467790"
           className="hidden sm:inline-flex items-center gap-2 bg-ink text-white px-5 py-2.5 rounded-full text-sm font-semibold no-underline hover:bg-teal transition-colors duration-200"
+          data-scan
         >
           <Icon icon={Phone} size={16} aria-hidden={true} />
           Call Now

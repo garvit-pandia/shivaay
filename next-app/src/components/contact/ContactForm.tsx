@@ -112,7 +112,7 @@ export function ContactForm() {
         </div>
 
         <div className="flex items-center gap-4 border-t-[1.5px] border-dashed border-ink/25 pt-6">
-          <button type="submit" disabled={sending} className="inline-flex items-center gap-2 btn-primary px-6 py-3 text-base font-semibold no-underline disabled:opacity-50">
+          <button type="submit" disabled={sending} data-stamp="signed" className="inline-flex items-center gap-2 btn-primary px-6 py-3 text-base font-semibold no-underline disabled:opacity-50">
             <Icon icon={Send} size={18} aria-hidden={true} />
             {sending ? "Sending..." : "Send Inquiry"}
           </button>
