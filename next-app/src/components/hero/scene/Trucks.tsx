@@ -115,7 +115,8 @@ function spinWheels(model: FittedModel, omega: number, step: number) {
 function buildRoutes(): TruckRoute[] {
   return TRUCK_PATHS.map((p) => {
     const curve = new THREE.CatmullRomCurve3(
-      p.points.map(([x, y, z]) => new THREE.Vector3(x, y, z))
+      p.points.map(([x, y, z]) => new THREE.Vector3(x, y, z)),
+      p.closed
     );
     curve.arcLengthDivisions = 200;
     return { curve, speed: p.speed, offset: p.offset, length: curve.getLength() };
@@ -349,20 +350,21 @@ interface GateProps {
 }
 
 /**
- * Yard gate at GATE: two booths, a barrier arm pivoted on the west booth that
- * raises while truck #1 is inside its gate window (u ∈ [0.05, 0.25]), cones
- * and crate props on full tier.
+ * Yard gate at GATE: two booths, a barrier arm pivoted on the inner face of
+ * the west booth. The 9-unit arm covers the west lane only (tip at x ≈ −2.5
+ * closed) and raises while truck #1 is inside its gate window
+ * (u ∈ [0.12, 0.26]); cones and crate props on full tier.
  */
 function Gate({ tier, u1 }: GateProps) {
   const armRef = useRef<THREE.Group>(null);
-  const armLength = GATE.width - 6;
+  const armLength = 9;
 
   useFrame(() => {
     if (!armRef.current) return;
     armRef.current.rotation.z = gateRaiseAmount(u1.current ?? 0) * 1.25;
   });
 
-  const pivotX = GATE.x - armLength / 2;
+  const pivotX = GATE.x - GATE.width / 2 + 1.5;
 
   return (
     <group>
@@ -387,8 +389,8 @@ function Gate({ tier, u1 }: GateProps) {
           <boxGeometry args={[armLength, 0.3, 0.3]} />
           <meshStandardMaterial color={INK} roughness={0.6} />
         </mesh>
-        <mesh position={[armLength - 2, 0, 0]}>
-          <boxGeometry args={[2.4, 0.32, 0.32]} />
+        <mesh position={[armLength - 1, 0, 0]}>
+          <boxGeometry args={[2, 0.32, 0.32]} />
           <meshStandardMaterial color={ACCENT_ORANGE} roughness={0.6} />
         </mesh>
       </group>

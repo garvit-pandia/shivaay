@@ -49,10 +49,11 @@ test("gate barrier raises only inside truck #1's u window", () => {
   const near = (actual: number, expected: number) =>
     assert.ok(Math.abs(actual - expected) < 1e-9, `${actual} ≉ ${expected}`);
   assert.equal(gateRaiseAmount(0), 0);
-  assert.equal(gateRaiseAmount(0.02), 0);
-  near(gateRaiseAmount(0.04), 0.5); // easing in
-  assert.equal(gateRaiseAmount(0.15), 1); // held up across [0.05, 0.25]
-  near(gateRaiseAmount(0.26), 0.5); // easing out
+  assert.equal(gateRaiseAmount(0.11), 0); // below the window
+  near(gateRaiseAmount(0.13), 0.5); // easing in over [0.12, 0.14]
+  assert.equal(gateRaiseAmount(0.15), 1); // held up across [0.14, 0.26]
+  assert.equal(gateRaiseAmount(0.24), 1);
+  near(gateRaiseAmount(0.27), 0.5); // easing out over [0.26, 0.28]
   assert.equal(gateRaiseAmount(0.3), 0);
   assert.equal(gateRaiseAmount(1), 0);
   assert.equal(gateRaiseAmount(-0.1), 0);

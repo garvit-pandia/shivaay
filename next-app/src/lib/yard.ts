@@ -98,21 +98,33 @@ export function createYard(
   return { boxes, labels };
 }
 
-/** Truck routes across the apron: [[x, y, z], …], looped. */
-export const TRUCK_PATHS: { points: [number, number, number][]; speed: number; offset: number }[] = [
+/**
+ * Truck circuits on the apron: [[x, y, z], …] with `closed` feeding
+ * `CatmullRomCurve3`'s closed flag. Both loops stay on the apron (x ±92,
+ * z −64…44) and use the stack-free service lanes and the lane in front of the
+ * gate (z = −64) — never the bare map paper beside the hero copy.
+ */
+export const TRUCK_PATHS: {
+  points: [number, number, number][];
+  speed: number;
+  offset: number;
+  closed: boolean;
+}[] = [
   {
-    points: [
-      [-150, 0, -46], [-70, 0, -46], [-24, 0, -40], [4, 0, -18], [10, 0, 26], [60, 0, 44], [150, 0, 46],
-    ],
-    speed: 0.014,
+    // Inner circuit; its front stretch crosses the gate on the z = −64 lane.
+    points: [[-88, 0, -64], [88, 0, -64], [88, 0, -12], [-88, 0, -12]],
+    speed: 0.018,
     offset: 0,
+    closed: true,
   },
   {
+    // Outer circuit hugging the apron edges, with service-lane doglegs.
     points: [
-      [150, 0, 32], [66, 0, 30], [18, 0, 12], [-8, 0, -14], [-60, 0, -30], [-150, 0, -32],
+      [92, 0, 44], [-80, 0, 44], [-92, 0, 20], [-92, 0, -40], [-60, 0, -64], [40, 0, -64], [92, 0, -40],
     ],
-    speed: 0.011,
-    offset: 0.45,
+    speed: 0.014,
+    offset: 0.5,
+    closed: true,
   },
 ];
 
@@ -133,11 +145,12 @@ export const GATE = { x: 0, z: -70, width: 26 } as const;
 
 /**
  * Gate barrier raise amount (0 = closed, 1 = fully up) for truck #1's path
- * progress `u`. Fully raised across the plan's u ∈ [0.05, 0.25] window, with a
- * 0.02-wide ease on each edge so the arm never snaps.
+ * progress `u`. Truck #1 passes the gate at u ≈ 0.19; the arm is fully raised
+ * across u ∈ [0.14, 0.26], with a 0.02-wide ease on each edge (starting at
+ * u = 0.12, lowering from u = 0.26) so it never snaps.
  */
 export function gateRaiseAmount(u: number): number {
   const ease = (t: number) => t * t * (3 - 2 * t);
   const clamp01 = (t: number) => Math.min(1, Math.max(0, t));
-  return ease(clamp01((u - 0.03) / 0.02)) * (1 - ease(clamp01((u - 0.25) / 0.02)));
+  return ease(clamp01((u - 0.12) / 0.02)) * (1 - ease(clamp01((u - 0.26) / 0.02)));
 }
