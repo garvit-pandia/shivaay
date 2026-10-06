@@ -90,14 +90,15 @@ mono labels, gradient hairline, deep-teal footer.
   trucks/crane/reach-stacker, network layer, waybill cursor bridge. Assets are
   CC0 Kenney (`next-app/public/models/`, licence alongside).
 - **Bundle** (fresh production export, `serve out` :5299; Next 16/Turbopack no
-  longer prints First Load JS, so initial JS = executed non-module script tags,
-  gzip): `/` 258.7 KB gz · `/services` 164.4 · `/contact` 156.0 · `/resources`
-  150.7 · resources/documents 155.0 · files 155.1 · links 152.2 · ports 155.1 ·
+  longer prints First Load JS, so measured from the exported HTML script tags,
+  gzip): `/` initial **~199 KB gz** (203,965 B — back at the pre-hero level) ·
+  `/services` 164.4 · `/contact` 156.0 · `/resources` 150.7 ·
+  resources/documents 155.0 · files 155.1 · links 152.2 · ports 155.1 ·
   404 150.7.
-- **Hero-only lazy** (request diff `/` − `/services`): three + R3F + scene
-  177.6 KB gz, support chunk 45.2, tiny helper 0.3 → **217.9 KB gz**. **Models**
+- **Hero-only lazy** (late requests on `/` only): three + R3F + scene chunk
+  272.8 KB gz, support chunk 45.2, tiny helper 0.3 → **318.3 KB gz**. **Models**
   (raw / gz): truck.glb 176 KB / 27.7, box 14 KB / 3.3, cone 17 KB / 4.0,
-  colormap.png 12 KB / 11.0 → **45.9 KB gz**. **Home-only lazy total 263.8 KB gz
+  colormap.png 12 KB / 11.0 → **45.9 KB gz**. **Home-only lazy total ≈ 364 KB gz
   vs 450 KB budget — pass; `truck.glb` kept as shipped (no gltf-transform
   optimization needed).**
 - **Tiers / fallback matrix** (export, Playwright): mobile 390×844 renders the
@@ -109,9 +110,12 @@ mono labels, gradient hairline, deep-teal footer.
 - **FPS:** ~14 fps settled at 1440×900 (13 / 15.5 / 14 over 3×2 s rAF) — headless
   SwiftShader only (no `/dev/dri` here), so not representative; human pass on the
   preview still open.
-- Note: home's initial JS includes a 100.5 KB gz async three-core chunk because
-  `lib/hero-poses.ts` is eagerly pulled in by the progress hook; making that
-  fully lazy is a future win (budget passes either way).
+- Leak fixed (2026-10-06, after the measurement pass): `lib/hero-poses.ts`
+  imported `three` at top level and was eagerly reachable from the progress
+  hook, so a 100.5 KB gz three-core chunk landed in home's initial HTML. Pure
+  helpers moved to `lib/hero-ease.ts`; initial home dropped 258.7 → ~199 KB gz
+  and **no initial script contains three code** (verified by grep of the
+  exported HTML).
 - Open items: motion-density client verdict, rail siding phase-2 (gated on it),
   human-fps pass on the preview.
 
@@ -122,7 +126,7 @@ mono labels, gradient hairline, deep-teal footer.
 - [x] WebGL-off fallback (4 arcs + 5 dots, **0 console errors** after 2026-10-05 fix)
 - [x] door-wipe transition · [x] mobile 390px, no overflow (all routes)
 - [x] container wall geometry 12/12 ≥ 256px + flip + focus ring (fixed 2026-10-05)
-- [x] hero bundle (2026-10-06): lazy hero 217.9 + models 45.9 = 263.8 KB gz ≤ 450 KB budget; home initial 258.7 KB gz; ~14 fps headless SwiftShader (not representative)
+- [x] hero bundle (2026-10-06): lazy hero 318.3 + models 45.9 ≈ 364 KB gz ≤ 450 KB budget; home initial ~199 KB gz (three leak fixed); ~14 fps headless SwiftShader (not representative)
 - [x] no-JS content readable (js-gated hides)
 - [ ] **Visual taste sign-off** — fresh pass needed on `screenshots/v5-*` or the Vercel
   preview; motion-density verdict still pending from client.

@@ -4,7 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { useEffect, useMemo } from "react";
 import * as THREE from "three";
 import { cities, routes } from "@/lib/data";
-import { smoothstep } from "@/lib/hero-poses";
+import { smoothstep } from "@/lib/hero-ease";
 
 /** Scene units per degree — diagrammatic, not geographically to scale. */
 const SCALE = 7;

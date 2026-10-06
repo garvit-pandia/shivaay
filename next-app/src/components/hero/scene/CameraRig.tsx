@@ -3,7 +3,8 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
-import { makeCurves, smoothstep } from "@/lib/hero-poses";
+import { makeCurves } from "@/lib/hero-poses";
+import { smoothstep } from "@/lib/hero-ease";
 
 /**
  * Consumes the shared progress ref (0 = map, 1 = settled yard) and drives the

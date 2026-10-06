@@ -21,13 +21,3 @@ export function makeCurves() {
     target: new THREE.CatmullRomCurve3(POSES.map((p) => new THREE.Vector3(...p.target))),
   };
 }
-
-export const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
-
-export const easeInOutCubic = (t: number) =>
-  t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
-export const smoothstep = (a: number, b: number, v: number) => {
-  const t = clamp01((v - a) / (b - a));
-  return t * t * (3 - 2 * t);
-};

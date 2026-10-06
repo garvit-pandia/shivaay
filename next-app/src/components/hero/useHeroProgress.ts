@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { heroBridge } from "@/lib/hero-bridge";
-import { clamp01, easeInOutCubic } from "@/lib/hero-poses";
+import { clamp01, easeInOutCubic } from "@/lib/hero-ease";
 
 export type HeroPhase = "dive" | "scrub" | "settled";
 

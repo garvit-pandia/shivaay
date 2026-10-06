@@ -2,7 +2,7 @@
 
 import { Html } from "@react-three/drei";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { smoothstep } from "@/lib/hero-poses";
+import { smoothstep } from "@/lib/hero-ease";
 import { createYard } from "@/lib/yard";
 
 export interface StackLabelsProps {
