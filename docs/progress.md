@@ -1,7 +1,7 @@
 # Shivaay Logistics — Progress Tracker
 
 Living document: branches, what lives where, session history, and what's next.
-Updated: 2026-10-05. Owner: Garvit. All work happens on feature branches — `main` is production.
+Updated: 2026-10-06. Owner: Garvit. All work happens on feature branches — `main` is production.
 
 ## Branch map
 
@@ -9,7 +9,7 @@ Updated: 2026-10-05. Owner: Garvit. All work happens on feature branches — `ma
 |---|---|---|---|
 | `main` | — | Production. Light-mode site (home, services, contact). Last: `0932d9b` light-mode styling | Live site (auto-deploy) |
 | `feat/resources-section` | `main` + 6 commits | Resources hub: `/resources`, `/links`, `/documents`, `/files`, `/ports` + 12 downloads + Esri map-tile fix. Last: `2ff5e3c` | Preview `2PH3WqUXi` |
-| `redesign/immersive-2026` | `feat/resources-section` + 13 commits | **Active work.** Full immersive redesign + 2026-10-05 review-fix pass. Last: `9b03616` | Auto-deploys on push |
+| `redesign/immersive-2026` | `feat/resources-section` + 13 commits | **Active work.** Full immersive redesign + 2026-10-05 review-fix pass + living-yard hero (2026-10-06). Last: `cfedfa3` | Auto-deploys on push |
 
 Merge note (decide with client before any PR): `redesign/immersive-2026` contains the
 6 resources commits too — merging it ships resources + redesign together. Alternative:
@@ -81,6 +81,40 @@ mono labels, gradient hairline, deep-teal footer.
 - Still client-side: marquee copy, WhatsApp float color, real photos vs stock,
   motion-density verdict, merge strategy.
 
+## Session log — 2026-10-06 (living-yard hero: bundle, tiers, fallbacks)
+
+- **Implementation status:** the dot-globe hero is replaced by the R3F living
+  yard (spec `docs/superpowers/specs/2026-10-05-living-yard-hero-design.md`,
+  plan `docs/superpowers/plans/2026-10-05-living-yard-hero-plan.md`, commits
+  `d9994a9`→`cfedfa3` + this measurements pass): auto-dive → scroll scrub → skip,
+  trucks/crane/reach-stacker, network layer, waybill cursor bridge. Assets are
+  CC0 Kenney (`next-app/public/models/`, licence alongside).
+- **Bundle** (fresh production export, `serve out` :5299; Next 16/Turbopack no
+  longer prints First Load JS, so initial JS = executed non-module script tags,
+  gzip): `/` 258.7 KB gz · `/services` 164.4 · `/contact` 156.0 · `/resources`
+  150.7 · resources/documents 155.0 · files 155.1 · links 152.2 · ports 155.1 ·
+  404 150.7.
+- **Hero-only lazy** (request diff `/` − `/services`): three + R3F + scene
+  177.6 KB gz, support chunk 45.2, tiny helper 0.3 → **217.9 KB gz**. **Models**
+  (raw / gz): truck.glb 176 KB / 27.7, box 14 KB / 3.3, cone 17 KB / 4.0,
+  colormap.png 12 KB / 11.0 → **45.9 KB gz**. **Home-only lazy total 263.8 KB gz
+  vs 450 KB budget — pass; `truck.glb` kept as shipped (no gltf-transform
+  optimization needed).**
+- **Tiers / fallback matrix** (export, Playwright): mobile 390×844 renders the
+  lite tier — canvas on, zero stack labels, one truck, `scrollWidth` 390. Reduced
+  motion settles immediately (no skip); no WebGL → SVG yard fallback, 0 errors;
+  context loss → SVG fallback swaps in, 0 errors; GLB abort → procedural trucks
+  render and settle (the deliberately aborted requests still log fetch failures
+  in the browser console).
+- **FPS:** ~14 fps settled at 1440×900 (13 / 15.5 / 14 over 3×2 s rAF) — headless
+  SwiftShader only (no `/dev/dri` here), so not representative; human pass on the
+  preview still open.
+- Note: home's initial JS includes a 100.5 KB gz async three-core chunk because
+  `lib/hero-poses.ts` is eagerly pulled in by the progress hook; making that
+  fully lazy is a future win (budget passes either way).
+- Open items: motion-density client verdict, rail siding phase-2 (gated on it),
+  human-fps pass on the preview.
+
 ## Verification status
 
 - [x] build + lint green (re-verified 2026-10-05) · [x] SSR content present
@@ -88,7 +122,7 @@ mono labels, gradient hairline, deep-teal footer.
 - [x] WebGL-off fallback (4 arcs + 5 dots, **0 console errors** after 2026-10-05 fix)
 - [x] door-wipe transition · [x] mobile 390px, no overflow (all routes)
 - [x] container wall geometry 12/12 ≥ 256px + flip + focus ring (fixed 2026-10-05)
-- [x] three.js lazy chunk budget: 179.4 KB gz home-only; initial JS ≈ 198 KB gz on home
+- [x] hero bundle (2026-10-06): lazy hero 217.9 + models 45.9 = 263.8 KB gz ≤ 450 KB budget; home initial 258.7 KB gz; ~14 fps headless SwiftShader (not representative)
 - [x] no-JS content readable (js-gated hides)
 - [ ] **Visual taste sign-off** — fresh pass needed on `screenshots/v5-*` or the Vercel
   preview; motion-density verdict still pending from client.
