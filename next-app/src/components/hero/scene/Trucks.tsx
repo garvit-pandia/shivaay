@@ -240,6 +240,19 @@ function TruckGLB({ body, onModel }: TruckGLBProps) {
   return <primitive object={model.object} />;
 }
 
+function TruckHeadlights() {
+  return (
+    <group>
+      {[-0.9, 0.9].map((x) => (
+        <mesh key={x} position={[x, 1.5, 3.42]}>
+          <sphereGeometry args={[0.22, 10, 10]} />
+          <meshBasicMaterial color="#FFF6E0" toneMapped={false} />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
 interface TruckProps {
   id: string;
   route: TruckRoute;
@@ -296,6 +309,7 @@ function Truck({ id, route, body, reduced, progress, register, onProgress }: Tru
           {/* Inner group carries the model-forward correction (see MODEL_YAW). */}
           <group rotation-y={MODEL_YAW}>
             <TruckGLB body={body} onModel={registerModel} />
+            <TruckHeadlights />
           </group>
         </Suspense>
       </ModelBoundary>

@@ -193,6 +193,8 @@ export function GantryCrane({ progress, reduced, register }: GantryCraneProps) {
   const cableRefs = useRef<(THREE.Mesh | null)[]>([]);
   const boxRef = useRef<THREE.Mesh>(null);
   const anchorRef = useRef<THREE.Group>(null);
+  const beaconRef = useRef<THREE.MeshBasicMaterial>(null);
+  const blinkRef = useRef(0);
   const tRef = useRef(2); // start after load-in
 
   useLayoutEffect(() => {
@@ -224,6 +226,14 @@ export function GantryCrane({ progress, reduced, register }: GantryCraneProps) {
   };
 
   useFrame((_, delta) => {
+    const step = Math.min(delta, 0.05);
+    blinkRef.current += step;
+    if (beaconRef.current) {
+      // Aviation beacon: soft pulse while running, steady when parked.
+      beaconRef.current.opacity = reduced
+        ? 1
+        : 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(blinkRef.current * 2.4));
+    }
     if (reduced) {
       // Reduced motion: no cycle — trolley parked at the pick slot, box grounded.
       apply(0, 0, false, CRANE.pickZ);
@@ -232,7 +242,7 @@ export function GantryCrane({ progress, reduced, register }: GantryCraneProps) {
     const p = progress.current ?? 1;
     // The crane only runs in the settled half of the dive.
     if (p < 0.55) return;
-    tRef.current += Math.min(delta, 0.05);
+    tRef.current += step;
     const { trolley, hoist, carry } = sample(KEYS, tRef.current);
     const atPlace = tRef.current % CRANE.cycle >= 10.5;
     apply(trolley, hoist, carry, atPlace ? CRANE.placeZ : CRANE.pickZ);
@@ -276,6 +286,20 @@ export function GantryCrane({ progress, reduced, register }: GantryCraneProps) {
         <mesh position={[0, CRANE.beamY, 0]}>
           <boxGeometry args={[2.4, 1.4, CRANE.railZ + 4]} />
           <meshStandardMaterial color="#1E1B18" roughness={0.6} />
+        </mesh>
+        {/* aviation beacon on a short mast — soft pulse, steady when parked */}
+        <mesh position={[0, CRANE.beamY + 0.9, 0]}>
+          <cylinderGeometry args={[0.09, 0.09, 1.8, 8]} />
+          <meshStandardMaterial color="#1E1B18" roughness={0.6} />
+        </mesh>
+        <mesh position={[0, CRANE.beamY + 1.9, 0]}>
+          <sphereGeometry args={[0.45, 12, 12]} />
+          <meshBasicMaterial
+            ref={beaconRef}
+            color="#EA580C"
+            transparent
+            toneMapped={false}
+          />
         </mesh>
       </group>
       {/* trolley + hoist, initialised at the parked pose */}

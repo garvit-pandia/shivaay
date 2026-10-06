@@ -22,6 +22,18 @@ export type QualityTier = "full" | "lite";
 function StackField({ tier }: { tier: QualityTier }) {
   const { boxes } = useMemo(() => createYard(116, tier === "lite" ? "lite" : "full"), [tier]);
 
+  // Subtle per-instance tonal variation so the stacks read as individual
+  // boxes, not a flat fill. Deterministic hash of the box number.
+  const colors = useMemo(
+    () =>
+      boxes.map((b) => {
+        const n = Number.parseInt(b.id.slice(4), 10) || 0;
+        const j = (((n * 2654435761) % 1000) / 1000 - 0.5) * 0.07;
+        return new THREE.Color(b.color).offsetHSL(0, 0, j);
+      }),
+    [boxes]
+  );
+
   const ribTexture = useMemo(() => {
     const c = document.createElement("canvas");
     c.width = 64;
@@ -43,11 +55,11 @@ function StackField({ tier }: { tier: QualityTier }) {
     <Instances limit={boxes.length} castShadow={false} receiveShadow={false}>
       <boxGeometry args={[CONTAINER.w, CONTAINER.h, CONTAINER.d]} />
       <meshStandardMaterial map={ribTexture} roughness={0.82} metalness={0.04} />
-      {boxes.map((b) => (
+      {boxes.map((b, i) => (
         <Instance
           key={b.id}
           position={[b.x, (b.tier + 0.5) * (CONTAINER.h + 0.12), b.z]}
-          color={b.color}
+          color={colors[i]}
         />
       ))}
     </Instances>
@@ -67,6 +79,37 @@ export function HeroStage({ tier, progress, active, reduced, onContextLost }: He
   const registerAgent = useCallback<RegisterAgent>((id, node) => {
     if (node) roots.current[id] = node;
     else delete roots.current[id];
+  }, []);
+
+  // Painted apron: lane dashes under the two truck lanes + a stop bar at the
+  // gate. Canvas top edge maps to the yard's north edge (z = -75).
+  const apronTexture = useMemo(() => {
+    const c = document.createElement("canvas");
+    c.width = 1024;
+    c.height = 700;
+    const ctx = c.getContext("2d");
+    if (ctx) {
+      ctx.fillStyle = "#E4DFD2";
+      ctx.fillRect(0, 0, 1024, 700);
+      const X = (x: number) => ((x + 110) / 220) * 1024;
+      const Z = (z: number) => ((z + 75) / 150) * 700;
+      ctx.strokeStyle = "rgba(250,248,244,0.6)";
+      ctx.lineWidth = 5;
+      ctx.setLineDash([28, 20]);
+      for (const z of [-64, -12]) {
+        ctx.beginPath();
+        ctx.moveTo(X(-102), Z(z));
+        ctx.lineTo(X(102), Z(z));
+        ctx.stroke();
+      }
+      ctx.setLineDash([]);
+      ctx.fillStyle = "rgba(250,248,244,0.65)";
+      ctx.fillRect(X(-13), Z(-66.5), X(13) - X(-13), 7);
+    }
+    const tex = new THREE.CanvasTexture(c);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.anisotropy = 4;
+    return tex;
   }, []);
 
   return (
@@ -96,7 +139,7 @@ export function HeroStage({ tier, progress, active, reduced, onContextLost }: He
       {/* yard apron */}
       <mesh rotation-x={-Math.PI / 2} position={[0, 0.01, 0]}>
         <planeGeometry args={[YARD.w, YARD.d]} />
-        <meshStandardMaterial color="#E4DFD2" roughness={1} />
+        <meshStandardMaterial map={apronTexture} roughness={1} />
       </mesh>
 
       <CameraRig progress={progress} />
