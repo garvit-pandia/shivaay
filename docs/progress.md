@@ -126,6 +126,12 @@ mono labels, gradient hairline, deep-teal footer.
   (JSON `{id,label,route?,eta?}`) → floating tag; `data-stamp`
   (`cleared|scanned|signed|stacked`) → click stamp. 3D agents feed the same tag
   via `lib/cursor-store.ts` + `lib/hero-bridge.ts`.
+- **Polish rounds (post-plan, all on the branch, verify 12/12 green):**
+  staged dive pacing (`diveWarp` in `lib/hero-ease.ts`, unit-tested); copy
+  reveals at p≥0.85; camera tracks the path exactly (damping only on parallax
+  + look); teal emissive hover highlights on agents; canvas fade-in; painted
+  apron lanes + gate stop bar; per-container tonal jitter; crane beacon pulse;
+  truck headlights; staggered stack-label appearance; skip/cue fades.
 
 ## Verification status
 
