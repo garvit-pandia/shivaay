@@ -53,3 +53,17 @@ All files were downloaded from
   nothing downloadable). Content in `src/lib/resources.ts`.
 - `/resources/ports` — 8 Ludhiana ICD/CFS facilities with Google Maps embeds.
   Data in `src/lib/resources.ts`.
+
+## 3D models (homepage hero)
+
+| File | Source | License | Downloaded |
+|---|---|---|---|
+| `truck.glb`, `box.glb`, `cone.glb` | Kenney Car Kit 3.1 — https://kenney.nl/media/pages/assets/car-kit/1a312ec241-1775131960/kenney_car-kit.zip | CC0 (license copy: `public/models/LICENSE-kenney-car-kit.txt`) | 2026-10-05 |
+
+Models were extracted from the kit and are tinted to the brand palette at runtime
+(`Trucks.tsx`). Reference projects (Meridian Terminal, cargoShip3JS, shipping_container)
+were studied for patterns only — no code was copied.
+
+The GLBs reference the kit's shared `Textures/colormap.png`, served at
+`public/models/Textures/colormap.png` (all materials are replaced at runtime, so it
+only keeps the loader free of missing-texture errors).

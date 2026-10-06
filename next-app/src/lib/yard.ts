@@ -130,3 +130,14 @@ export const CRANE = {
 } as const;
 
 export const GATE = { x: 0, z: -70, width: 26 } as const;
+
+/**
+ * Gate barrier raise amount (0 = closed, 1 = fully up) for truck #1's path
+ * progress `u`. Fully raised across the plan's u ∈ [0.05, 0.25] window, with a
+ * 0.02-wide ease on each edge so the arm never snaps.
+ */
+export function gateRaiseAmount(u: number): number {
+  const ease = (t: number) => t * t * (3 - 2 * t);
+  const clamp01 = (t: number) => Math.min(1, Math.max(0, t));
+  return ease(clamp01((u - 0.03) / 0.02)) * (1 - ease(clamp01((u - 0.25) / 0.02)));
+}

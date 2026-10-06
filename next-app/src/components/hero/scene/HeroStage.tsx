@@ -8,6 +8,7 @@ import { CONTAINER, YARD, createYard } from "@/lib/yard";
 import { CameraRig } from "./CameraRig";
 import { GantryCrane } from "./Agents";
 import { NetworkLayer } from "./NetworkLayer";
+import { Trucks } from "./Trucks";
 
 export type QualityTier = "full" | "lite";
 
@@ -92,6 +93,8 @@ export function HeroStage({ tier, progress, active, reduced, onContextLost }: He
       <StackField tier={tier} />
 
       <GantryCrane progress={progress} reduced={reduced} />
+
+      <Trucks tier={tier} reduced={reduced} progress={progress} />
     </Canvas>
   );
 }
