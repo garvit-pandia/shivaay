@@ -62,17 +62,18 @@ export function Cursor() {
     let hideTimer = 0;
 
     const renderWaybill = () => {
+      // Tag and scanner box are independent: [data-scan] without [data-waybill]
+      // (nav links, gallery items) still gets the sweep highlight.
       const w = activeWaybill();
       if (!w) {
         tag.classList.remove("is-on");
-        scan.classList.remove("is-on");
-        return;
+      } else {
+        tagId.textContent = w.id;
+        tagLabel.textContent = w.label;
+        tagRoute.textContent = [w.route, w.eta].filter(Boolean).join(" · ");
+        tagRoute.style.display = w.route || w.eta ? "block" : "none";
+        tag.classList.add("is-on");
       }
-      tagId.textContent = w.id;
-      tagLabel.textContent = w.label;
-      tagRoute.textContent = [w.route, w.eta].filter(Boolean).join(" · ");
-      tagRoute.style.display = w.route || w.eta ? "block" : "none";
-      tag.classList.add("is-on");
       const r = getCursorState().scanRect;
       if (r) {
         scan.style.left = `${r.x - 3}px`;
