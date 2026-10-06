@@ -53,7 +53,18 @@ export function useHeroProgress({ trackRef, desktop, reduced }: Options) {
       progress.current = 1;
       target.current = 1;
       phaseRef.current = "settled";
-      return;
+      // Publish the test hook even though there is no driver loop: callers
+      // must be able to assert the settled contract without waiting.
+      const reducedHook: SlHeroHook = {
+        getState: () => ({ phase: "settled", progress: 1, desktop, reduced }),
+        setProgress: () => {},
+        skip: () => {},
+        getAgentScreenPosition: (id) => heroBridge.getAgentScreenPosition(id),
+      };
+      (window as unknown as { __slHero?: SlHeroHook }).__slHero = reducedHook;
+      return () => {
+        delete (window as unknown as { __slHero?: SlHeroHook }).__slHero;
+      };
     }
 
     let seen = false;
