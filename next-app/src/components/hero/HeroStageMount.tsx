@@ -98,13 +98,7 @@ export function HeroStageMount({ children }: { children: React.ReactNode }) {
           className="pointer-events-none absolute inset-0 bg-gradient-to-r from-cream via-cream/75 to-transparent lg:via-cream/30"
           aria-hidden="true"
         />
-        <div
-          className={`hero-copy relative z-10 ${
-            phase === "settled"
-              ? "pointer-events-none [&_a]:pointer-events-auto [&_button]:pointer-events-auto"
-              : ""
-          }`}
-        >
+        <div className="hero-copy relative z-10">
           {children}
         </div>
         {phase !== "settled" && !reduced && (

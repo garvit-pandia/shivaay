@@ -17,7 +17,7 @@ export function HeroSection() {
     <section className="relative bg-cream" aria-labelledby="hero-heading">
       <HeroStageMount>
         <div className="mx-auto max-w-[1280px] px-6 min-h-[94vh] flex items-center pt-24 pb-20">
-          <div className="max-w-2xl">
+          <div className="hero-copy-block max-w-2xl">
             <p className="mono-label text-[11px] text-teal mb-6 flex items-center gap-2.5">
               <span className="ticker-dot" aria-hidden="true" />
               Customs Broker · Ludhiana
