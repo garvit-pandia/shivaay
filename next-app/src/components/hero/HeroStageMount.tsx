@@ -95,10 +95,18 @@ export function HeroStageMount({ children }: { children: React.ReactNode }) {
           {webgl !== true || contextLost ? <YardFallback /> : null}
         </div>
         <div
-          className="absolute inset-0 bg-gradient-to-r from-cream via-cream/75 to-transparent lg:via-cream/30"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-cream via-cream/75 to-transparent lg:via-cream/30"
           aria-hidden="true"
         />
-        <div className="hero-copy relative z-10">{children}</div>
+        <div
+          className={`hero-copy relative z-10 ${
+            phase === "settled"
+              ? "pointer-events-none [&_a]:pointer-events-auto [&_button]:pointer-events-auto"
+              : ""
+          }`}
+        >
+          {children}
+        </div>
         {phase !== "settled" && !reduced && (
           <button type="button" className="hero-skip mono-label" onClick={skip}>
             Skip intro

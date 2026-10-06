@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { heroBridge } from "@/lib/hero-bridge";
 import { clamp01, easeInOutCubic } from "@/lib/hero-poses";
 
 export type HeroPhase = "dive" | "scrub" | "settled";
@@ -166,7 +167,7 @@ export function useHeroProgress({ trackRef, desktop, reduced }: Options) {
         else ensureLoop();
       },
       skip,
-      getAgentScreenPosition: () => null,
+      getAgentScreenPosition: (id) => heroBridge.getAgentScreenPosition(id),
     };
     (window as unknown as { __slHero?: SlHeroHook }).__slHero = hook;
 

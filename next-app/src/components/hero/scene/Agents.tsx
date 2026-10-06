@@ -1,10 +1,73 @@
 "use client";
 
-import { useFrame } from "@react-three/fiber";
-import { useMemo, useRef } from "react";
+import { useFrame, useThree, type ThreeEvent } from "@react-three/fiber";
+import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
+import { setThreeWaybill, type Waybill } from "@/lib/cursor-store";
+import { heroBridge } from "@/lib/hero-bridge";
 import { ACCENT_ORANGE } from "@/lib/palette";
 import { CONTAINER, CRANE } from "@/lib/yard";
+
+/* ------------------------------------------------------------------ *
+ * Raycast bridge — hovered agents publish waybills to the cursor store
+ * and expose their screen position for tests + tooling.
+ * ------------------------------------------------------------------ */
+
+/** Stable scene ids + waybill copy for the hoverable yard agents. */
+const AGENT_WAYBILLS: Record<"crane" | "stacker", Waybill> = {
+  crane: { id: "SHV-CRN-01", label: "ICD Transfer", route: "YARD → YARD" },
+  stacker: { id: "SHV-STK-01", label: "Stack Shuffle", route: "LANE 2 → BLOCK C" },
+};
+
+/** Named agent roots, filled on mount and read by `BridgeRegistration`. */
+export type AgentRoots = React.RefObject<Record<string, THREE.Object3D>>;
+
+/** Registers (or clears, with `null`) a named agent root. */
+export type RegisterAgent = (id: string, node: THREE.Object3D | null) => void;
+
+/** Hover handlers for an agent: cursor highlight + waybill in, clear on out. */
+export function agentHover(waybill: Waybill) {
+  return {
+    onPointerOver: (e: ThreeEvent<PointerEvent>) => {
+      e.stopPropagation();
+      document.body.style.cursor = "pointer";
+      setThreeWaybill(waybill);
+    },
+    onPointerOut: () => {
+      document.body.style.cursor = "";
+      setThreeWaybill(null);
+    },
+  };
+}
+
+/**
+ * Publishes `heroBridge.getAgentScreenPosition` while the canvas is alive.
+ * World position → NDC → viewport pixels via the GL element's rect, so the
+ * numbers line up with page coordinates (and Playwright's mouse).
+ */
+export function BridgeRegistration({ roots }: { roots: AgentRoots }) {
+  const { camera, gl } = useThree();
+
+  useEffect(() => {
+    heroBridge.getAgentScreenPosition = (id) => {
+      const obj = roots.current[id];
+      if (!obj) return null;
+      const v = new THREE.Vector3();
+      obj.getWorldPosition(v);
+      v.project(camera);
+      const rect = gl.domElement.getBoundingClientRect();
+      return {
+        x: rect.left + ((v.x + 1) / 2) * rect.width,
+        y: rect.top + ((1 - v.y) / 2) * rect.height,
+      };
+    };
+    return () => {
+      heroBridge.getAgentScreenPosition = () => null;
+    };
+  }, [camera, gl, roots]);
+
+  return null;
+}
 
 /** Crane timeline keys: t seconds → trolley (0 pick…1 place), hoist (1 high…0 low), carrying. */
 const KEYS = [
@@ -89,6 +152,7 @@ const BRACE = (() => {
 export interface GantryCraneProps {
   progress: React.RefObject<number>;
   reduced: boolean;
+  register: RegisterAgent;
 }
 
 /**
@@ -98,12 +162,18 @@ export interface GantryCraneProps {
  * hoist clamps at the grip station so the spreader settles on a grounded
  * container instead of sinking through it.
  */
-export function GantryCrane({ progress, reduced }: GantryCraneProps) {
+export function GantryCrane({ progress, reduced, register }: GantryCraneProps) {
   const trolleyRef = useRef<THREE.Group>(null);
   const spreaderRef = useRef<THREE.Group>(null);
   const cableRefs = useRef<(THREE.Mesh | null)[]>([]);
   const boxRef = useRef<THREE.Mesh>(null);
+  const anchorRef = useRef<THREE.Group>(null);
   const tRef = useRef(2); // start after load-in
+
+  useLayoutEffect(() => {
+    register("crane", anchorRef.current);
+    return () => register("crane", null);
+  }, [register]);
 
   const apply = (trolley: number, hoist: number, carry: boolean, boxZ: number) => {
     const z = CRANE.pickZ + (CRANE.placeZ - CRANE.pickZ) * trolley;
@@ -144,7 +214,9 @@ export function GantryCrane({ progress, reduced }: GantryCraneProps) {
   });
 
   return (
-    <group>
+    <group {...agentHover(AGENT_WAYBILLS.crane)}>
+      {/* bridge anchor: the beam midpoint, always inside the frame */}
+      <group ref={anchorRef} position={[CRANE.pickX, CRANE.beamY, 0]} />
       {/* static frame: two X-braced A-frames + beam */}
       <group position={[CRANE.pickX, 0, 0]}>
         {[-1, 1].map((z) => (
@@ -305,6 +377,7 @@ export interface ReachStackerProps {
   tier: "full" | "lite";
   reduced: boolean;
   progress: React.RefObject<number>;
+  register: RegisterAgent;
 }
 
 /**
@@ -314,13 +387,19 @@ export interface ReachStackerProps {
  * apron to stack-top height — on a ≈20 s loop. Full tier only; under reduced
  * motion it stands parked at the pause station.
  */
-export function ReachStacker({ tier, reduced, progress }: ReachStackerProps) {
+export function ReachStacker({ tier, reduced, progress, register }: ReachStackerProps) {
   const vehicleRef = useRef<THREE.Group>(null);
   const boomRef = useRef<THREE.Group>(null);
   const boxRef = useRef<THREE.Mesh>(null);
   const frameRef = useRef<THREE.Mesh>(null);
   const cableRef = useRef<THREE.Mesh>(null);
+  const anchorRef = useRef<THREE.Group>(null);
   const tRef = useRef(0);
+
+  useLayoutEffect(() => {
+    register("stacker", anchorRef.current);
+    return () => register("stacker", null);
+  }, [register]);
 
   const apply = (x: number, lift: number) => {
     const pose = stackerPose(lift);
@@ -354,7 +433,13 @@ export function ReachStacker({ tier, reduced, progress }: ReachStackerProps) {
   if (tier === "lite") return null;
 
   return (
-    <group ref={vehicleRef} position={[STACKER.pauseX, 0, STACKER.z]}>
+    <group
+      ref={vehicleRef}
+      position={[STACKER.pauseX, 0, STACKER.z]}
+      {...agentHover(AGENT_WAYBILLS.stacker)}
+    >
+      {/* bridge anchor at chassis height */}
+      <group ref={anchorRef} position={[0, 2, 0]} />
       {/* chassis + cab + wheels */}
       <mesh position={[0, 1.95, 0]}>
         <boxGeometry args={[6.4, 2.3, 3.4]} />

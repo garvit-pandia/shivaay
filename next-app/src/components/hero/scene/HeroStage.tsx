@@ -2,11 +2,17 @@
 
 import { Canvas } from "@react-three/fiber";
 import { Instance, Instances } from "@react-three/drei";
-import { useMemo } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { CONTAINER, YARD, createYard } from "@/lib/yard";
 import { CameraRig } from "./CameraRig";
-import { GantryCrane, ReachStacker, YardDressing } from "./Agents";
+import {
+  BridgeRegistration,
+  GantryCrane,
+  ReachStacker,
+  YardDressing,
+  type RegisterAgent,
+} from "./Agents";
 import { NetworkLayer } from "./NetworkLayer";
 import { StackLabels } from "./StackLabels";
 import { Trucks } from "./Trucks";
@@ -57,6 +63,12 @@ export interface HeroStageProps {
 }
 
 export function HeroStage({ tier, progress, active, reduced, onContextLost }: HeroStageProps) {
+  const roots = useRef<Record<string, THREE.Object3D>>({});
+  const registerAgent = useCallback<RegisterAgent>((id, node) => {
+    if (node) roots.current[id] = node;
+    else delete roots.current[id];
+  }, []);
+
   return (
     <Canvas
       aria-hidden
@@ -89,19 +101,21 @@ export function HeroStage({ tier, progress, active, reduced, onContextLost }: He
 
       <CameraRig progress={progress} />
 
+      <BridgeRegistration roots={roots} />
+
       <NetworkLayer progress={progress} reduced={reduced} />
 
       <StackField tier={tier} />
 
       <StackLabels tier={tier} progress={progress} />
 
-      <GantryCrane progress={progress} reduced={reduced} />
+      <GantryCrane progress={progress} reduced={reduced} register={registerAgent} />
 
-      <ReachStacker tier={tier} reduced={reduced} progress={progress} />
+      <ReachStacker tier={tier} reduced={reduced} progress={progress} register={registerAgent} />
 
       <YardDressing />
 
-      <Trucks tier={tier} reduced={reduced} progress={progress} />
+      <Trucks tier={tier} reduced={reduced} progress={progress} register={registerAgent} />
     </Canvas>
   );
 }

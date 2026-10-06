@@ -2,16 +2,41 @@
 
 import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import React, { Suspense, useCallback, useEffect, useMemo, useRef } from "react";
+import React, {
+  Suspense,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+} from "react";
 import * as THREE from "three";
+import type { Waybill } from "@/lib/cursor-store";
 import { ACCENT_ORANGE } from "@/lib/palette";
 import { GATE, TRUCK_PATHS, gateRaiseAmount } from "@/lib/yard";
+import { agentHover, type RegisterAgent } from "./Agents";
 
 /** Flat brand tints for the tinted-by-traverse Kenney models. */
 const INK = "#1E1B18";
 const CREAM = "#FAF8F4";
 const BODY_A = "#0F766E";
 const BODY_B = "#134E4A";
+
+/** Raycast-bridge waybills for the two rolling agents. */
+const TRUCK_WAYBILLS: Record<string, Waybill> = {
+  "truck-1": {
+    id: "SHV-TRK-01",
+    label: "Inbound — Mundra",
+    route: "MUNDRA → LDH",
+    eta: "ETA 06:40",
+  },
+  "truck-2": {
+    id: "SHV-TRK-02",
+    label: "Outbound — Delhi",
+    route: "LDH → DELHI",
+    eta: "ETA 06:40",
+  },
+};
 
 /** Fitted truck length in scene units (the yard scale is ≈ metres). */
 const TRUCK_LENGTH = 7;
@@ -216,10 +241,12 @@ function TruckGLB({ body, onModel }: TruckGLBProps) {
 }
 
 interface TruckProps {
+  id: string;
   route: TruckRoute;
   body: string;
   reduced: boolean;
   progress: React.RefObject<number>;
+  register: RegisterAgent;
   onProgress?: (u: number) => void;
 }
 
@@ -229,12 +256,17 @@ interface TruckProps {
  * `lookAt(pos + tangent)`. Wheels spin proportionally to ground speed when the
  * GLB exposes them (Kenney's does — four separate wheel meshes).
  */
-function Truck({ route, body, reduced, progress, onProgress }: TruckProps) {
+function Truck({ id, route, body, reduced, progress, register, onProgress }: TruckProps) {
   const groupRef = useRef<THREE.Group>(null);
   const modelRef = useRef<FittedModel | null>(null);
   const tRef = useRef(0);
 
-  const register = useCallback((model: FittedModel | null) => {
+  useLayoutEffect(() => {
+    register(id, groupRef.current);
+    return () => register(id, null);
+  }, [id, register]);
+
+  const registerModel = useCallback((model: FittedModel | null) => {
     modelRef.current = model;
   }, []);
 
@@ -257,13 +289,13 @@ function Truck({ route, body, reduced, progress, onProgress }: TruckProps) {
   });
 
   return (
-    <group ref={groupRef}>
+    <group ref={groupRef} {...agentHover(TRUCK_WAYBILLS[id])}>
       <BlobShadow />
       <ModelBoundary fallback={<ProceduralTruck body={body} />}>
         <Suspense fallback={null}>
           {/* Inner group carries the model-forward correction (see MODEL_YAW). */}
           <group rotation-y={MODEL_YAW}>
-            <TruckGLB body={body} onModel={register} />
+            <TruckGLB body={body} onModel={registerModel} />
           </group>
         </Suspense>
       </ModelBoundary>
@@ -436,6 +468,7 @@ export interface TrucksProps {
   tier: "full" | "lite";
   reduced: boolean;
   progress: React.RefObject<number>;
+  register: RegisterAgent;
 }
 
 /**
@@ -444,7 +477,7 @@ export interface TrucksProps {
  * wrapped in a `ModelBoundary` so a missing/blocked GLB degrades to procedural
  * geometry instead of taking the scene down.
  */
-export function Trucks({ tier, reduced, progress }: TrucksProps) {
+export function Trucks({ tier, reduced, progress, register }: TrucksProps) {
   const routes = useMemo(() => buildRoutes(), []);
   const u1 = useRef(0);
   const onU1 = useCallback((u: number) => {
@@ -454,6 +487,8 @@ export function Trucks({ tier, reduced, progress }: TrucksProps) {
   return (
     <group>
       <Truck
+        id="truck-1"
+        register={register}
         route={routes[0]}
         body={BODY_A}
         reduced={reduced}
@@ -461,7 +496,14 @@ export function Trucks({ tier, reduced, progress }: TrucksProps) {
         onProgress={onU1}
       />
       {tier === "full" && (
-        <Truck route={routes[1]} body={BODY_B} reduced={reduced} progress={progress} />
+        <Truck
+          id="truck-2"
+          register={register}
+          route={routes[1]}
+          body={BODY_B}
+          reduced={reduced}
+          progress={progress}
+        />
       )}
       <Gate tier={tier} u1={u1} />
     </group>
