@@ -65,7 +65,7 @@ export function HeroStageMount({ children }: { children: React.ReactNode }) {
   const [contextLost, setContextLost] = useState(false);
   const [active, setActive] = useState(true);
   const trackRef = useRef<HTMLDivElement>(null);
-  const { phase, progress, skip } = useHeroProgress({ trackRef, desktop, reduced });
+  const { phase, copyOn, progress, skip } = useHeroProgress({ trackRef, desktop, reduced });
 
   // Pause the render loop when the hero is offscreen.
   useEffect(() => {
@@ -79,7 +79,7 @@ export function HeroStageMount({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <div className="hero-track" ref={trackRef} data-phase={phase}>
+    <div className="hero-track" ref={trackRef} data-phase={phase} data-copy={copyOn ? "on" : "off"}>
       <div className="hero-sticky">
         <div className="absolute inset-0 bg-blueprint" aria-hidden="true" />
         <div className="hero-canvas-wrap" aria-hidden="true">

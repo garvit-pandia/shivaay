@@ -13,3 +13,15 @@ export const smoothstep = (a: number, b: number, v: number) => {
   const t = clamp01((v - a) / (b - a));
   return t * t * (3 - 2 * t);
 };
+
+/**
+ * Dive pacing: linger over the map, descend swiftly through the clouds,
+ * settle gently into the yard. Piecewise smoothstep — C1-continuous with
+ * soft beats at the knots. warp(0) = 0, warp(1) = 1, strictly increasing.
+ */
+export function diveWarp(t: number): number {
+  const c = clamp01(t);
+  if (c < 0.35) return 0.22 * smoothstep(0, 0.35, c);
+  if (c < 0.75) return 0.22 + 0.56 * smoothstep(0.35, 0.75, c);
+  return 0.78 + 0.22 * smoothstep(0.75, 1, c);
+}

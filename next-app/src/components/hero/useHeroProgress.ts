@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { heroBridge } from "@/lib/hero-bridge";
-import { clamp01, easeInOutCubic } from "@/lib/hero-ease";
+import { clamp01, diveWarp } from "@/lib/hero-ease";
 
 export type HeroPhase = "dive" | "scrub" | "settled";
 
@@ -29,6 +29,10 @@ export function useHeroProgress({ trackRef, desktop, reduced }: Options) {
   const target = useRef(reduced ? 1 : 0);
   const phaseRef = useRef<HeroPhase>(reduced ? "settled" : "dive");
   const [phase, setPhase] = useState<HeroPhase>(reduced ? "settled" : "dive");
+  // Copy fades in once the camera is nearly settled (p ≥ 0.85), ahead of the
+  // phase flip — the reveal overlaps the end of the dive instead of popping.
+  const [copyOn, setCopyOn] = useState(reduced);
+  const copyRef = useRef(reduced);
   const modeRef = useRef<"auto" | "user" | "done">("auto");
   const rafRef = useRef(0);
   const lastRef = useRef(0);
@@ -93,7 +97,7 @@ export function useHeroProgress({ trackRef, desktop, reduced }: Options) {
 
       if (modeRef.current === "auto" && startedRef.current) {
         const t = clamp01((now - startedAtRef.current) / diveMsRef.current);
-        target.current = baseRef.current + (1 - baseRef.current) * easeInOutCubic(t);
+        target.current = baseRef.current + (1 - baseRef.current) * diveWarp(t);
       }
       progress.current = clamp01(
         progress.current + (target.current - progress.current) * (1 - Math.exp(-6 * dt))
@@ -116,6 +120,11 @@ export function useHeroProgress({ trackRef, desktop, reduced }: Options) {
       const prev = Number.parseFloat(track.dataset.progress ?? "");
       if (settledNow || !Number.isFinite(prev) || Math.abs(prev - progress.current) > 0.004) {
         track.dataset.progress = progress.current.toFixed(3);
+      }
+      const wantCopy = progress.current >= 0.85;
+      if (copyRef.current !== wantCopy) {
+        copyRef.current = wantCopy;
+        setCopyOn(wantCopy);
       }
     };
 
@@ -202,6 +211,7 @@ export function useHeroProgress({ trackRef, desktop, reduced }: Options) {
     // is still false, so the React state cannot adopt it without setState in
     // an effect (see the reduced branch above).
     phase: reduced ? ("settled" as const) : phase,
+    copyOn: reduced ? true : copyOn,
     progress,
     skip: () => {
       // Stable public skip: flip to settled target via the hook registered in the effect.

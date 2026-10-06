@@ -31,13 +31,38 @@ export function agentHover(waybill: Waybill) {
     onPointerOver: (e: ThreeEvent<PointerEvent>) => {
       e.stopPropagation();
       document.body.style.cursor = "pointer";
+      setAgentHighlight(e.eventObject, true);
       setThreeWaybill(waybill);
     },
-    onPointerOut: () => {
+    onPointerOut: (e: ThreeEvent<PointerEvent>) => {
       document.body.style.cursor = "";
+      setAgentHighlight(e.eventObject, false);
       setThreeWaybill(null);
     },
   };
+}
+
+/**
+ * Teal emissive lift on the hovered agent's standard materials. All scene
+ * materials start with black emissive, so clearing restores the base look
+ * without storing anything.
+ */
+const HIGHLIGHT = new THREE.Color("#0F766E");
+
+export function setAgentHighlight(root: THREE.Object3D | null, on: boolean) {
+  root?.traverse((o) => {
+    const mesh = o as THREE.Mesh;
+    if (!mesh.isMesh) return;
+    const mat = mesh.material as THREE.MeshStandardMaterial | undefined;
+    if (!mat || !("emissive" in mat)) return;
+    if (on) {
+      mat.emissive.copy(HIGHLIGHT);
+      mat.emissiveIntensity = 0.35;
+    } else {
+      mat.emissive.setRGB(0, 0, 0);
+      mat.emissiveIntensity = 1;
+    }
+  });
 }
 
 /**
