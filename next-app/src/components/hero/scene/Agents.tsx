@@ -1,7 +1,7 @@
 "use client";
 
 import { useFrame } from "@react-three/fiber";
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import * as THREE from "three";
 import { ACCENT_ORANGE } from "@/lib/palette";
 import { CONTAINER, CRANE } from "@/lib/yard";
@@ -212,6 +212,356 @@ export function GantryCrane({ progress, reduced }: GantryCraneProps) {
         <boxGeometry args={[CONTAINER.w, CONTAINER.h, CONTAINER.d]} />
         <meshStandardMaterial color={ACCENT_ORANGE} roughness={0.82} />
       </mesh>
+    </group>
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ * Reach stacker — the second working agent, on the z = −12 service lane
+ * ------------------------------------------------------------------ */
+
+/** Reach-stacker timeline keys: x shuttles −34…14, boom work at the x = 8 pause. */
+const STACKER_KEYS: { t: number; x: number; lift: number }[] = [
+  { t: 0, x: 8, lift: 0 },
+  { t: 1, x: 8, lift: 0 },
+  { t: 2.5, x: 8, lift: 1 },
+  { t: 3.5, x: 8, lift: 1 },
+  { t: 5, x: 14, lift: 1 },
+  { t: 6, x: 14, lift: 1 },
+  { t: 12, x: -34, lift: 1 },
+  { t: 13, x: -34, lift: 1 },
+  { t: 14.5, x: -34, lift: 0 },
+  { t: 15.5, x: -34, lift: 0 },
+  { t: 20, x: 8, lift: 0 },
+];
+
+/** Reach-stacker constants; z = −12 is the stack-free service lane by design. */
+const STACKER = {
+  z: -12,
+  cycle: 20,
+  pauseX: 8,
+  pivotX: 2.3,
+  pivotY: 3.25,
+  reach: 7,
+  slingGap: 1,
+  groundY: 1.35,
+  topY: 6.34,
+  boxW: 4,
+} as const;
+
+/** Wheel hubs, [x, z] pairs on the chassis. */
+const STACKER_WHEELS: [number, number][] = [
+  [-2.3, 1.55],
+  [2.3, 1.55],
+  [-2.3, -1.55],
+  [2.3, -1.55],
+];
+
+function sampleStacker(t: number): { x: number; lift: number } {
+  const time = t % STACKER.cycle;
+  let a = STACKER_KEYS[0];
+  let b = STACKER_KEYS[STACKER_KEYS.length - 1];
+  for (let i = 0; i < STACKER_KEYS.length - 1; i++) {
+    if (time >= STACKER_KEYS[i].t && time <= STACKER_KEYS[i + 1].t) {
+      a = STACKER_KEYS[i];
+      b = STACKER_KEYS[i + 1];
+      break;
+    }
+  }
+  const span = Math.max(b.t - a.t, 0.0001);
+  const raw = (time - a.t) / span;
+  const e = raw * raw * (3 - 2 * raw);
+  const lerp = (u: number, v: number) => u + (v - u) * e;
+  return { x: lerp(a.x, b.x), lift: lerp(a.lift, b.lift) };
+}
+
+/**
+ * Rig pose for a lift value (0 = container near the apron, 1 = stack-top
+ * height). The sling point sits `slingGap` above the container top and the
+ * container hangs *forward* of it, so the angled boom never crosses the box.
+ */
+function stackerPose(lift: number) {
+  const boxY = STACKER.groundY + (STACKER.topY - STACKER.groundY) * lift;
+  const boxTopY = boxY + CONTAINER.h / 2;
+  const tipY = boxTopY + STACKER.slingGap;
+  const angle = Math.asin(
+    Math.min(1, Math.max(-1, (tipY - STACKER.pivotY) / STACKER.reach))
+  );
+  const tipX = STACKER.pivotX + STACKER.reach * Math.cos(angle);
+  return {
+    boxY,
+    boxTopY,
+    tipY,
+    angle,
+    tipX,
+    boxX: tipX + STACKER.boxW / 2,
+    frameX: tipX + 1.2,
+  };
+}
+
+const STACKER_PARKED = stackerPose(0);
+
+export interface ReachStackerProps {
+  tier: "full" | "lite";
+  reduced: boolean;
+  progress: React.RefObject<number>;
+}
+
+/**
+ * Reach stacker: body + cab on four wheels with a two-stage angled boom. It
+ * shuttles the service lane z = −12 between x = −34 and x = 14, pauses at the
+ * x = 8 station and works its boom there — raising the slung container from the
+ * apron to stack-top height — on a ≈20 s loop. Full tier only; under reduced
+ * motion it stands parked at the pause station.
+ */
+export function ReachStacker({ tier, reduced, progress }: ReachStackerProps) {
+  const vehicleRef = useRef<THREE.Group>(null);
+  const boomRef = useRef<THREE.Group>(null);
+  const boxRef = useRef<THREE.Mesh>(null);
+  const frameRef = useRef<THREE.Mesh>(null);
+  const cableRef = useRef<THREE.Mesh>(null);
+  const tRef = useRef(0);
+
+  const apply = (x: number, lift: number) => {
+    const pose = stackerPose(lift);
+    vehicleRef.current?.position.set(x, 0, STACKER.z);
+    if (boomRef.current) boomRef.current.rotation.z = pose.angle;
+    if (boxRef.current) boxRef.current.position.set(pose.boxX, pose.boxY, 0);
+    if (frameRef.current) {
+      frameRef.current.position.set(pose.frameX, pose.boxTopY + 0.13, 0);
+    }
+    if (cableRef.current) {
+      const frameTopY = pose.boxTopY + 0.26;
+      cableRef.current.position.set(pose.tipX, (pose.tipY + frameTopY) / 2, 0);
+      cableRef.current.scale.y = Math.max(pose.tipY - frameTopY, 0.05);
+    }
+  };
+
+  useFrame((_, delta) => {
+    if (reduced) {
+      // Reduced motion: parked at the pause station, container on the apron.
+      apply(STACKER.pauseX, 0);
+      return;
+    }
+    const p = progress.current ?? 1;
+    // Agents run only in the settled half of the dive, like the crane.
+    if (p < 0.55) return;
+    tRef.current += Math.min(delta, 0.05);
+    const { x, lift } = sampleStacker(tRef.current);
+    apply(x, lift);
+  });
+
+  if (tier === "lite") return null;
+
+  return (
+    <group ref={vehicleRef} position={[STACKER.pauseX, 0, STACKER.z]}>
+      {/* chassis + cab + wheels */}
+      <mesh position={[0, 1.95, 0]}>
+        <boxGeometry args={[6.4, 2.3, 3.4]} />
+        <meshStandardMaterial color="#0F766E" roughness={0.75} metalness={0.05} />
+      </mesh>
+      <mesh position={[-2, 3.8, -0.9]}>
+        <boxGeometry args={[2.4, 2.4, 1.6]} />
+        <meshStandardMaterial color="#134E4A" roughness={0.5} metalness={0.1} />
+      </mesh>
+      {STACKER_WHEELS.map(([wx, wz]) => (
+        <mesh
+          key={`${wx}:${wz}`}
+          position={[wx, 0.85, wz]}
+          rotation-x={Math.PI / 2}
+        >
+          <cylinderGeometry args={[0.85, 0.85, 0.55, 14]} />
+          <meshStandardMaterial color="#1E1B18" roughness={0.85} />
+        </mesh>
+      ))}
+      {/* two-stage angled boom, pivoted ahead of the cab */}
+      <group
+        ref={boomRef}
+        position={[STACKER.pivotX, STACKER.pivotY, 0]}
+        rotation-z={STACKER_PARKED.angle}
+      >
+        <mesh position={[2.3, 0, 0]}>
+          <boxGeometry args={[4.6, 0.8, 1.05]} />
+          <meshStandardMaterial color={ACCENT_ORANGE} roughness={0.65} />
+        </mesh>
+        <mesh position={[6.2, 0, 0]}>
+          <boxGeometry args={[3.2, 0.6, 0.8]} />
+          <meshStandardMaterial color={ACCENT_ORANGE} roughness={0.65} />
+        </mesh>
+      </group>
+      {/* sling + lifting frame + carried container (hangs forward of the tip) */}
+      <mesh
+        ref={cableRef}
+        position={[
+          STACKER_PARKED.tipX,
+          (STACKER_PARKED.tipY + STACKER_PARKED.boxTopY + 0.26) / 2,
+          0,
+        ]}
+        scale={[
+          1,
+          Math.max(STACKER_PARKED.tipY - STACKER_PARKED.boxTopY - 0.26, 0.05),
+          1,
+        ]}
+      >
+        <cylinderGeometry args={[0.07, 0.07, 1, 6]} />
+        <meshStandardMaterial color="#1E1B18" roughness={0.6} />
+      </mesh>
+      <mesh
+        ref={frameRef}
+        position={[STACKER_PARKED.frameX, STACKER_PARKED.boxTopY + 0.13, 0]}
+      >
+        <boxGeometry args={[3, 0.26, 1.8]} />
+        <meshStandardMaterial color="#1E1B18" roughness={0.65} />
+      </mesh>
+      <mesh ref={boxRef} position={[STACKER_PARKED.boxX, STACKER_PARKED.boxY, 0]}>
+        <boxGeometry args={[STACKER.boxW, CONTAINER.h, 2.3]} />
+        <meshStandardMaterial color="#FAF8F4" roughness={0.85} />
+      </mesh>
+    </group>
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ * Yard dressing — warehouse silhouette + painted apron decals
+ * ------------------------------------------------------------------ */
+
+const WAREHOUSE = { x: -58, z: -89, w: 70, h: 10, d: 20 } as const;
+const WAREHOUSE_DOORS_X = [-70, -60, -50, -40, -30] as const;
+
+/**
+ * Flat silhouette of the bonded warehouse beyond the yard's far (north-west)
+ * edge: long cream volume, a strip of dark roller doors on the apron-facing
+ * wall and a barcode + wordmark band near the roofline.
+ */
+function Warehouse() {
+  const barcode = useMemo(() => {
+    const c = document.createElement("canvas");
+    c.width = 256;
+    c.height = 64;
+    const ctx = c.getContext("2d");
+    if (ctx) {
+      ctx.clearRect(0, 0, 256, 64);
+      ctx.fillStyle = "#1E1B18";
+      let x = 6;
+      while (x < 248) {
+        const w = 1 + ((x * 7) % 3);
+        ctx.fillRect(x, 6, w, 34);
+        x += w + 2 + ((x * 5) % 4);
+      }
+      ctx.font = "600 13px monospace";
+      ctx.fillText("SHV · LDH / IN", 6, 58);
+    }
+    const tex = new THREE.CanvasTexture(c);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    return tex;
+  }, []);
+
+  return (
+    <group position={[WAREHOUSE.x, 0, WAREHOUSE.z]}>
+      <mesh position={[0, WAREHOUSE.h / 2, 0]}>
+        <boxGeometry args={[WAREHOUSE.w, WAREHOUSE.h, WAREHOUSE.d]} />
+        <meshStandardMaterial color="#F3EFE7" roughness={1} />
+      </mesh>
+      {WAREHOUSE_DOORS_X.map((dx) => (
+        <mesh key={dx} position={[dx, 3.2, WAREHOUSE.d / 2 + 0.15]}>
+          <boxGeometry args={[7, 6.4, 0.3]} />
+          <meshStandardMaterial color="#1E1B18" roughness={0.8} />
+        </mesh>
+      ))}
+      <mesh position={[0, 8.4, WAREHOUSE.d / 2 + 0.06]}>
+        <planeGeometry args={[18, 2.2]} />
+        <meshBasicMaterial map={barcode} transparent toneMapped={false} />
+      </mesh>
+    </group>
+  );
+}
+
+/** Canvas paint for the apron decals: lane arrow / SHV stencil. */
+function usePaintedDecal(kind: "arrow" | "stencil") {
+  return useMemo(() => {
+    const c = document.createElement("canvas");
+    c.width = 256;
+    c.height = 128;
+    const ctx = c.getContext("2d");
+    if (ctx) {
+      ctx.clearRect(0, 0, 256, 128);
+      if (kind === "arrow") {
+        ctx.fillStyle = "rgba(250,248,244,0.95)";
+        ctx.fillRect(32, 56, 130, 16);
+        ctx.beginPath();
+        ctx.moveTo(150, 34);
+        ctx.lineTo(216, 64);
+        ctx.lineTo(150, 94);
+        ctx.closePath();
+        ctx.fill();
+      } else {
+        ctx.strokeStyle = "rgba(15,118,110,0.8)";
+        ctx.lineWidth = 6;
+        ctx.strokeRect(10, 10, 236, 108);
+        ctx.fillStyle = "rgba(15,118,110,0.82)";
+        ctx.font = "700 62px 'Courier New', monospace";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("SHV", 128, 58);
+        ctx.font = "600 16px 'Courier New', monospace";
+        ctx.fillText("LDH · ICD", 128, 100);
+      }
+    }
+    const tex = new THREE.CanvasTexture(c);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.anisotropy = 8;
+    return tex;
+  }, [kind]);
+}
+
+const decalMaterial = (
+  map: THREE.Texture,
+  opacity = 0.9
+): React.ReactElement => (
+  <meshBasicMaterial
+    map={map}
+    transparent
+    opacity={opacity}
+    depthWrite={false}
+    toneMapped={false}
+    polygonOffset
+    polygonOffsetFactor={-2}
+    polygonOffsetUnits={-2}
+  />
+);
+
+/**
+ * Thin painted markings on the apron (y = 0.02): lane arrows on the x lane at
+ * z = 36 and an SHV stencil on the south pad — all clear of the truck lanes
+ * (z = −64, z = −12) and the gantry lane (x ≈ 24).
+ */
+function ApronDecals() {
+  const arrow = usePaintedDecal("arrow");
+  const stencil = usePaintedDecal("stencil");
+  return (
+    <group>
+      <mesh position={[-46, 0.02, 36]} rotation-x={-Math.PI / 2}>
+        <planeGeometry args={[9, 4.5]} />
+        {decalMaterial(arrow)}
+      </mesh>
+      <mesh position={[54, 0.02, 36]} rotation-x={-Math.PI / 2}>
+        <planeGeometry args={[9, 4.5]} />
+        {decalMaterial(arrow)}
+      </mesh>
+      <mesh position={[6, 0.02, 56]} rotation-x={-Math.PI / 2}>
+        <planeGeometry args={[8, 4]} />
+        {decalMaterial(stencil)}
+      </mesh>
+    </group>
+  );
+}
+
+/** Static yard set-dressing (both tiers): warehouse silhouette + decals. */
+export function YardDressing() {
+  return (
+    <group>
+      <Warehouse />
+      <ApronDecals />
     </group>
   );
 }

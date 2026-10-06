@@ -6,8 +6,9 @@ import { useMemo } from "react";
 import * as THREE from "three";
 import { CONTAINER, YARD, createYard } from "@/lib/yard";
 import { CameraRig } from "./CameraRig";
-import { GantryCrane } from "./Agents";
+import { GantryCrane, ReachStacker, YardDressing } from "./Agents";
 import { NetworkLayer } from "./NetworkLayer";
+import { StackLabels } from "./StackLabels";
 import { Trucks } from "./Trucks";
 
 export type QualityTier = "full" | "lite";
@@ -92,7 +93,13 @@ export function HeroStage({ tier, progress, active, reduced, onContextLost }: He
 
       <StackField tier={tier} />
 
+      <StackLabels tier={tier} progress={progress} />
+
       <GantryCrane progress={progress} reduced={reduced} />
+
+      <ReachStacker tier={tier} reduced={reduced} progress={progress} />
+
+      <YardDressing />
 
       <Trucks tier={tier} reduced={reduced} progress={progress} />
     </Canvas>
