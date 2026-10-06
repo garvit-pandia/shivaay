@@ -84,14 +84,20 @@ export function useHeroProgress({ trackRef, desktop, reduced }: Options) {
 
     const loop = (now: number) => {
       rafRef.current = requestAnimationFrame(loop);
-      const dt = Math.min((now - lastRef.current) / 1000, 0.05);
+      // Clamp `dt` at 0: `ensureLoop` resets `lastRef` to `performance.now()`,
+      // which can be ahead of the next rAF timestamp (frame start) — a negative
+      // dt would move progress away from its target and can push it out of
+      // [0, 1], which makes the camera curve sampling throw.
+      const dt = Math.min(Math.max((now - lastRef.current) / 1000, 0), 0.05);
       lastRef.current = now;
 
       if (modeRef.current === "auto" && startedRef.current) {
         const t = clamp01((now - startedAtRef.current) / diveMsRef.current);
         target.current = baseRef.current + (1 - baseRef.current) * easeInOutCubic(t);
       }
-      progress.current += (target.current - progress.current) * (1 - Math.exp(-6 * dt));
+      progress.current = clamp01(
+        progress.current + (target.current - progress.current) * (1 - Math.exp(-6 * dt))
+      );
 
       const settledNow = Math.abs(target.current - progress.current) < 0.002;
       if (settledNow) {
