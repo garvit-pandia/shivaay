@@ -83,12 +83,16 @@ mono labels, gradient hairline, deep-teal footer.
 
 ## Session log — 2026-10-06 (living-yard hero: bundle, tiers, fallbacks)
 
-- **Implementation status:** the dot-globe hero is replaced by the R3F living
-  yard (spec `docs/superpowers/specs/2026-10-05-living-yard-hero-design.md`,
-  plan `docs/superpowers/plans/2026-10-05-living-yard-hero-plan.md`, commits
-  `d9994a9`→`cfedfa3` + this measurements pass): auto-dive → scroll scrub → skip,
-  trucks/crane/reach-stacker, network layer, waybill cursor bridge. Assets are
-  CC0 Kenney (`next-app/public/models/`, licence alongside).
+- **Implementation status: COMPLETE.** The dot-globe hero is replaced by the
+  R3F living yard (spec `docs/superpowers/specs/2026-10-05-living-yard-hero-design.md`,
+  plan `docs/superpowers/plans/2026-10-05-living-yard-hero-plan.md`, all 20 tasks
+  landed on `redesign/immersive-2026`): auto-dive → scroll scrub → skip,
+  trucks/crane/reach-stacker, network layer, waybill cursor bridge.
+  `GlobeHero.tsx` retired (git history keeps it). Verification:
+  `python3 scripts/verify_hero.py --base-url http://localhost:5299` → **12/12
+  PASS** (SSR copy, mount+settle, scrub release, skip, revisit, reduced-motion,
+  no-WebGL, GLB abort, cursor fixture, yard hover, mobile 390, services clean).
+  Assets are CC0 Kenney (`next-app/public/models/`, licence alongside).
 - **Bundle** (fresh production export, `serve out` :5299; Next 16/Turbopack no
   longer prints First Load JS, so measured from the exported HTML script tags,
   gzip): `/` initial **~199 KB gz** (203,965 B — back at the pre-hero level) ·
@@ -118,6 +122,10 @@ mono labels, gradient hairline, deep-teal footer.
   exported HTML).
 - Open items: motion-density client verdict, rail siding phase-2 (gated on it),
   human-fps pass on the preview.
+- **Cursor contract (stable):** `data-scan` → scanner sweep; `data-waybill`
+  (JSON `{id,label,route?,eta?}`) → floating tag; `data-stamp`
+  (`cleared|scanned|signed|stacked`) → click stamp. 3D agents feed the same tag
+  via `lib/cursor-store.ts` + `lib/hero-bridge.ts`.
 
 ## Verification status
 

@@ -54,6 +54,16 @@
 - Stitched `fullPage: true` captures are not evidence either way: on reveal-heavy pages they produced phantom blanks (sections looked empty but were fine) and phantom "fine" (a 0px wall looked like an intentional strip design). Element screenshots + DOM geometry assertions (`offsetHeight`, computed `opacity`) are the source of truth.
 - Playwright `.focus()` does not trigger `:focus-visible` — test focus rings with real `keyboard.press('Tab')` before declaring them broken.
 
+## Living-Yard Hero (Oct 2026)
+- `overflow-x: hidden` on `body` creates a scroll container that breaks `position: sticky` descendants — use `overflow-x: clip` instead.
+- A top-level `import "three"` in a lib module reachable from an eager client component pulls three.js into the initial bundle (found: 100 KB gz leak via `hero-poses.ts` ← `useHeroProgress`). Keep pure helpers in a three-free module (`hero-ease.ts`); verify with `grep` for three markers across the exported HTML's initial scripts.
+- Dev-server staleness on WSL2 is real: `curl` the served CSS chunk for a new class before doubting code; if stale, `rm -rf .next` + restart beats repeated edits. Production verification always runs against a fresh `out/` export on :5299.
+- Node 22 runs TypeScript tests directly (`node --experimental-strip-types --test`), but imports need explicit `.ts` extensions and `tsconfig` needs `allowImportingTsExtensions` + `tests` excluded.
+- rAF timestamps can run *behind* `performance.now()`: clamp loop `dt` at 0 and clamp driven values into range, or one bad frame throws curve sampling.
+- Truncated pyramid legs need splayed A-frames + cross-braces to read at diorama scale; flat dark steel (`#1E1B18`) pops against teal stacks.
+- Pointer-events choreography for canvas-under-copy: wrapper `pointer-events: none`, text block `pointer-events: auto` — keeps text selectable while the yard stays hoverable.
+- Screenshot timing: captures taken during the 2.75 s preloader show doors, not the hero — wait it out (or assert DOM state, not pixels) for fallback evidence shots.
+
 ## Immersive Redesign (Oct 2026)
 - `style={{ background: color }}` shorthand wipes `background-image` from motif classes (`.corrugated`) — always use `backgroundColor` longhand when combining inline color with class textures.
 - `Math.random()` in a `useState` initializer causes SSR/client hydration mismatch (dev "N issues" badge) — use a seeded PRNG (mulberry32) for initial values; effect-internal randomness is fine.
