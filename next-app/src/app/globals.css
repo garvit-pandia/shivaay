@@ -1210,7 +1210,7 @@ html.js .faq-item.faq-open .faq-answer {
 @media (min-width: 1024px) {
   .hero-track { height: 220vh; }
   .hero-sticky { position: sticky; top: 0; }
-  .hero-canvas-wrap { opacity: 1; }
+  .hero-canvas-wrap { opacity: 1; transform: translateX(8vw); }
 }
 .hero-copy { transition: opacity 0.7s ease, transform 0.7s ease; }
 /* The copy wrapper spans the full hero; only the text block itself should
