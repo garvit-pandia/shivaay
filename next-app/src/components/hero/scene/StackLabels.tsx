@@ -25,6 +25,13 @@ export function StackLabels({ tier, progress }: StackLabelsProps) {
     () => createYard(116, tier === "lite" ? "lite" : "full"),
     [tier]
   );
+
+  // Stagger each label's appearance across the settle so eight chips don't
+  // blink on at once — reads as a waybill system updating rather than a pop.
+  const stagger = useMemo(
+    () => labels.slice(0, 8).map((_, i) => 0.62 + (i / 8) * 0.24),
+    [labels]
+  );
   // Mount the Html roots one commit after the initial pass: React's dev
   // StrictMode remount would otherwise unmount drei's per-label roots inside
   // the commit and log a race-condition warning.
@@ -39,15 +46,16 @@ export function StackLabels({ tier, progress }: StackLabelsProps) {
     if (tier === "lite") return;
     let raf = 0;
     const tick = () => {
-      const o = smoothstep(0.62, 0.95, progress.current ?? 1);
-      for (const el of refs.current) {
-        if (el) el.style.opacity = String(o);
+      const p = progress.current ?? 1;
+      for (let i = 0; i < refs.current.length; i++) {
+        const el = refs.current[i];
+        if (el) el.style.opacity = String(smoothstep(stagger[i], stagger[i] + 0.12, p));
       }
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [progress, tier]);
+  }, [progress, stagger, tier]);
 
   if (tier === "lite" || !ready) return null;
 
