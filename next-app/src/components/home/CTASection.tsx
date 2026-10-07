@@ -19,10 +19,9 @@ export function CTASection({
     <section
       className="bg-cream py-24 border-t border-border"
       aria-labelledby="cta-heading"
-      data-station
     >
       <div className="mx-auto max-w-[1280px] px-6">
-        <div className="relative bg-teal rounded-3xl px-8 py-16 md:px-16 md:py-20 text-center overflow-hidden isolate">
+        <div className="cta-expand relative bg-teal rounded-3xl px-8 py-16 md:px-16 md:py-24 text-center overflow-hidden isolate">
           {/* physics crates drop behind the heading */}
           <CratesField />
           <div

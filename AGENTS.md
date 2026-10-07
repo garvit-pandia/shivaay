@@ -41,6 +41,12 @@ Project context for agent sessions in this repo. The workflow rules below still 
 - **Motif classes** (in `globals.css`): `corrugated` / `corrugated-strong`, `waybill`, `barcode`, `stamp-badge`, `mono-label`, `bg-blueprint` — pair with `backgroundColor` (never `background` shorthand) so textures survive inline colors
 - **three.js** is a lazy async chunk for the homepage hero only — never import it statically, or every page pays ~185KB gz
 
+## V3 redesign (in progress, Oct 2026)
+- **Branch:** `redesign/v3-2026` (off `redesign/immersive-2026`) — "editorial motion × living route map"; homepage first, other routes after client review
+- **Spec:** `docs/superpowers/specs/2026-10-07-v3-redesign-design.md`
+- **Motion engine:** GSAP (ScrollTrigger, SplitText) + Lenis. Import GSAP only via `components/motion/gsap.ts` (registers plugins, syncs Lenis, re-measures on layout shifts); Lenis lives in `motion/SmoothScroll` (root layout; `getLenis()` for stop/start). Every effect sits under `gsap.matchMedia(MOTION_OK)`; server markup is the finished state.
+- **Route map:** `components/home/RouteJourney.tsx` + pure geometry in `lib/journey.ts` (tested); outline baked from Natural Earth India-POV by `scripts/gen_india_outline.py` → `lib/india-outline.ts` (never hand-edit)
+
 ## Workflow Orchestration
 
 ### 1. Plan Mode Default

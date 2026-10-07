@@ -2,7 +2,7 @@
 
 import { testimonials } from "@/lib/data";
 import { Conveyor } from "@/components/motion/Conveyor";
-import { SplitReveal } from "@/components/motion/SplitReveal";
+import { TextReveal } from "@/components/motion/TextReveal";
 import Link from "next/link";
 
 const CARD_COLORS = ["#0F766E", "#134E4A", "#0D9488"];
@@ -10,20 +10,19 @@ const CARD_COLORS = ["#0F766E", "#134E4A", "#0D9488"];
 export function TestimonialsSection() {
   return (
     <section
-      className="py-24 bg-white border-t border-border overflow-hidden"
+      className="py-24 lg:py-32 bg-white border-t border-border overflow-hidden"
       aria-labelledby="testimonials-heading"
-      data-station
     >
       <div className="mx-auto max-w-[1280px] px-6 mb-12">
         <p className="mono-label text-[10px] text-orange mb-3">
-          Manifest · 05 — References
+          Manifest · 06 — References
         </p>
-        <h2
+        <TextReveal
           id="testimonials-heading"
-          className="font-serif text-3xl lg:text-5xl font-medium text-ink"
+          className="font-serif text-4xl lg:text-6xl font-medium text-ink leading-[1.05]"
         >
-          <SplitReveal text="Trusted by businesses" />
-        </h2>
+          Trusted by businesses
+        </TextReveal>
       </div>
 
       <Conveyor>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Phone, Menu, X, ChevronDown, Link2, FileText, Download, MapPin } from "lucide-react";
 import { Icon } from "@/components/ui/Icon";
+import { getLenis } from "@/components/motion/SmoothScroll";
 
 const links = [
   { href: "/", label: "Home" },
@@ -36,7 +37,13 @@ export function Navbar() {
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    // Lenis scrolls programmatically, so body overflow alone won't lock it.
+    if (menuOpen) getLenis()?.stop();
+    else getLenis()?.start();
+    return () => {
+      document.body.style.overflow = "";
+      getLenis()?.start();
+    };
   }, [menuOpen]);
 
   const linkClass = (active: boolean) =>

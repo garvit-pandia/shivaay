@@ -87,3 +87,13 @@
 
 ## Domain (Oct 2026)
 - The live domain is `www.shivaaylogistics.in`; `shivaaylogistics.com` was never ours but sat in og:url, JSON-LD `url` and the README, so production advertised the wrong canonical URL. Before writing any absolute site URL, check `AGENTS.md` facts and `curl -sI` the domain — don't copy it from existing metadata.
+
+## V3 Redesign (Oct 2026)
+- **Never delete CSS by "start marker → next occurrence of some later marker".** Cutting from `/* Leaflet overrides */` to the first `@keyframes wipe-out` silently removed ~650 lines (stamps, waybills, corrugated, preloader/cursor `position: fixed`) because the end marker was far below. Build and lint still passed — missing CSS is not an error. Cut whole rules by exact boundaries, print what was removed, and `git diff --stat` the file (deletions should match the intended line count).
+- Symptoms of missing global CSS are indirect: fixed overlays (preloader, WhatsApp, cursor) fall into normal flow and shift layout after ScrollTrigger measured → pinned sections stop short. When a pin/scrub "ends early", record body-children heights over time before blaming GSAP.
+- ScrollTrigger only re-measures on load/resize. `components/motion/gsap.ts` re-measures on document-height changes (body ResizeObserver, debounced) — keep it; late layout shifts otherwise break pins.
+- `python3 -m http.server` has no `cleanUrls`: `/services` is the server's 404 page (empty `<html>` class), not the app. Test `/services.html`.
+- `pkill -f "<pattern>"` inside a Bash call can match its own shell's command line and kill it (exit 144). Kill by PID from `ss -ltnp`.
+- Headless SwiftShader rasterises SVG on the CPU: viewBox zooms stall to ~10 fps and screenshots can time out when several browsers run at once. Trace before optimising (GPU-process time ≫ main thread = headless artifact); never run parallel Playwright passes together with `verify_hero.py` (flaky `scrub_releases`).
+- Lenis' stock CSS sets `.lenis.lenis-smooth iframe { pointer-events: none }` permanently — it would kill the contact map. Use the hand-picked rules in `globals.css` (only while `.lenis-scrolling`).
+- Map outlines on an Indian business site must use India's official boundaries: Natural Earth `ne_10m_admin_0_countries_ind` (India point of view), baked by `scripts/gen_india_outline.py`.

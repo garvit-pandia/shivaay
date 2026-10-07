@@ -1,7 +1,7 @@
 import { HeroSection } from "@/components/home/HeroSection";
-import { HomeShell } from "@/components/home/HomeShell";
 import { StatsMarquee } from "@/components/home/StatsMarquee";
-import { ServiceTags } from "@/components/home/ServiceTags";
+import { ServiceStack } from "@/components/home/ServiceStack";
+import { RouteJourney } from "@/components/home/RouteJourney";
 import { ProcessTimeline } from "@/components/home/ProcessTimeline";
 import { WhyPartnerSection } from "@/components/home/WhyPartnerSection";
 import { MissionSection } from "@/components/home/MissionSection";
@@ -26,16 +26,15 @@ export default function Home() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
-      <HomeShell>
-        <HeroSection />
-        <StatsMarquee />
-        <ServiceTags />
-        <ProcessTimeline />
-        <WhyPartnerSection />
-        <MissionSection />
-        <TestimonialsSection />
-        <CTASection />
-      </HomeShell>
+      <HeroSection />
+      <StatsMarquee />
+      <ServiceStack />
+      <RouteJourney />
+      <ProcessTimeline />
+      <WhyPartnerSection />
+      <MissionSection />
+      <TestimonialsSection />
+      <CTASection />
     </>
   );
 }

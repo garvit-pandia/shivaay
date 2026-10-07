@@ -8,6 +8,7 @@ import { Preloader } from "@/components/motion/Preloader";
 import { Cursor } from "@/components/motion/Cursor";
 import { PageTransition } from "@/components/motion/PageTransition";
 import { ScrollProgress } from "@/components/motion/ScrollProgress";
+import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { companyInfo } from "@/lib/data";
 import "./globals.css";
 
@@ -85,6 +86,7 @@ export default function RootLayout({
         <Footer />
         <WhatsAppFloat />
         <ScrollReveal />
+        <SmoothScroll />
         <Cursor />
         <PageTransition />
       </body>
