@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { gsap, useGSAP, MOTION_OK } from "./gsap";
 import { TextReveal } from "./TextReveal";
+import { entranceDelay } from "./transition-state";
 
 /**
  * Shared inner-page header: kicker, masked-line h1, intro, an optional aside,
@@ -31,7 +32,7 @@ export function PageHero({
       const mm = gsap.matchMedia();
       mm.add(MOTION_OK, () => {
         gsap
-          .timeline({ defaults: { ease: "expo.out" } })
+          .timeline({ defaults: { ease: "expo.out" }, delay: entranceDelay() })
           .from(".ph-kicker", { y: 16, opacity: 0, duration: 0.8 }, 0.1)
           .from(".ph-desc, .ph-aside", { y: 24, opacity: 0, duration: 1, stagger: 0.12 }, 0.45)
           .fromTo(".ph-route-fill", { scaleX: 0 }, { scaleX: 1, duration: 2.2, ease: "power2.inOut" }, 0.3)

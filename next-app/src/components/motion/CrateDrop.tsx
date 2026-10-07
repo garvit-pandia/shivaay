@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { gsap, useGSAP, MOTION_OK } from "./gsap";
+import { entranceDelay } from "./transition-state";
 
 /**
  * Drops every `.crate-drop` child from above with a bounce (like crates
@@ -14,7 +15,7 @@ export function CrateDrop({ children, className }: { children: React.ReactNode; 
       const mm = gsap.matchMedia();
       mm.add(MOTION_OK, () => {
         gsap
-          .timeline({ delay: 0.25 })
+          .timeline({ delay: 0.25 + entranceDelay() })
           .from(".crate-drop", {
             yPercent: -260,
             rotation: (i) => [-24, 14, -9][i % 3],

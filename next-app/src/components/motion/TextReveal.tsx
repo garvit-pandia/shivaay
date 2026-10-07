@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { gsap, SplitText, useGSAP, MOTION_OK } from "./gsap";
+import { entranceDelay } from "./transition-state";
 
 type Tag = "h1" | "h2" | "h3" | "p" | "span" | "div";
 
@@ -42,7 +43,7 @@ export function TextReveal({
               duration: 1.1,
               ease: "expo.out",
               stagger: 0.09,
-              delay,
+              delay: delay + entranceDelay(),
               scrollTrigger: { trigger: el, start: "top 88%", once: true },
             }),
         });

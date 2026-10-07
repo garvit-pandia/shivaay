@@ -692,43 +692,6 @@ html.preloaded .preloader {
   to { transform: scaleX(1); }
 }
 
-/* ---- Page transition wipe ---- */
-.page-wipe {
-  position: fixed;
-  inset: 0;
-  z-index: 8500;
-  pointer-events: none;
-  visibility: hidden;
-}
-.page-wipe.active {
-  visibility: visible;
-  pointer-events: auto;
-}
-.page-wipe .wipe-panel {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 50.5%;
-  background: #0F766E;
-  transform: scaleY(0);
-}
-.page-wipe .wipe-panel.left { left: 0; transform-origin: bottom; }
-.page-wipe .wipe-panel.right { right: 0; transform-origin: bottom; }
-.page-wipe.enter .wipe-panel {
-  animation: wipe-in 0.45s cubic-bezier(0.7, 0, 0.3, 1) forwards;
-}
-.page-wipe.exit .wipe-panel {
-  transform: scaleY(1);
-  transform-origin: top;
-  animation: wipe-out 0.55s cubic-bezier(0.7, 0, 0.3, 1) 0.1s forwards;
-}
-@keyframes wipe-in {
-  to { transform: scaleY(1); }
-}
-@keyframes wipe-out {
-  to { transform: scaleY(0); }
-}
-
 /* ---- Odometer ---- */
 .odo {
   display: inline-flex;
@@ -986,8 +949,7 @@ html.js .faq-item.faq-open .faq-answer {
   html .preloader {
     display: none !important;
   }
-  .page-wipe,
-  .page-wipe.active {
+  .pt-root {
     display: none !important;
   }
   .container-card,
@@ -1902,4 +1864,89 @@ body::after {
   .ph-aside {
     display: none;
   }
+}
+
+/* ---- "Routing" page transition (PageTransition.tsx) ---- */
+.pt-root {
+  position: fixed;
+  inset: 0;
+  z-index: 8500;
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+.pt-col {
+  flex: 1 1 0;
+  height: 100%;
+  margin-right: -1px;
+  /* No CSS transform here: GSAP would read it as a pixel `y` and stack
+     its yPercent on top. The root's visibility hides the idle wall. */
+  box-shadow: inset -2px 0 0 rgba(0, 0, 0, 0.18);
+}
+.pt-label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(86vw, 30rem);
+  padding: 1.6rem 1.75rem 1.4rem;
+  border: 1.5px dashed rgba(255, 255, 255, 0.55);
+  border-radius: 16px;
+  background: rgba(11, 38, 36, 0.35);
+  color: #fff;
+  text-align: center;
+}
+.pt-codes {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.9rem 0 0.6rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.14em;
+}
+.pt-line {
+  position: relative;
+  height: 2px;
+  background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.6) 0 6px, transparent 6px 11px);
+}
+.pt-dot {
+  position: absolute;
+  top: -5px;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  border-radius: 50%;
+  background: var(--color-orange);
+  box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.3);
+}
+.pt-dest {
+  margin: 0 0 1rem;
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 7vw, 3.6rem);
+  line-height: 1.05;
+}
+.pt-barcode-wrap {
+  position: relative;
+  display: block;
+  height: 22px;
+  overflow: hidden;
+}
+.pt-barcode {
+  display: block;
+  height: 100%;
+  width: 100%;
+  color: rgba(255, 255, 255, 0.85);
+}
+.pt-scan {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 10%;
+  background: linear-gradient(90deg, transparent, rgba(234, 88, 12, 0.85), transparent);
 }
