@@ -5,7 +5,7 @@ import { Icon } from "@/components/ui/Icon";
 export function Footer() {
   return (
     <footer className="border-t border-border bg-white" role="contentinfo">
-      <div className="mx-auto max-w-[1280px] px-6 py-16 grid grid-cols-1 sm:grid-cols-3 gap-10">
+      <div className="mx-auto max-w-[1280px] px-6 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
         <div>
           <Link href="/" className="font-serif text-xl font-semibold text-ink tracking-tight no-underline">
             Shivaay Logistics
@@ -21,6 +21,16 @@ export function Footer() {
             <li><Link href="/" className="text-ink-dim text-sm hover:text-teal transition-colors no-underline">Home</Link></li>
             <li><Link href="/services" className="text-ink-dim text-sm hover:text-teal transition-colors no-underline">Services</Link></li>
             <li><Link href="/contact" className="text-ink-dim text-sm hover:text-teal transition-colors no-underline">Contact</Link></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-[13px] font-semibold text-ink uppercase tracking-wider mb-4">Resources</h4>
+          <ul className="list-none m-0 p-0 space-y-2.5">
+            <li><Link href="/resources/links" className="text-ink-dim text-sm hover:text-teal transition-colors no-underline">Quick Links</Link></li>
+            <li><Link href="/resources/documents" className="text-ink-dim text-sm hover:text-teal transition-colors no-underline">Documents</Link></li>
+            <li><Link href="/resources/files" className="text-ink-dim text-sm hover:text-teal transition-colors no-underline">Download Files</Link></li>
+            <li><Link href="/resources/ports" className="text-ink-dim text-sm hover:text-teal transition-colors no-underline">Ports/ICDs/CFS</Link></li>
           </ul>
         </div>
 

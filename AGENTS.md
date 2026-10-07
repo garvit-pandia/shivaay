@@ -1,3 +1,31 @@
+# Shivaay Logistics — Agent Notes
+
+Project context for agent sessions in this repo. The workflow rules below still apply.
+
+## Facts
+- **Live site:** https://www.shivaaylogistics.in (Vercel; production = `main`)
+- **App:** `next-app/` — Next.js 16 (App Router) + React 19 + Tailwind v4
+- **Static export:** `output: "export"` — no server runtime; every route must be statically exportable
+- **Dev server:** `cd next-app && npm run dev` → http://localhost:5182 (port claimed in `../PORT-REGISTRY.md`)
+- **Verify before done:** `npm run build` (all routes static) + `npm run lint`
+
+## Deploy model (Vercel)
+- `main` → production (auto-deploy on push)
+- Any pushed branch → Preview deployment (**publicly accessible** — Vercel Authentication is currently disabled so the client can review without a Vercel account; anyone with the URL can view)
+- Flow: feature branch → PR → review preview → merge → production
+- To re-protect: Settings → Deployment Protection → Vercel Authentication → enable
+- Canonical domain is `www.shivaaylogistics.in` (apex `.in` 308-redirects to www). There is no `.com` domain — never use it in metadata/JSON-LD.
+- **Finding preview URLs** (repo `garvit-pandia/shivaay`, no Vercel CLI needed):
+  - Latest build of a branch (stable alias): `https://shivaay-git-<branch, '/'→'-'>-garvits-projects-1883ee4b.vercel.app`
+  - Exact build of a commit: `id=$(gh api "repos/garvit-pandia/shivaay/deployments?sha=<sha>" --jq '.[0].id'); gh api repos/garvit-pandia/shivaay/deployments/$id/statuses --jq '.[0].environment_url'`
+  - Build state for a commit: `gh api repos/garvit-pandia/shivaay/commits/<sha>/status --jq '.statuses[]|[.state,.target_url]|@tsv'`
+  - Previews are public, so verify them directly with `curl`/Playwright (expect 200)
+
+## Key docs
+- `README.md` — routes, stack, dev commands
+- `docs/resources-source-manifest.md` — provenance for downloadable documents
+- `tasks/lessons.md` — lessons/pitfalls (update after any correction)
+
 ## Workflow Orchestration
 
 ### 1. Plan Mode Default

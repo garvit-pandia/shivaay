@@ -18,7 +18,7 @@
 - prefers-reduced-motion needs explicit rules for reveal animations
 
 ## React 19 / Next.js 16 Lint Rules
-- `react-hooks/set-state-in-effect`: Cannot call setState synchronously inside useEffect. Use refs for flags, or move state updates to event handlers (e.g., onClick on Links instead of useEffect on pathname change)
+- `react-hooks/set-state-in-effect`: Cannot call setState synchronously inside useEffect. Use refs for flags, or move state updates to event handlers (e.g., onClick on Links instead of useEffect on pathname change). To close menus on route change without an effect, use the adjust-during-render pattern (`const [prev, setPrev] = useState(pathname); if (prev !== pathname) { setPrev(pathname); closeMenus(); }`)
 - `react-hooks/immutability`: Cannot access a variable before it is declared in the same scope. For self-referencing callbacks (like recursive requestAnimationFrame), use `useRef` to hold the function
 - Always use `<Link>` from `next/link` for internal navigation, never raw `<a>` tags
 - Always use `<Image>` from `next/image` instead of `<img>` — warnings now, errors in future versions
@@ -39,3 +39,18 @@
 ## Workflow
 - Brainstorming skill produces good results even with one "do whatever is best" mandate — pick the simplest defensible option, write the spec, commit, proceed.
 - Subagent-driven implementation works well for mechanical class-name swaps across many files. Dispatch one subagent with the full plan + spec + foundation CSS context, let it commit per-task, then run parallel verification.
+
+## Git & Deploy
+- Fresh clones may have no git identity — check `git config user.email` before the first commit and set repo-local `user.name`/`user.email` to match the existing commit author (`git log -1 --format='%an <%ae>'`).
+- Vercel preview deployments are **publicly accessible** as of Oct 2026 — Vercel Authentication was disabled at the project level so the client can review without a Vercel account. Previews CAN now be verified with `curl` (expect 200, not 302 → `vercel.com/sso-api`). If auth is ever re-enabled, this reverts and they must be verified locally instead.
+
+## External Services
+- Tile providers can change policy without notice: Carto began returning "API KEY REQUIRED" watermarked placeholder tiles for keyless usage (Oct 2026) — the coverage map broke with no code change. Swapped to Esri Light Gray Canvas (Base + Reference overlay, keyless). If a map goes blank/watermarked, verify the provider response and swap the `TileLayer` URL rather than debugging the app.
+
+## Verification Tooling
+- Server-rendered HTML arrives as one long line: `grep -c` counts matching *lines* (always 1). Use `grep -o … | wc -l` for occurrence counts.
+- Scroll-reveal pages must be scrolled through and settled before screenshots, or below-fold `.reveal` cards appear missing (phantom bugs).
+- Google Maps iframes need several seconds to load tiles in headless browsers; a blank map early on is not proof of failure.
+
+## Domain (Oct 2026)
+- The live domain is `www.shivaaylogistics.in`; `shivaaylogistics.com` was never ours but sat in og:url, JSON-LD `url` and the README, so production advertised the wrong canonical URL. Before writing any absolute site URL, check `AGENTS.md` facts and `curl -sI` the domain — don't copy it from existing metadata.
