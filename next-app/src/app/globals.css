@@ -25,8 +25,10 @@
 }
 
 /* ---- Base ---- */
+/* No CSS smooth scrolling: Lenis smooths wheel + anchor scrolls. A global
+   `scroll-behavior: smooth` gets captured by ScrollTrigger and re-applied
+   inline on every refresh, which then fights Lenis on programmatic scrolls. */
 html {
-  scroll-behavior: smooth;
   color-scheme: light;
 }
 
@@ -1033,7 +1035,7 @@ html.js .hero-track[data-phase="scrub"]:not([data-copy="on"]) .hero-scroll-cue {
    V3 — editorial motion × living route map (redesign/v3-2026)
    ============================================================ */
 
-/* ---- Lenis (unlayered: must beat `html { scroll-behavior: smooth }`).
+/* ---- Lenis (unlayered).
    Hand-picked from lenis.css — its stock `.lenis-smooth iframe` rule would
    kill pointer events on every embed (contact map) permanently. ---- */
 html.lenis,
