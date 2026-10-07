@@ -42,7 +42,7 @@
 
 ## Git & Deploy
 - Fresh clones may have no git identity — check `git config user.email` before the first commit and set repo-local `user.name`/`user.email` to match the existing commit author (`git log -1 --format='%an <%ae>'`).
-- Vercel preview deployments are auth-protected (302 → `vercel.com/sso-api`). `curl` cannot verify them — verify locally (build + browser E2E); humans open previews while logged into Vercel.
+- Vercel preview deployments are **publicly accessible** as of Oct 2026 — Vercel Authentication was disabled at the project level so the client can review without a Vercel account. Previews CAN now be verified with `curl` (expect 200, not 302 → `vercel.com/sso-api`). If auth is ever re-enabled, this reverts and they must be verified locally instead.
 
 ## External Services
 - Tile providers can change policy without notice: Carto began returning "API KEY REQUIRED" watermarked placeholder tiles for keyless usage (Oct 2026) — the coverage map broke with no code change. Swapped to Esri Light Gray Canvas (Base + Reference overlay, keyless). If a map goes blank/watermarked, verify the provider response and swap the `TileLayer` URL rather than debugging the app.
@@ -51,3 +51,6 @@
 - Server-rendered HTML arrives as one long line: `grep -c` counts matching *lines* (always 1). Use `grep -o … | wc -l` for occurrence counts.
 - Scroll-reveal pages must be scrolled through and settled before screenshots, or below-fold `.reveal` cards appear missing (phantom bugs).
 - Google Maps iframes need several seconds to load tiles in headless browsers; a blank map early on is not proof of failure.
+
+## Domain (Oct 2026)
+- The live domain is `www.shivaaylogistics.in`; `shivaaylogistics.com` was never ours but sat in og:url, JSON-LD `url` and the README, so production advertised the wrong canonical URL. Before writing any absolute site URL, check `AGENTS.md` facts and `curl -sI` the domain — don't copy it from existing metadata.

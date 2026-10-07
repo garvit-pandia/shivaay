@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     description:
       "The list of documents required for AD Code registration, IEC application, Bill of Entry, Shipping Bill, GST refunds, LUT and customs clearance.",
     type: "website",
-    url: "https://shivaaylogistics.com/resources/documents",
+    url: "https://www.shivaaylogistics.in/resources/documents",
   },
   twitter: { card: "summary_large_image" },
 };
