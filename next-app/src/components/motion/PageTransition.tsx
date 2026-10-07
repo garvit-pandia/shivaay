@@ -30,6 +30,7 @@ function uncover(root: HTMLDivElement | null) {
   if (!root) return;
   const cols = root.querySelectorAll(".pt-col");
   const anims = root.querySelectorAll(".pt-anim");
+  const label = root.querySelector(".pt-label");
   requestAnimationFrame(() => {
     gsap
       .timeline({
@@ -39,6 +40,8 @@ function uncover(root: HTMLDivElement | null) {
         },
       })
       .to(anims, { y: -14, opacity: 0, duration: 0.25, stagger: 0.03, ease: "power2.in" })
+      // The label card (dashed frame + tint) leaves with its text, not with the last column.
+      .to(label, { opacity: 0, duration: 0.25, ease: "power2.in" }, 0.08)
       .to(cols, { yPercent: -101, duration: UNCOVER_S, ease: "power3.inOut", stagger: { each: 0.05, from: "end" } }, 0.1);
   });
 }
@@ -83,7 +86,8 @@ export function PageTransition() {
 
       const cols = root.querySelectorAll(".pt-col");
       const anims = root.querySelectorAll(".pt-anim");
-      gsap.killTweensOf([cols, anims]);
+      const label = root.querySelector(".pt-label");
+      gsap.killTweensOf([cols, anims, label]);
       gsap
         .timeline({
           onComplete: () => {
@@ -94,6 +98,8 @@ export function PageTransition() {
         })
         .set(root, { autoAlpha: 1, pointerEvents: "auto" })
         .fromTo(cols, { yPercent: 101 }, { yPercent: 0, duration: COVER_S, ease: "power3.inOut", stagger: 0.05 })
+        // Opacity only: .pt-label is centred with a CSS transform GSAP must not touch.
+        .fromTo(label, { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power2.out" }, 0.28)
         .fromTo(anims, { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, stagger: 0.05, ease: "power2.out" }, 0.3)
         .fromTo(root.querySelector(".pt-dot"), { left: "0%" }, { left: "100%", duration: 0.55, ease: "power2.inOut" }, 0.4)
         .fromTo(root.querySelector(".pt-scan"), { xPercent: -100 }, { xPercent: 900, duration: 0.6, ease: "power1.inOut" }, 0.4);
