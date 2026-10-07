@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, BadgeCheck } from "lucide-react";
-import { HeroStageMount } from "@/components/hero/HeroStageMount";
+import { FlapBoard } from "@/components/hero/FlapBoard";
 import { Odometer } from "@/components/motion/Odometer";
 import { Magnetic } from "@/components/motion/Magnetic";
 import { SplitReveal } from "@/components/motion/SplitReveal";
@@ -14,9 +14,9 @@ const stats = [
 
 export function HeroSection() {
   return (
-    <section className="relative bg-cream" aria-labelledby="hero-heading">
-      <HeroStageMount>
-        <div className="mx-auto max-w-[1280px] px-6 min-h-[94vh] flex items-center pt-24 pb-20">
+    <section className="relative bg-cream overflow-hidden" aria-labelledby="hero-heading">
+      <div className="absolute inset-0 bg-blueprint" aria-hidden="true" />
+      <div className="relative mx-auto max-w-[1280px] px-6 min-h-[94vh] grid lg:grid-cols-[minmax(0,1fr)_auto] gap-12 lg:gap-16 items-center pt-16 pb-20 lg:pt-20">
           <div className="hero-copy-block max-w-xl">
             <p className="mono-label text-[11px] text-teal mb-6 flex items-center gap-2.5">
               <span className="ticker-dot" aria-hidden="true" />
@@ -70,17 +70,16 @@ export function HeroSection() {
               ))}
             </div>
           </div>
-        </div>
+          <FlapBoard />
+      </div>
 
-        {/* scroll cue — inside the mount so it can hide during the dive */}
-        <div
-          className="hero-scroll-cue absolute bottom-7 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2.5"
-          aria-hidden="true"
-        >
-          <span className="mono-label text-[9px] text-ink-dim">Scroll</span>
-          <span className="scroll-cue block w-px h-10 bg-ink/15" />
-        </div>
-      </HeroStageMount>
+      <div
+        className="hero-scroll-cue absolute bottom-7 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2.5"
+        aria-hidden="true"
+      >
+        <span className="mono-label text-[9px] text-ink-dim">Scroll</span>
+        <span className="scroll-cue block w-px h-10 bg-ink/15" />
+      </div>
     </section>
   );
 }

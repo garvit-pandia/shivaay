@@ -1950,3 +1950,133 @@ body::after {
   width: 10%;
   background: linear-gradient(90deg, transparent, rgba(234, 88, 12, 0.85), transparent);
 }
+
+/* ---- Hero variant: split-flap departures board (FlapBoard.tsx) ---- */
+.fb {
+  --fw: 17px;
+  --fh: 28px;
+  --bw: 62px;
+  --bh: 88px;
+  width: fit-content;
+  max-width: 100%;
+  padding: 1.25rem 1.25rem 1.4rem;
+  border-radius: 22px;
+  background-color: #1E1B18;
+  box-shadow: 0 40px 80px -40px rgba(30, 27, 24, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+@media (max-width: 1279px) {
+  .fb { --fw: 15px; --fh: 25px; --bw: 54px; --bh: 76px; }
+}
+@media (max-width: 639px) {
+  .fb { --fw: 13px; --fh: 22px; --bw: 38px; --bh: 54px; margin-inline: auto; padding: 1rem; }
+  .fb-wide { display: none !important; }
+}
+.fb-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.9rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px dashed rgba(250, 248, 244, 0.18);
+}
+.fb-big {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 1.25rem;
+}
+.fb-big .flap {
+  --w: var(--bw);
+  --h: var(--bh);
+  font-size: calc(var(--bh) * 0.62);
+  color: #FDBA74;
+}
+.fb-table {
+  display: grid;
+  gap: 5px;
+}
+.fb-labels,
+.fb-row {
+  display: flex;
+  gap: 10px;
+}
+.fb-labels .fb-col {
+  width: calc(var(--cells) * (var(--fw) + 2px) - 2px);
+  font-size: 8px;
+  color: rgba(250, 248, 244, 0.5);
+}
+.fb-row .fb-col {
+  display: flex;
+  gap: 2px;
+}
+.fb-row {
+  cursor: default;
+}
+.fb-row[data-status="CLEARED"] .fb-col:last-child .flap,
+.fb-row[data-status="RELEASED"] .fb-col:last-child .flap {
+  color: #5EEAD4;
+}
+.fb-row[data-status="IN TRANSIT"] .fb-col:last-child .flap,
+.fb-row[data-status="AT GATE"] .fb-col:last-child .flap {
+  color: #FDBA74;
+}
+.flap {
+  --w: var(--fw);
+  --h: var(--fh);
+  position: relative;
+  display: inline-block;
+  width: var(--w);
+  height: var(--h);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: calc(var(--fh) * 0.62);
+  color: #FAF8F4;
+  perspective: 300px;
+}
+.flap .fh,
+.flap .fl {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50%;
+  overflow: hidden;
+  background-color: #2B2724;
+  backface-visibility: hidden;
+}
+.flap .t {
+  top: 0;
+  border-radius: 3px 3px 0 0;
+  transform-origin: 50% 100%;
+}
+.flap .b {
+  top: 50%;
+  border-radius: 0 0 3px 3px;
+  transform-origin: 50% 0;
+  background-color: #262320;
+}
+.flap .fl.b {
+  transform: rotateX(90deg);
+}
+.flap b {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: var(--h);
+  line-height: var(--h);
+  text-align: center;
+}
+.flap .b b {
+  top: calc(var(--h) / -2);
+}
+.flap .t b {
+  top: 0;
+}
+.flap::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 2;
+}
