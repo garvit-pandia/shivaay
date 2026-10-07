@@ -1412,7 +1412,7 @@ body::after {
     top: 0.5rem;
     bottom: 0.5rem;
     width: 2px;
-    background: repeating-linear-gradient(rgba(250, 248, 244, 0.25) 0 6px, transparent 6px 12px);
+    background: repeating-linear-gradient(rgba(15, 118, 110, 0.3) 0 6px, transparent 6px 12px);
   }
   .proc-rail-fill {
     position: absolute;
@@ -1429,7 +1429,7 @@ body::after {
     font-size: 4.5rem;
     line-height: 1;
     color: transparent;
-    -webkit-text-stroke: 1px rgba(250, 248, 244, 0.35);
+    -webkit-text-stroke: 1px rgba(15, 118, 110, 0.4);
     margin-bottom: 1.25rem;
   }
   @media (min-width: 1024px) {
@@ -1472,7 +1472,7 @@ body::after {
       bottom: auto;
       width: auto;
       height: 2px;
-      background: repeating-linear-gradient(90deg, rgba(250, 248, 244, 0.25) 0 8px, transparent 8px 16px);
+      background: repeating-linear-gradient(90deg, rgba(15, 118, 110, 0.3) 0 8px, transparent 8px 16px);
     }
     .proc-rail-fill {
       transform-origin: 0 50%;
