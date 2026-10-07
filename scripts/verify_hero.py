@@ -53,7 +53,8 @@ SETTLE_BUDGET_S = 12.0
 # Expected network noise when a model request is deliberately aborted.
 NET_NOISE = re.compile(r"Failed to fetch|ERR_FAILED|Could not load", re.IGNORECASE)
 CURSOR_SELECTORS = (
-    ".cursor-follow",
+    ".cursor-dot",
+    ".cursor-truck",
     ".cursor-stamp-el",
     ".cursor-waybill",
     ".cursor-scanbox",

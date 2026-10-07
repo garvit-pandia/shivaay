@@ -16,6 +16,7 @@ Project context for agent sessions in this repo. The workflow rules below still 
 - Canonical domain is `www.shivaaylogistics.in` (apex `.in` 308-redirects to www). There is no `.com` domain — never use it in metadata/JSON-LD.
 - **Finding preview URLs** (repo `garvit-pandia/shivaay`, no Vercel CLI needed):
   - Latest build of a branch (stable alias): `https://shivaay-git-<branch, '/'→'-'>-garvits-projects-1883ee4b.vercel.app` (e.g. `shivaay-git-redesign-immersive-2026-…`)
+    - **Long branch names get a truncated, hashed alias** (DNS labels max 63 chars): `redesign/v3-hero-flapboard` → `shivaay-git-redesign-v3-hero-f-c07be6-…`. Never hand-build these — read the real alias with `vercel inspect <deployment-url> --scope garvits-projects-1883ee4b` (Aliases section; `vercel ls shivaay --scope …` lists deployments) and `curl` it for 200 before sharing.
   - Exact build of a commit: `id=$(gh api "repos/garvit-pandia/shivaay/deployments?sha=<sha>" --jq '.[0].id'); gh api repos/garvit-pandia/shivaay/deployments/$id/statuses --jq '.[0].environment_url'`
   - Build state for a commit: `gh api repos/garvit-pandia/shivaay/commits/<sha>/status --jq '.statuses[]|[.state,.target_url]|@tsv'`
   - Previews are public, so verify them directly with `curl`/Playwright (expect 200)

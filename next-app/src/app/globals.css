@@ -494,8 +494,19 @@ section[id],
   transform: rotate(8deg);
 }
 
-/* ---- Custom cursor (fine pointers only; native cursor stays) ---- */
-.cursor-follow,
+/* ---- Toy-truck cursor (fine pointers only; replaces the native arrow) ---- */
+html.truck-cursor,
+html.truck-cursor * {
+  cursor: none !important;
+}
+/* Text entry and embedded maps keep the native cursor. */
+html.truck-cursor :is(input:not([type="checkbox"], [type="radio"], [type="submit"], [type="button"], [type="range"]), textarea, [contenteditable="true"], iframe) {
+  cursor: auto !important;
+}
+.cursor-dot,
+.cursor-truck,
+.cursor-puff,
+.cursor-beep,
 .cursor-stamp-el {
   position: fixed;
   top: 0;
@@ -503,24 +514,120 @@ section[id],
   pointer-events: none;
   z-index: 9999;
   opacity: 0;
-  transition: opacity 0.25s;
   will-change: transform;
 }
-.cursor-follow {
-  width: 36px;
-  height: 36px;
-  margin: -18px 0 0 -18px;
-  border: 1.5px solid rgba(15, 118, 110, 0.55);
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
   border-radius: 50%;
-  transition: opacity 0.25s, width 0.2s, height 0.2s, margin 0.2s, border-color 0.2s;
+  background: #EA580C;
+  box-shadow: 0 0 0 2px rgba(250, 248, 244, 0.9);
+  transition: opacity 0.2s;
 }
-.cursor-follow.cursor-active {
-  width: 56px;
-  height: 56px;
-  margin: -28px 0 0 -28px;
-  border-color: rgba(234, 88, 12, 0.7);
+.cursor-dot::after {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(234, 88, 12, 0.6);
+  scale: 0.4;
+  opacity: 0;
+  transition: scale 0.25s cubic-bezier(0.2, 1.4, 0.4, 1), opacity 0.2s;
+}
+.cursor-dot.is-hazard::after { scale: 1; opacity: 1; }
+.cursor-truck { transition: opacity 0.2s; }
+.cursor-dot.is-on,
+.cursor-truck.is-on { opacity: 1; }
+/* Nose of the truck (49px, 20px into the art) parks on the pointer. */
+.truck-body {
+  position: absolute;
+  left: -49px;
+  top: -20px;
+  transform-origin: 49px 20px;
+  filter: drop-shadow(0 3px 3px rgba(30, 27, 24, 0.18));
+}
+.truck-hop {
+  animation: truck-idle 0.16s steps(2) infinite alternate;
+}
+.truck-hop.is-honk {
+  animation: truck-honk 0.42s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+@keyframes truck-idle {
+  from { translate: 0 0; }
+  to { translate: 0 0.5px; }
+}
+@keyframes truck-honk {
+  0% { translate: 0 0; scale: 1 1; }
+  30% { translate: 0 -5px; scale: 0.94 1.08; }
+  60% { translate: 0 0; scale: 1.08 0.92; }
+  100% { translate: 0 0; scale: 1 1; }
+}
+.truck-hop svg { display: block; overflow: visible; }
+.truck-wheel { transform-box: fill-box; transform-origin: center; }
+.truck-eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: truck-blink 4s infinite;
+}
+@keyframes truck-blink {
+  0%, 94%, 100% { scale: 1 1; }
+  97% { scale: 1 0.15; }
+}
+.truck-hazard { fill: #FCD34D; opacity: 0.55; }
+.cursor-truck.is-hazard .truck-hazard {
+  animation: truck-hazard 0.5s steps(1) infinite;
+}
+@keyframes truck-hazard {
+  0% { fill: #F59E0B; opacity: 1; filter: drop-shadow(0 0 2px #F59E0B); }
+  50% { fill: #FCD34D; opacity: 0.25; filter: none; }
+}
+.cursor-puff {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(107, 94, 74, 0.35);
+  z-index: 9998;
+}
+.cursor-beep {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #EA580C;
+  background: #FFFDF9;
+  border: 1.5px solid #1E1B18;
+  border-radius: 999px;
+  padding: 3px 8px;
+  white-space: nowrap;
+  translate: -50% -100%;
+  transform-origin: 50% 100%;
+}
+.cursor-beep::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  width: 7px;
+  height: 7px;
+  margin-left: -3.5px;
+  background: inherit;
+  border-right: 1.5px solid #1E1B18;
+  border-bottom: 1.5px solid #1E1B18;
+  rotate: 45deg;
+}
+.cursor-beep.is-pop {
+  animation: beep-pop 0.7s cubic-bezier(0.2, 1.4, 0.4, 1) forwards;
+}
+@keyframes beep-pop {
+  0% { opacity: 0; scale: 0.3; rotate: -10deg; }
+  25% { opacity: 1; scale: 1.12; rotate: 4deg; }
+  40% { scale: 1; rotate: -2deg; }
+  80% { opacity: 1; translate: -50% -110%; }
+  100% { opacity: 0; scale: 0.9; translate: -50% -130%; }
 }
 .cursor-stamp-el {
+  transition: opacity 0.25s;
   font-family: var(--font-mono);
   font-size: 10px;
   font-weight: 700;
@@ -975,7 +1082,10 @@ html.js .faq-item.faq-open .faq-answer {
     transform: none;
     transition: none;
   }
-  .cursor-follow,
+  .cursor-dot,
+  .cursor-truck,
+  .cursor-puff,
+  .cursor-beep,
   .cursor-stamp-el,
   .cursor-waybill,
   .cursor-scanbox {
