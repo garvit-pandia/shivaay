@@ -11,7 +11,7 @@ const structuredData = {
   "@type": "LocalBusiness",
   name: "Shivaay Logistics",
   description: companyInfo.description,
-  url: "https://shivaaylogistics.com",
+  url: "https://www.shivaaylogistics.in",
   telephone: [companyInfo.phone, companyInfo.whatsapp],
   email: contactInfo.email,
   address: contactInfo.address,

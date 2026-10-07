@@ -31,7 +31,7 @@ export const metadata: Metadata = {
       "Customs clearance, freight forwarding, and logistics solutions across India.",
     type: "website",
     siteName: companyInfo.name,
-    url: "https://shivaaylogistics.com/",
+    url: "https://www.shivaaylogistics.in/",
   },
   twitter: {
     card: "summary_large_image",
