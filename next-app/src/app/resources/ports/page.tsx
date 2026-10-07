@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     description:
       "Clearance Ports/ICD's/CFS in Ludhiana — locations and maps for major ICD and CFS facilities.",
     type: "website",
-    url: "https://shivaaylogistics.com/resources/ports",
+    url: "https://www.shivaaylogistics.in/resources/ports",
   },
   twitter: { card: "summary_large_image" },
 };

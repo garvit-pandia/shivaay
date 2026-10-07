@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     description:
       "Get in touch with Shivaay Logistics for customs brokerage and freight forwarding services. Call +91 88474-67790 or visit our office in Ludhiana, Punjab.",
     type: "website",
-    url: "https://shivaaylogistics.com/contact",
+    url: "https://www.shivaaylogistics.in/contact",
   },
   twitter: { card: "summary_large_image" },
 };

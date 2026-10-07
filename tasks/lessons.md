@@ -84,3 +84,6 @@
 - **agent-browser usage:** load version-matched docs first with `agent-browser skills get core` — it serves them from the installed binary, so they can't go stale. Core loop: `open <url>` → `snapshot -i` for `@eN` refs → act → re-snapshot. Refs are reassigned every snapshot and go stale the moment the page changes.
 - **Screenshot timing:** a capture taken right after `networkidle` catches the Preloader/door transition mid-flight (rotated card, sliced headline) and reads as broken layout. Sleep ~3-4s after load before shooting.
 - Headless WebGL caveat: see `--enable-unsafe-swiftshader --use-angle=swiftshader` under Immersive Redesign — an absent GlobeHero in a headless capture is a flag issue, not a regression.
+
+## Domain (Oct 2026)
+- The live domain is `www.shivaaylogistics.in`; `shivaaylogistics.com` was never ours but sat in og:url, JSON-LD `url` and the README, so production advertised the wrong canonical URL. Before writing any absolute site URL, check `AGENTS.md` facts and `curl -sI` the domain — don't copy it from existing metadata.
