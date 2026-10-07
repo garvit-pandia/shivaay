@@ -1,15 +1,17 @@
 import { ExternalLink } from "lucide-react";
 import { Icon } from "@/components/ui/Icon";
 import { portalLinks } from "@/lib/resources";
+import { TiltGroup } from "@/components/motion/TiltGroup";
 
 export function PortalLinkGrid() {
   return (
-    <section className="pb-20 bg-cream" aria-label="Transport & customs portals">
+    <section className="py-16 lg:py-20 bg-cream" aria-label="Transport & customs portals">
       <div className="mx-auto max-w-[1280px] px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <TiltGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {portalLinks.map((link, i) => (
             <div
               key={link.address}
+              data-tilt
               className="reveal waybill flex flex-col justify-between gap-5 bg-white rounded-2xl p-6 card-hover"
             >
               <div>
@@ -32,7 +34,7 @@ export function PortalLinkGrid() {
               </a>
             </div>
           ))}
-        </div>
+        </TiltGroup>
       </div>
     </section>
   );

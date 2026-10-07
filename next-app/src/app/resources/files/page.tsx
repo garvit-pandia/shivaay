@@ -23,6 +23,7 @@ export default function FilesPage() {
       <ResourcesHeader
         title="Download Documents"
         description="Important documents, circulars & notifications for your reference."
+        ghost="Downloads"
       />
       <DownloadGrid />
       <CTASection

@@ -8,7 +8,7 @@ export function DocumentRequirements() {
   const activeCategory = documentCategories[activeIndex];
 
   return (
-    <section className="pb-20 bg-cream" aria-label="Documents required by process">
+    <section className="py-16 lg:py-20 bg-cream" aria-label="Documents required by process">
       <div className="mx-auto max-w-[1280px] px-6">
         <div
           role="tablist"

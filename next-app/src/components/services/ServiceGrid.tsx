@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  useEffect,
-  useRef,
-  useState,
-  type CSSProperties,
-  type KeyboardEvent,
-} from "react";
+import { useRef, useState, type KeyboardEvent } from "react";
 import {
   Plane,
   Ship,
@@ -25,6 +19,9 @@ import type { LucideIcon } from "lucide-react";
 import { Icon } from "@/components/ui/Icon";
 import { services } from "@/lib/data";
 import { containerColor } from "@/lib/palette";
+import { gsap, ScrollTrigger, useGSAP, MOTION_OK } from "@/components/motion/gsap";
+import { attachTilt } from "@/components/motion/tilt";
+import { PageHero } from "@/components/motion/PageHero";
 
 /**
  * Name → icon resolution, keyed EXACTLY by the `icon` strings in
@@ -54,25 +51,47 @@ const serviceIcons: Record<string, LucideIcon> = {
 
 export function ServiceGrid() {
   const wallRef = useRef<HTMLDivElement>(null);
-  const [dealt, setDealt] = useState(false);
   const [flipped, setFlipped] = useState<Record<number, boolean>>({});
 
-  // Deal the wall in once it scrolls into view (one-way).
-  useEffect(() => {
-    const wall = wallRef.current;
-    if (!wall) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setDealt(true);
-          io.disconnect();
-        }
-      },
-      { threshold: 0.15 }
-    );
-    io.observe(wall);
-    return () => io.disconnect();
-  }, []);
+  // Crane drop: containers are lowered in row by row as they scroll into
+  // view, swing a little on the "cable", then settle; cards tilt to the
+  // pointer. `.is-dealt` on the wall lifts the CSS pre-hide (hydration gap).
+  useGSAP(
+    () => {
+      const wall = wallRef.current;
+      if (!wall) return;
+      const cards = gsap.utils.toArray<HTMLElement>(".container-card", wall);
+      wall.classList.add("is-dealt");
+      const mm = gsap.matchMedia();
+      mm.add(MOTION_OK, () => {
+        gsap.set(cards, { transformPerspective: 1100 });
+        ScrollTrigger.batch(cards, {
+          start: "top 92%",
+          once: true,
+          onEnter: (batch) =>
+            gsap
+              .timeline()
+              .from(batch, {
+                y: -160,
+                opacity: 0,
+                rotationZ: (i) => (i % 2 ? 7 : -7),
+                duration: 0.9,
+                ease: "power3.in",
+                stagger: 0.09,
+              })
+              .to(batch, {
+                keyframes: { rotationZ: [2.5, -1.2, 0.4, 0], y: [-6, 0] },
+                duration: 0.9,
+                ease: "sine.out",
+                stagger: 0.09,
+              }, ">-0.05"),
+        });
+        return attachTilt(cards, 6);
+      });
+      return () => mm.revert();
+    },
+    { scope: wallRef }
+  );
 
   const toggleFlip = (index: number) => {
     setFlipped((prev) => ({ ...prev, [index]: !prev[index] }));
@@ -86,35 +105,31 @@ export function ServiceGrid() {
   };
 
   return (
-    <section
-      className="pt-14 pb-24 bg-cream"
-      aria-labelledby="services-grid-heading"
-    >
-      {/* No-JS: .dealt is only honoured under .js — force cards readable. */}
+    <>
+    <PageHero
+      id="services-grid-heading"
+      kicker="Manifest — Services · 12"
+      title="All forwarding services"
+      description="12 specialized services to move your business forward"
+      ghost="Services"
+      aside={
+        <div className="ph-stat">
+          <span className="font-serif text-7xl lg:text-8xl leading-none text-teal">12</span>
+          <span className="mono-label text-[10px] text-ink-dim">Containers on the manifest</span>
+          <span className="barcode block h-6 w-40 text-ink/70" aria-hidden="true" />
+        </div>
+      }
+    />
+    <section className="pt-16 pb-24 bg-cream" aria-label="Service containers">
+      {/* No-JS: the pre-hide only applies under .js — force cards readable. */}
       <noscript>
         <style>{`.container-card{opacity:1}`}</style>
       </noscript>
 
       <div className="mx-auto max-w-[1280px] px-6">
-        <div className="flex flex-wrap items-end justify-between gap-4 mb-12 lg:mb-16">
-          <div className="max-w-2xl">
-            <p className="mono-label text-[10px] text-orange mb-3">
-              Manifest — Services · 12
-            </p>
-            <h1
-              id="services-grid-heading"
-              className="font-serif text-4xl lg:text-5xl font-medium text-ink mb-4"
-            >
-              All forwarding services
-            </h1>
-            <p className="text-base lg:text-lg text-ink-dim leading-relaxed">
-              12 specialized services to move your business forward
-            </p>
-          </div>
-          <p className="mono-label text-[9px] text-ink-dim hidden sm:block">
-            Hover / tap a container to flip
-          </p>
-        </div>
+        <p className="mono-label text-[9px] text-ink-dim mb-8 hidden sm:block">
+          Hover / tap a container to flip
+        </p>
 
         <div
           ref={wallRef}
@@ -122,17 +137,10 @@ export function ServiceGrid() {
         >
           {services.map((s, i) => {
             const code = `SHV-${String(i + 1).padStart(3, "0")}`;
-            const cardStyle = {
-              "--d": `${i * 90}ms`,
-              "--tilt": i % 2 === 0 ? "-2deg" : "2deg",
-            } as CSSProperties;
             return (
               <div
                 key={s.title}
-                className={`container-card${dealt ? " dealt" : ""}${
-                  flipped[i] ? " flipped" : ""
-                }`}
-                style={cardStyle}
+                className="container-card"
                 role="button"
                 tabIndex={0}
                 aria-pressed={!!flipped[i]}
@@ -204,5 +212,6 @@ export function ServiceGrid() {
         </div>
       </div>
     </section>
+    </>
   );
 }

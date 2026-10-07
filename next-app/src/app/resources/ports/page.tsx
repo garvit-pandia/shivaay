@@ -23,6 +23,7 @@ export default function PortsPage() {
       <ResourcesHeader
         title="Clearance Ports/ICD's/CFS in Ludhiana"
         description="Explore the major Clearance Ports/ICD's/CFS in Ludhiana."
+        ghost="Ports"
       />
       <PortsAccordion />
       <CTASection

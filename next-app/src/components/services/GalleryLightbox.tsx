@@ -5,11 +5,42 @@ import Image from "next/image";
 import { X } from "lucide-react";
 import { Icon } from "@/components/ui/Icon";
 import { galleryImages } from "@/lib/data";
+import { gsap, useGSAP, MOTION_OK } from "@/components/motion/gsap";
+import { TextReveal } from "@/components/motion/TextReveal";
 
 export function GalleryLightbox() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const lightboxRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement | null>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  // Each photo sits behind a pair of container doors that swing apart as it
+  // scrolls in, while the photo settles from a slight zoom. The doors only
+  // exist visually once this runs (`.has-doors`), so no-JS shows photos.
+  useGSAP(
+    () => {
+      const grid = gridRef.current;
+      if (!grid) return;
+      const mm = gsap.matchMedia();
+      mm.add(MOTION_OK, () => {
+        grid.classList.add("has-doors");
+        gsap.utils.toArray<HTMLElement>(".gallery-item", grid).forEach((item, i) => {
+          gsap
+            .timeline({
+              scrollTrigger: { trigger: item, start: "top 85%", once: true },
+              delay: i * 0.12,
+              defaults: { duration: 1.2, ease: "power3.inOut" },
+            })
+            .to(item.querySelector(".gal-door-l"), { xPercent: -102 }, 0)
+            .to(item.querySelector(".gal-door-r"), { xPercent: 102 }, 0)
+            .from(item.querySelector("img"), { scale: 1.35, duration: 1.6, ease: "expo.out" }, 0.15);
+        });
+        return () => grid.classList.remove("has-doors");
+      });
+      return () => mm.revert();
+    },
+    { scope: gridRef }
+  );
 
   const open = useCallback((i: number) => { setOpenIdx(i); }, []);
   const close = useCallback(() => { setOpenIdx(null); }, []);
@@ -56,11 +87,11 @@ export function GalleryLightbox() {
             <p className="mono-label text-[10px] text-orange mb-3">
               Manifest — Network · 03
             </p>
-            <h2 id="gallery-heading" className="font-serif text-3xl lg:text-5xl font-medium text-ink">
+            <TextReveal id="gallery-heading" className="font-serif text-4xl lg:text-6xl font-medium text-ink leading-[1.05]">
               Our network
-            </h2>
+            </TextReveal>
           </div>
-          <div className="gallery-grid">
+          <div ref={gridRef} className="gallery-grid">
             {galleryImages.map((img, i) => (
               <div
                 key={i}
@@ -73,6 +104,8 @@ export function GalleryLightbox() {
                 onKeyDown={(e) => { if (e.key === "Enter") { triggerRef.current = e.currentTarget; open(i); } }}
               >
                 <Image src={img.src} alt={img.alt} width={400} height={300} className="w-full h-full object-cover" />
+                <span className="gal-door gal-door-l corrugated" aria-hidden="true" />
+                <span className="gal-door gal-door-r corrugated" aria-hidden="true" />
               </div>
             ))}
           </div>

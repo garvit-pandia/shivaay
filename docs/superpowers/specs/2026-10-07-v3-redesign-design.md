@@ -59,3 +59,18 @@ the repo only if another route uses it.
 - Bundle: no `three` in initial scripts; GSAP absent from non-home routes' HTML-referenced chunks.
 - Playwright (swiftshader flags) against a fresh `out/` export: desktop 1440×900 + mobile 390×844 section shots
   after scroll-settle; reduced-motion pass; zero console errors; `scripts/verify_hero.py` still green.
+
+## Phase 2 — inner routes (2026-10-07)
+
+- **`PageHero`** (`components/motion/PageHero.tsx`) on every inner route: masked-line h1, kicker/intro rise, giant
+  outlined ghost word drifting with scroll, route line drawing along the bottom edge with a marker. Asides hidden < 640px.
+- **/services:** containers are craned in row by row (`ScrollTrigger.batch`: drop, cable swing, settle) and tilt to the
+  pointer (`motion/tilt.ts`); gallery photos sit behind container doors that swing open; masked headings.
+- **/contact:** live waybill on the form — tracking number + barcode derived from the typed manifest
+  (`lib/radar.ts#waybillId/barcodeBars`, decorative/aria-hidden), completion meter, scan sweep on each keystroke;
+  sending slams a CLEARED stamp and the card takes the hit. Office map opens as an iris (CSS scroll-driven).
+- **/resources:** dossier cards with tabs + tilt (`TiltGroup`), PageHero on every sub-page.
+- **/resources/ports:** customs radar — every ICD/CFS plotted by true range/bearing from Ludhiana using coordinates parsed
+  from its Maps embed (7 of 8; one has only a search embed). SVG beam rotates via CSS; each blip pings with
+  `animation-delay = bearing/360 × period`, so it lights as the beam passes (no JS loop). List hover/focus/open ↔ blip.
+- **404:** digits drop like crates (bounce), then the stamp slams and the stage shakes.

@@ -833,19 +833,12 @@ html.preloaded .preloader {
   border-radius: 10px;
 }
 /* Only pre-hide when JS is on and can deal the cards in */
-.js .container-card:not(.dealt) {
+/* Pre-hide lives on the wall (its className is static, so React never
+   rewrites it); per-card classes would be wiped on every flip re-render. */
+.js .container-wall:not(.is-dealt) .container-card {
   opacity: 0;
 }
-.js .container-card.dealt {
-  opacity: 1;
-  animation: crate-deal 0.65s cubic-bezier(0.2, 0.9, 0.3, 1.15) backwards;
-  animation-delay: var(--d, 0ms);
-}
-@keyframes crate-deal {
-  0% { opacity: 0; transform: translateY(-46px) rotate(var(--tilt, 2deg)) scale(0.92); }
-  60% { opacity: 1; transform: translateY(4px) rotate(0deg) scale(1.01); }
-  100% { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
-}
+/* Motion (crane drop + tilt) is GSAP — see ServiceGrid. */
 .container-card-inner {
   position: relative;
   width: 100%;
@@ -854,7 +847,7 @@ html.preloaded .preloader {
   transition: transform 0.7s cubic-bezier(0.35, 0.1, 0.2, 1);
 }
 .container-card:hover .container-card-inner,
-.container-card.flipped .container-card-inner {
+.container-card[aria-pressed="true"] .container-card-inner {
   transform: rotateY(180deg);
 }
 .container-face {
@@ -998,7 +991,7 @@ html.js .faq-item.faq-open .faq-answer {
     display: none !important;
   }
   .container-card,
-  html.js .container-card:not(.dealt) {
+  html.js .container-wall:not(.is-dealt) .container-card {
     opacity: 1;
   }
   .container-card-inner {
@@ -1527,6 +1520,386 @@ body::after {
     animation: none;
   }
   .jr-freight {
+    display: none;
+  }
+}
+
+/* ============================================================
+   V3 — inner routes (services / contact / resources / 404)
+   ============================================================ */
+
+/* Office map opens like an iris as it scrolls in (CSS scroll-driven). */
+@keyframes map-iris {
+  from { clip-path: circle(14% at 50% 50%); }
+  to { clip-path: circle(80% at 50% 50%); }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .map-iris {
+      animation: map-iris linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 45%;
+    }
+  }
+}
+
+/* Inquiry success: the stamp slams, the card takes the hit. */
+@keyframes stamp-slam {
+  0% { transform: scale(3.2) rotate(-35deg); opacity: 0; }
+  60% { transform: scale(0.92) rotate(10deg); opacity: 1; }
+  100% { transform: scale(1) rotate(8deg); opacity: 0.85; }
+}
+@keyframes card-hit {
+  0%, 100% { transform: none; }
+  30% { transform: translate(-5px, 2px); }
+  55% { transform: translate(4px, -1px); }
+  80% { transform: translate(-2px, 0); }
+}
+@keyframes wb-scan {
+  from { transform: translateX(-10%); opacity: 1; }
+  to { transform: translateX(1100%); opacity: 0; }
+}
+@keyframes radar-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes radar-ping {
+  0% { transform: scale(1); opacity: 0.9; }
+  30% { transform: scale(4.2); opacity: 0; }
+  100% { transform: scale(4.2); opacity: 0; }
+}
+@keyframes radar-glow {
+  0% { fill: #CCFBF1; }
+  35%, 100% { fill: #2DD4BF; }
+}
+@keyframes port-open {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .stamp-slam {
+    animation: stamp-slam 0.55s cubic-bezier(0.5, 0, 0.75, 0) both;
+  }
+  .wb-cleared {
+    animation: card-hit 0.35s linear 0.4s both;
+  }
+  .port-panel {
+    animation: port-open 0.45s ease both;
+  }
+}
+
+@layer components {
+  /* ---- Page hero (all inner routes) ---- */
+  .ph-ghost {
+    position: absolute;
+    left: -2vw;
+    bottom: -0.18em;
+    font-family: var(--font-serif);
+    font-size: clamp(7rem, 22vw, 21rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    white-space: nowrap;
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(15, 118, 110, 0.13);
+    pointer-events: none;
+    user-select: none;
+  }
+  .ph-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .ph-route {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, rgba(15, 118, 110, 0.25) 0 8px, transparent 8px 16px);
+  }
+  .ph-route-fill {
+    position: absolute;
+    inset: 0;
+    background: var(--color-teal);
+    transform-origin: 0 50%;
+  }
+  .ph-route-marker {
+    position: absolute;
+    top: -5px;
+    left: 100%;
+    width: 12px;
+    height: 12px;
+    margin-left: -6px;
+    border-radius: 50%;
+    background: var(--color-orange);
+    box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.18);
+    opacity: 0;
+  }
+
+  /* ---- Gallery: container doors over each photo ---- */
+  .gallery-item {
+    position: relative;
+  }
+  .gal-door {
+    display: none;
+  }
+  .has-doors .gal-door {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50.5%;
+    background-color: #134E4A;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .has-doors .gal-door-l {
+    left: 0;
+    border-right: 2px solid rgba(0, 0, 0, 0.25);
+  }
+  .has-doors .gal-door-r {
+    right: 0;
+    background-color: #0F766E;
+  }
+
+  /* ---- Contact: live waybill strip ---- */
+  .wb-strip {
+    margin: -0.5rem 0 1.75rem;
+    padding: 1.1rem 1.25rem 1rem;
+    border-radius: 14px;
+    background-color: var(--color-cream);
+    border: 1.5px dashed rgba(30, 27, 24, 0.22);
+  }
+  .wb-barcode-wrap {
+    position: relative;
+    margin: 0.85rem 0 0.75rem;
+    overflow: hidden;
+  }
+  .wb-barcode {
+    display: block;
+    width: 100%;
+    height: 34px;
+    fill: var(--color-ink);
+  }
+  .wb-barcode rect {
+    transition: width 0.25s ease;
+  }
+  .wb-scan {
+    position: absolute;
+    top: -4px;
+    bottom: -4px;
+    left: 0;
+    width: 9%;
+    background: linear-gradient(90deg, transparent, rgba(234, 88, 12, 0.55), transparent);
+    opacity: 0;
+  }
+  .wb-meter {
+    height: 4px;
+    border-radius: 99px;
+    background: rgba(15, 118, 110, 0.12);
+    overflow: hidden;
+  }
+  .wb-meter > span {
+    display: block;
+    height: 100%;
+    background: var(--color-teal);
+    transform-origin: 0 50%;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  /* ---- Resources hub: dossier cards ---- */
+  .dossier {
+    position: relative;
+    display: block;
+    padding-top: 1.6rem;
+    transform-style: preserve-3d;
+  }
+  .dossier-tab {
+    position: absolute;
+    top: 0;
+    left: 1.5rem;
+    padding: 0.45rem 1rem 0.9rem;
+    border-radius: 10px 10px 0 0;
+    background-color: var(--color-teal);
+    color: #fff;
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .dossier:hover .dossier-tab {
+    transform: translateY(-6px);
+  }
+  .dossier-body {
+    position: relative;
+    padding: 2rem;
+    border-radius: 18px;
+    background-color: #fff;
+    min-height: 17rem;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.35s ease;
+  }
+  .dossier:hover .dossier-body {
+    box-shadow: 0 30px 60px -34px rgba(19, 78, 74, 0.45);
+  }
+  .dossier-index {
+    font-family: var(--font-serif);
+    font-size: 4.5rem;
+    line-height: 0.8;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(15, 118, 110, 0.35);
+  }
+  .dossier-cta {
+    margin-top: auto;
+    padding-top: 2rem;
+    transition: gap 0.3s ease;
+  }
+  .dossier:hover .dossier-cta {
+    gap: 0.85rem;
+  }
+
+  /* ---- Ports: radar ---- */
+  .radar {
+    border-radius: 24px;
+    background-color: #0B2624;
+    background-image: radial-gradient(circle at 50% 45%, rgba(45, 212, 191, 0.12), transparent 65%);
+    padding: 1.25rem;
+    box-shadow: 0 30px 70px -36px rgba(11, 38, 36, 0.8);
+  }
+  .radar-scope {
+    position: relative;
+    aspect-ratio: 1;
+  }
+  .radar-beam {
+    /* view-box's reference box starts at user-space (0,0) — the scope
+       centre here (viewBox -120 -120 240 240), not the viewBox corner. */
+    transform-box: view-box;
+    transform-origin: 0 0;
+    pointer-events: none;
+  }
+  .radar-beam path {
+    fill: #2DD4BF;
+  }
+  .radar-beam line {
+    stroke: #CCFBF1;
+    stroke-width: 0.9;
+  }
+  .radar-svg {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .radar-ring circle {
+    fill: none;
+    stroke: rgba(94, 234, 212, 0.22);
+    stroke-width: 0.6;
+  }
+  .radar-ring text,
+  .radar-cross text {
+    font-family: var(--font-mono);
+    font-size: 6px;
+    fill: rgba(94, 234, 212, 0.55);
+    letter-spacing: 0.08em;
+  }
+  .radar-cross line {
+    stroke: rgba(94, 234, 212, 0.14);
+    stroke-width: 0.5;
+  }
+  .radar-hq circle {
+    fill: var(--color-orange);
+  }
+  .radar-hq text {
+    font-family: var(--font-mono);
+    font-size: 6px;
+    font-weight: 700;
+    fill: #FDBA74;
+    letter-spacing: 0.1em;
+  }
+  .radar-range {
+    stroke: #FDBA74;
+    stroke-width: 0.8;
+    stroke-dasharray: 2 2;
+  }
+  .radar-blip {
+    cursor: pointer;
+  }
+  .radar-dot {
+    fill: #2DD4BF;
+    transition: r 0.2s;
+  }
+  .radar-ping {
+    fill: none;
+    stroke: #5EEAD4;
+    stroke-width: 0.8;
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .radar-blip text {
+    font-family: var(--font-mono);
+    font-size: 6.5px;
+    font-weight: 700;
+    fill: rgba(204, 251, 241, 0.85);
+  }
+  .radar-blip.is-active .radar-dot {
+    fill: var(--color-orange);
+    r: 4.5px;
+  }
+  .radar-blip.is-active text {
+    fill: #FDBA74;
+  }
+  .radar-caption {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.75rem;
+    align-items: center;
+    margin-top: 0.75rem;
+    padding-top: 0.85rem;
+    border-top: 1px dashed rgba(94, 234, 212, 0.25);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(204, 251, 241, 0.8);
+    min-height: 2.4rem;
+  }
+  .port-item {
+    border-color: var(--color-border);
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+  .port-item[data-active] {
+    border-color: rgba(234, 88, 12, 0.55);
+    box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .radar-beam {
+    animation: radar-spin linear infinite;
+  }
+  .radar-ping {
+    animation: radar-ping var(--period, 6s) linear var(--delay, 0s) infinite;
+  }
+  .radar-dot {
+    animation: radar-glow var(--period, 6s) linear var(--delay, 0s) infinite;
+  }
+  .radar-blip.is-active .radar-dot {
+    animation: none;
+  }
+  .wb-scan {
+    animation: wb-scan 0.7s ease-out;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .radar-beam {
+    opacity: 0.5;
+  }
+}
+
+/* Header asides are decoration; on phones they would cost a full screen. */
+@media (max-width: 639px) {
+  .ph-aside {
     display: none;
   }
 }

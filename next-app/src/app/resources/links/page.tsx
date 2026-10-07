@@ -23,6 +23,7 @@ export default function LinksPage() {
       <ResourcesHeader
         title="Transport & Customs Resources"
         description="Tap “Visit” to explore the website!"
+        ghost="Portals"
       />
       <PortalLinkGrid />
       <CTASection

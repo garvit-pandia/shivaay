@@ -1,12 +1,43 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { barcodeBars, waybillId } from "@/lib/radar";
 import { Send, Check } from "lucide-react";
 import { Icon } from "@/components/ui/Icon";
 import { serviceOptions } from "@/lib/data";
 
+const TRACKED = ["name", "company", "phone", "email", "service", "message"] as const;
+const BAR_COUNT = 46;
+
+/** Barcode drawn from the typed manifest — every keystroke reprints it. */
+function Barcode({ seed }: { seed: string }) {
+  const bars = barcodeBars(seed, BAR_COUNT);
+  const xs: number[] = [];
+  let width = 0;
+  for (const w of bars) {
+    xs.push(width);
+    width += w + 1.4;
+  }
+  return (
+    <svg className="wb-barcode" viewBox={`0 0 ${width} 28`} preserveAspectRatio="none" aria-hidden="true">
+      {bars.map((w, i) => (
+        <rect key={i} x={xs[i]} y={0} width={w} height={28} />
+      ))}
+    </svg>
+  );
+}
+
 export function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [seed, setSeed] = useState("");
+  const [filled, setFilled] = useState(0);
+
+  const onManifestInput = (e: FormEvent<HTMLFormElement>) => {
+    const data = new FormData(e.currentTarget);
+    const values = TRACKED.map((k) => String(data.get(k) ?? "").trim());
+    setSeed(values.join("|"));
+    setFilled(values.filter(Boolean).length);
+  };
   const [errors, setErrors] = useState<{ name?: string; phone?: string }>({});
   const [sending, setSending] = useState(false);
 
@@ -43,10 +74,13 @@ export function ContactForm() {
 
   if (submitted) {
     return (
-      <div className="waybill rounded-2xl bg-white p-10 text-center">
-        <span className="stamp-badge w-24 h-24 text-[10px] text-teal mx-auto mb-6">
+      <div className="waybill wb-cleared rounded-2xl bg-white p-10 text-center">
+        <span className="stamp-badge stamp-slam w-28 h-28 text-[11px] text-teal mx-auto mb-6">
+          Cleared
+          <br />
           Received
         </span>
+        <p className="mono-label text-[10px] text-ink-dim mb-6">Waybill {waybillId(seed)} filed</p>
         <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 bg-teal-tint">
           <Icon icon={Check} size={32} className="text-teal" />
         </div>
@@ -59,12 +93,34 @@ export function ContactForm() {
   }
 
   return (
-    <div className="bg-white border border-border rounded-2xl p-8 shadow-[0_1px_3px_rgba(30,27,24,0.04)]">
+    <div className="relative bg-white border border-border rounded-2xl p-8 shadow-[0_24px_60px_-34px_rgba(19,78,74,0.45)]">
+      {/* Live waybill — decorative mirror of the form's progress */}
+      <div className="wb-strip" aria-hidden="true">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="mono-label text-[9px] text-ink-dim mb-1">Waybill no.</p>
+            <p className="font-mono text-lg font-bold text-ink tracking-wider m-0 tabular-nums">{waybillId(seed)}</p>
+          </div>
+          <div className="text-right">
+            <p className="mono-label text-[9px] text-ink-dim mb-1">Manifest</p>
+            <p className="font-mono text-lg font-bold text-teal m-0 tabular-nums">
+              {filled}/{TRACKED.length}
+            </p>
+          </div>
+        </div>
+        <div className="wb-barcode-wrap">
+          <Barcode seed={seed} />
+          <span key={seed} className="wb-scan" />
+        </div>
+        <div className="wb-meter">
+          <span style={{ transform: `scaleX(${filled / TRACKED.length})` }} />
+        </div>
+      </div>
       <p className="mono-label text-[10px] text-orange mb-2">Waybill · New Inquiry</p>
       <h2 className="font-serif text-2xl font-medium text-ink mb-1">Send an Inquiry</h2>
       <p className="text-ink-dim text-sm mb-6">Fill the form below and we&apos;ll get back to you within 24 hours.</p>
 
-      <form onSubmit={handleSubmit} noValidate className="space-y-6">
+      <form onSubmit={handleSubmit} onInput={onManifestInput} onChange={onManifestInput} noValidate className="space-y-6">
         <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute left-[-9999px]" />
 
         <div className="space-y-5">

@@ -7,7 +7,7 @@ export function ContactInfo() {
     <div>
       <h2 className="mono-label text-[11px] text-orange mb-6">Contact Information</h2>
       <ul className="list-none m-0 p-0 space-y-4">
-        <li className="waybill rounded-xl bg-white p-4 flex items-start gap-4">
+        <li className="reveal waybill rounded-xl bg-white p-4 flex items-start gap-4">
           <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 bg-teal-tint">
             <Icon icon={MapPin} size={15} className="text-teal" aria-hidden={true} />
           </div>
@@ -16,7 +16,7 @@ export function ContactInfo() {
             <div className="text-ink text-sm leading-relaxed">{contactInfo.address}</div>
           </div>
         </li>
-        <li className="waybill rounded-xl bg-white p-4 flex items-start gap-4">
+        <li className="reveal waybill rounded-xl bg-white p-4 flex items-start gap-4">
           <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 bg-teal-tint">
             <Icon icon={Phone} size={15} className="text-teal" aria-hidden={true} />
           </div>
@@ -32,7 +32,7 @@ export function ContactInfo() {
             </div>
           </div>
         </li>
-        <li className="waybill rounded-xl bg-white p-4 flex items-start gap-4">
+        <li className="reveal waybill rounded-xl bg-white p-4 flex items-start gap-4">
           <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 bg-teal-tint">
             <Icon icon={Mail} size={15} className="text-teal" aria-hidden={true} />
           </div>
@@ -43,7 +43,7 @@ export function ContactInfo() {
             </div>
           </div>
         </li>
-        <li className="waybill rounded-xl bg-white p-4 flex items-start gap-4">
+        <li className="reveal waybill rounded-xl bg-white p-4 flex items-start gap-4">
           <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 bg-teal-tint">
             <Icon icon={Clock} size={15} className="text-teal" aria-hidden={true} />
           </div>
@@ -52,7 +52,7 @@ export function ContactInfo() {
             <div className="text-ink text-sm">Ludhiana &middot; Amritsar &middot; Delhi &middot; Mumbai &middot; Mundra</div>
           </div>
         </li>
-        <li className="waybill rounded-xl bg-white p-4 flex items-start gap-4">
+        <li className="reveal waybill rounded-xl bg-white p-4 flex items-start gap-4">
           <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 bg-teal-tint">
             <Icon icon={Calendar} size={15} className="text-teal" aria-hidden={true} />
           </div>

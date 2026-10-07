@@ -5,6 +5,8 @@ import { OfficeMap } from "@/components/contact/OfficeMap";
 import { CTASection } from "@/components/home/CTASection";
 import { Faq } from "@/components/faq/Faq";
 import { contactFaqs } from "@/lib/data";
+import { PageHero } from "@/components/motion/PageHero";
+import { TextReveal } from "@/components/motion/TextReveal";
 
 export const metadata: Metadata = {
   title: "Contact Us | Shivaay Logistics",
@@ -23,19 +25,23 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <section className="relative pt-16 pb-20 bg-cream overflow-hidden">
-        <div className="absolute inset-0 bg-blueprint" aria-hidden="true" />
-        <div className="relative mx-auto max-w-[1280px] px-6">
-          <p className="mono-label text-[11px] text-teal mb-4">
-            Contact · Response within 24h
-          </p>
-          <h1 className="font-serif text-4xl lg:text-5xl font-normal text-ink tracking-tight mb-12">
-            Get in touch
-          </h1>
-          <div className="grid lg:grid-cols-2 gap-12">
-            <ContactInfo />
-            <ContactForm />
-          </div>
+      <PageHero
+        kicker="Contact · Response within 24h"
+        title="Get in touch"
+        description="Tell us what you're moving — every inquiry is answered by the same team that clears your cargo."
+        ghost="Contact"
+        aside={
+          <span className="stamp-badge w-32 h-32 text-[11px] text-orange">
+            Reply
+            <br />
+            within 24h
+          </span>
+        }
+      />
+      <section className="relative py-16 lg:py-24 bg-cream" aria-label="Contact details and inquiry form">
+        <div className="mx-auto max-w-[1280px] px-6 grid lg:grid-cols-2 gap-12">
+          <ContactInfo />
+          <ContactForm />
         </div>
       </section>
 
@@ -48,12 +54,12 @@ export default function ContactPage() {
           <p className="mono-label text-[11px] text-teal mb-4">
             Questions · Answered upfront
           </p>
-          <h2
+          <TextReveal
             id="contact-faq-heading"
-            className="font-serif text-3xl lg:text-4xl font-medium text-ink mb-10"
+            className="font-serif text-4xl lg:text-6xl font-medium text-ink leading-[1.05] mb-10"
           >
             Good to know
-          </h2>
+          </TextReveal>
           <Faq items={contactFaqs} idPrefix="contact-faq" />
         </div>
       </section>

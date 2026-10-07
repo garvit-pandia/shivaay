@@ -23,6 +23,7 @@ export default function DocumentsPage() {
       <ResourcesHeader
         title="Documents Required"
         description="Below is the list of documents required for various processes."
+        ghost="Documents"
       />
       <DocumentRequirements />
       <CTASection

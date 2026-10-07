@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Link2, FileText, Download, MapPin } from "lucide-react";
+import { Link2, FileText, Download, MapPin, ArrowRight } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Icon } from "@/components/ui/Icon";
 import { ResourcesHeader } from "@/components/resources/ResourcesHeader";
+import { TiltGroup } from "@/components/motion/TiltGroup";
 
 export const metadata: Metadata = {
   title: "Resources | Shivaay Logistics",
@@ -60,29 +61,39 @@ export default function ResourcesHubPage() {
         title="Resources"
         description="Transport and customs references — portals, document checklists, downloads and Ludhiana clearance facilities."
       />
-      <section className="pb-20 bg-cream" aria-label="Resource sections">
-        <div className="mx-auto max-w-[1280px] px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-4xl mx-auto">
-            {sections.map((section, i) => (
-              <Link
-                key={section.href}
-                href={section.href}
-                className="reveal waybill flex items-start gap-4 bg-white rounded-2xl p-6 card-hover no-underline"
-              >
-                <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 bg-teal-tint">
-                  <Icon icon={section.icon} size={18} className="text-teal" aria-hidden={true} />
+      <section className="py-16 lg:py-24 bg-cream" aria-label="Resource sections">
+        <TiltGroup className="mx-auto max-w-[1280px] px-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+          {sections.map((section, i) => (
+            <Link
+              key={section.href}
+              href={section.href}
+              data-tilt
+              data-scan
+              className="dossier reveal group no-underline"
+            >
+              <span className="dossier-tab mono-label text-[9px]">
+                Section {String(i + 1).padStart(2, "0")}
+              </span>
+              <div className="dossier-body waybill">
+                <div className="flex items-start justify-between gap-6">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-teal text-white">
+                    <Icon icon={section.icon} size={20} aria-hidden={true} />
+                  </div>
+                  <span className="dossier-index" aria-hidden="true">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
                 </div>
-                <div>
-                  <p className="mono-label text-[9px] text-orange mb-1.5">
-                    Section {String(i + 1).padStart(2, "0")}
-                  </p>
-                  <h2 className="font-semibold text-ink">{section.label}</h2>
-                  <p className="text-ink-dim text-sm mt-1 leading-relaxed">{section.description}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
+                <h2 className="font-serif text-3xl lg:text-4xl font-medium text-ink mt-8 mb-2 group-hover:text-teal transition-colors">
+                  {section.label}
+                </h2>
+                <p className="text-ink-dim leading-relaxed m-0 max-w-sm">{section.description}</p>
+                <span className="mono-label text-[10px] text-teal mt-8 inline-flex items-center gap-2 dossier-cta">
+                  Open section <ArrowRight size={14} aria-hidden="true" />
+                </span>
+              </div>
+            </Link>
+          ))}
+        </TiltGroup>
       </section>
     </>
   );

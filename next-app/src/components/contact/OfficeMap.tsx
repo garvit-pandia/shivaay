@@ -1,12 +1,14 @@
+import { TextReveal } from "@/components/motion/TextReveal";
+
 export function OfficeMap() {
   return (
     <section className="py-20 bg-white border-t border-border" aria-labelledby="office-heading">
       <div className="mx-auto max-w-[1280px] px-6">
         <p className="mono-label text-[11px] text-teal mb-3">Headquarters · Ludhiana</p>
-        <h2 id="office-heading" className="font-serif text-3xl lg:text-4xl font-medium text-ink mb-10">
+        <TextReveal id="office-heading" className="font-serif text-4xl lg:text-6xl font-medium text-ink leading-[1.05] mb-10">
           Visit our office
-        </h2>
-        <div className="w-full aspect-[16/9] max-h-[500px] rounded-xl overflow-hidden border border-border">
+        </TextReveal>
+        <div className="map-iris w-full aspect-[16/9] max-h-[500px] rounded-xl overflow-hidden border border-border">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3422.5!2d75.8573!3d30.9010!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391a8370c9e5c7b5%3A0x3f5c5a6e5b5a5b5a!2sMundian%20Kalan%2C%20Ludhiana%2C%20Punjab!5e0!3m2!1sen!2sin!4v1680000000000!5m2!1sen!2sin"
             width="100%"

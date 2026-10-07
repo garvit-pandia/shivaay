@@ -4,6 +4,7 @@ import { GalleryLightbox } from "@/components/services/GalleryLightbox";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { CTASection } from "@/components/home/CTASection";
 import { Faq } from "@/components/faq/Faq";
+import { TextReveal } from "@/components/motion/TextReveal";
 import { servicesFaqs } from "@/lib/data";
 
 export const metadata: Metadata = {
@@ -33,12 +34,12 @@ export default function ServicesPage() {
           <p className="mono-label text-[10px] text-orange mb-3">
             Manifest — Questions
           </p>
-          <h2
+          <TextReveal
             id="services-faq-heading"
-            className="font-serif text-3xl lg:text-5xl font-medium text-ink mb-12"
+            className="font-serif text-4xl lg:text-6xl font-medium text-ink leading-[1.05] mb-12"
           >
             Before you ask
-          </h2>
+          </TextReveal>
           <Faq items={servicesFaqs} idPrefix="services-faq" />
         </div>
       </section>
