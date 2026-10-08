@@ -14,6 +14,7 @@ export const metadata: Metadata = {
       "Comprehensive logistics services including customs clearance, freight forwarding, warehousing, and supply chain solutions by Shivaay Logistics.",
     type: "website",
     url: "https://www.shivaaylogistics.in/services",
+    images: "/opengraph-image.png",
   },
   twitter: { card: "summary_large_image" },
 };

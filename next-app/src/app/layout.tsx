@@ -22,6 +22,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.shivaaylogistics.in"),
   title: `${companyInfo.name} | ${companyInfo.tagline} | Ludhiana`,
   description:
     "Shivaay Logistics provides customs clearance, freight forwarding, and logistics solutions across India. Serving Ludhiana, Delhi, Mumbai, Amritsar, and Mundra.",
@@ -33,6 +34,8 @@ export const metadata: Metadata = {
     siteName: companyInfo.name,
     url: "https://www.shivaaylogistics.in/",
   },
+  authors: [{ name: "Garvit Pandia", url: "mailto:garvit@shivaaylogistics.in" }],
+  creator: "Garvit Pandia",
   twitter: {
     card: "summary_large_image",
   },
