@@ -15,6 +15,7 @@ export const metadata: Metadata = {
       "Quick links, required documents, downloadable forms, and clearance ports/ICDs/CFS in Ludhiana.",
     type: "website",
     url: "https://www.shivaaylogistics.in/resources",
+    images: "/opengraph-image.png",
   },
   twitter: { card: "summary_large_image" },
 };

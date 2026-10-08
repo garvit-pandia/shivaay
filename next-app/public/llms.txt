@@ -1,0 +1,39 @@
+# Shivaay Logistics
+
+> Shivaay Logistics is a customs broker and logistics facilitator based in Ludhiana, Punjab, India, with 15+ years of experience and 800+ clients. It provides customs clearance, freight forwarding (air, sea, road, rail), warehousing and import-export documentation across India, with operations in Ludhiana, Amritsar, Delhi, Mumbai and Mundra.
+
+Canonical site: https://www.shivaaylogistics.in
+
+## Business details
+
+- Name: Shivaay Logistics
+- Type: Customs broker & logistics facilitator
+- Headquarters: Plot No. 116, Street No. 8, Ganesh Nagar, 33 Feet Road, Near Ashiana Enclave, Mundian Kalan, Ludhiana-141015, Punjab, India
+- Phone / WhatsApp: +91 88474-67790
+- Email: shivaaylogistics2022@gmail.com
+- Hours: Monday–Saturday 9:00 AM – 7:00 PM IST; Sunday closed
+- Service locations: Ludhiana (headquarters), Amritsar (border hub), Delhi (distribution hub), Mumbai (major port), Mundra (port hub)
+
+## Pages
+
+- [Home](https://www.shivaaylogistics.in/): Company overview, core services, coverage map and client testimonials
+- [Services](https://www.shivaaylogistics.in/services): Customs clearance, air/sea/road/rail freight, door-to-door delivery, project cargo, warehousing, cargo insurance, packaging, documentation, LCL consolidation and 3PL
+- [Contact](https://www.shivaaylogistics.in/contact): Phone, email, office address, map and enquiry form
+
+## Resources for importers and exporters
+
+- [Resources overview](https://www.shivaaylogistics.in/resources): Hub for the pages below
+- [Quick links](https://www.shivaaylogistics.in/resources/links): ICEGATE, DGFT, customs duty calculator, exchange rates and shipping bill enquiry
+- [Documents required](https://www.shivaaylogistics.in/resources/documents): Checklists for AD Code registration, IEC application, Bill of Entry, Shipping Bill, GST refunds, LUT and customs clearance
+- [Download files](https://www.shivaaylogistics.in/resources/files): Customs circulars, declarations, RODTEP schedules and blank forms
+- [Ports, ICDs and CFS in Ludhiana](https://www.shivaaylogistics.in/resources/ports): Clearance points including CONCOR, Gateway Distriparks, Pristine, Hind Terminals, Adani and PLIL
+
+## Website credits
+
+- Engineered, designed and created by Garvit Pandia
+- Contact: garvit@shivaaylogistics.in
+
+## Optional
+
+- [Sitemap](https://www.shivaaylogistics.in/sitemap.xml)
+- [humans.txt](https://www.shivaaylogistics.in/humans.txt): Site credits

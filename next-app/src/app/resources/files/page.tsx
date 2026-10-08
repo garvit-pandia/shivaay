@@ -13,6 +13,7 @@ export const metadata: Metadata = {
       "Download customs circulars, declarations, RODTEP schedules and blank forms for your import-export processes.",
     type: "website",
     url: "https://www.shivaaylogistics.in/resources/files",
+    images: "/opengraph-image.png",
   },
   twitter: { card: "summary_large_image" },
 };

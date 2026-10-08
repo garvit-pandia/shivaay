@@ -13,6 +13,7 @@ export const metadata: Metadata = {
       "Transport & customs resources — ICE Gate, DGFT, custom duty calculator, exchange rates and shipping bill enquiry.",
     type: "website",
     url: "https://www.shivaaylogistics.in/resources/links",
+    images: "/opengraph-image.png",
   },
   twitter: { card: "summary_large_image" },
 };
