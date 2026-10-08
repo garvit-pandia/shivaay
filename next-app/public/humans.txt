@@ -1,0 +1,11 @@
+/* TEAM */
+Engineer, designer & creator: Garvit Pandia
+Contact: garvit [at] shivaaylogistics.in
+From: Ludhiana, Punjab, India
+
+/* SITE */
+Last update: 2026/10/08
+Language: English
+Standards: HTML5, CSS3
+Components: Next.js, React, Tailwind CSS, TypeScript
+Hosting: Vercel
